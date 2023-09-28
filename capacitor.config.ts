@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: "public",
   server: {
     // androidScheme: "https",
-    url: "http://localhost:3000/",
+    url: "https://santou-store.vercel.app/",
   },
   plugins: {
     SplashScreen: {
