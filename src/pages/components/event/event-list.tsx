@@ -2,7 +2,7 @@ const EventListComponent = () => {
   return (
     <div>
       <h4 className="font-semibold">Nos Evenements</h4>
-      <div className="grid grid-cols-1 space-y-2 h-72 overflow-y-scroll scroll-b">
+      <div className="grid grid-cols-1 space-y-2 h-80 overflow-y-scroll scroll-b">
         <div className="">
           <div className="flex  bg-white shadow-md  rounded-2xl p-2">
             <img
