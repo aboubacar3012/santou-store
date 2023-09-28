@@ -1,5 +1,5 @@
+import { cityOptions } from "@/docs/data";
 import Select from "react-select";
-import { cityOptions } from "../../docs/data";
 
 const CityFilterComponent = () => {
   return (

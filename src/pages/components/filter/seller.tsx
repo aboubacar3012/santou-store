@@ -1,5 +1,5 @@
+import { vendorOptions } from "@/docs/data";
 import Select from "react-select";
-import { vendorOptions } from "../../docs/data";
 
 const SellerFilterComponent = () => {
   return (
