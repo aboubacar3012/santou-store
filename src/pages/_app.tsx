@@ -7,6 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setSafeArea();
   }, []);
+
   return (
     <>
       <Component {...pageProps} />;{/* <!-- from node_modules --> */}

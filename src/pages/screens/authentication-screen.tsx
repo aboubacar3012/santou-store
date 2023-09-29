@@ -3,16 +3,29 @@ import LoginComponent from "../components/auth/login";
 import RegistrationComponent from "../components/auth/registration";
 import CompleteProfileComponent from "../components/auth/complete-profile";
 
-const AuthenticationScreen = () => {
+interface Props {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
+const AuthenticationScreen = ({
+  isAuthenticated,
+  setIsAuthenticated,
+}: Props) => {
   const [isLogin, setIsLogin] = useState(true);
   return (
     <div className="flex justify-center  ">
       {isLogin ? (
-        <LoginComponent setIsLogin={setIsLogin} />
+        <LoginComponent
+          setIsAuthenticated={setIsAuthenticated}
+          setIsLogin={setIsLogin}
+        />
       ) : (
-        <RegistrationComponent setIsLogin={setIsLogin} />
+        <RegistrationComponent
+          setIsAuthenticated={setIsAuthenticated}
+          setIsLogin={setIsLogin}
+        />
       )}
-      {/* <CompleteProfileComponent /> */}
     </div>
   );
 };

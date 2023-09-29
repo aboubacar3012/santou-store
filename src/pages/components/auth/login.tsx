@@ -1,7 +1,11 @@
 interface RegistrationProps {
   setIsLogin: (value: boolean) => void;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
 }
-const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
+const LoginComponent = ({
+  setIsLogin,
+  setIsAuthenticated,
+}: RegistrationProps) => {
   return (
     <div className="relative flex w-96 flex-col mt-32 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="relative mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-border text-white shadow-lg shadow-blue-500/40">
@@ -31,6 +35,7 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
       </div>
       <div className="p-6 pt-0">
         <button
+          onClick={() => setIsAuthenticated(true)}
           className="block w-full select-none rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
           data-ripple-light="true"

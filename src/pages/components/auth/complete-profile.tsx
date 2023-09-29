@@ -2,6 +2,11 @@ import { useState } from "react";
 interface Props {
   setStep: (value: number) => void;
 }
+
+interface PropsWithAuthentication {
+  setStep: (value: number) => void;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
 const _InformationFormComponent = ({ setStep }: Props) => {
   return (
     <div className="relative flex w-96 flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
@@ -148,7 +153,10 @@ const _AdresseFormComponent = ({ setStep }: Props) => {
   );
 };
 
-const _FinalisationComponent = ({ setStep }: Props) => {
+const _FinalisationComponent = ({
+  setStep,
+  setIsAuthenticated,
+}: PropsWithAuthentication) => {
   return (
     <div className="relative flex w-96 flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="flex flex-col gap-4 p-6">
@@ -163,7 +171,7 @@ const _FinalisationComponent = ({ setStep }: Props) => {
           className="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
           data-ripple-light="true"
-          onClick={() => alert("Inscription validee avec succes")}
+          onClick={() => setIsAuthenticated(true)}
         >
           Terminer
         </button>
@@ -172,7 +180,7 @@ const _FinalisationComponent = ({ setStep }: Props) => {
   );
 };
 
-const CompleteProfileComponent = () => {
+const CompleteProfileComponent = ({ setIsAuthenticated }: any) => {
   const [step, setStep] = useState(1);
   return (
     <div>
@@ -257,7 +265,12 @@ const CompleteProfileComponent = () => {
       </ol>
       {step === 1 && <_InformationFormComponent setStep={setStep} />}
       {step === 2 && <_AdresseFormComponent setStep={setStep} />}
-      {step === 3 && <_FinalisationComponent setStep={setStep} />}
+      {step === 3 && (
+        <_FinalisationComponent
+          setIsAuthenticated={setIsAuthenticated}
+          setStep={setStep}
+        />
+      )}
     </div>
   );
 };

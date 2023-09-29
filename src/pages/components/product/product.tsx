@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
-import { ProductDetails } from "./product-details";
+import ProductDetails from "./product-details";
 
 const ProductComponent = () => {
   const [showProduct, setShowProduct] = useState(false);

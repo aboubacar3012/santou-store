@@ -1,8 +1,15 @@
 import { BiHomeAlt2, BiUserCircle } from "react-icons/bi";
 import { AiOutlineHistory } from "react-icons/ai";
 import { BsBookmarks } from "react-icons/bs";
+import { Dispatch, SetStateAction } from "react";
+import { Menu } from "@/pages";
 
-const BottomTabBarComponent = () => {
+interface MenuProps {
+  menu: string;
+  setMenu: Dispatch<SetStateAction<Menu>>;
+}
+
+const BottomTabBarComponent = ({ menu, setMenu }: MenuProps) => {
   return (
     // <div className="sticky bottom-1 p-5 px-6 m-2   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer">
     //   <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
@@ -28,6 +35,7 @@ const BottomTabBarComponent = () => {
     <div className="fixed bottom-0 left-0 z-50 w-full pb-3  h-16  bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer ">
       <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
         <button
+          onClick={() => setMenu("home")}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
         >
@@ -37,6 +45,7 @@ const BottomTabBarComponent = () => {
           </span>
         </button>
         <button
+          onClick={() => setMenu("orders")}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
         >
@@ -46,6 +55,7 @@ const BottomTabBarComponent = () => {
           </span>
         </button>
         <button
+          onClick={() => setMenu("favorites")}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
         >
@@ -55,6 +65,7 @@ const BottomTabBarComponent = () => {
           </span>
         </button>
         <button
+          onClick={() => setMenu("profile")}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
         >

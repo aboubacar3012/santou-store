@@ -13,7 +13,7 @@ import {
 } from "@material-tailwind/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { GiShoppingCart } from "react-icons/gi";
-export function ProductDetails({ handleShow, showProduct, product }: any) {
+const ProductDetails = ({ handleShow, showProduct, product }: any) => {
   const [quantity, setQuantity] = useState(1);
 
   const onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ export function ProductDetails({ handleShow, showProduct, product }: any) {
       className=""
     >
       <DialogHeader className="justify-between">
-        {product.name}
+        {product?.name}
         <IconButton
           color="blue-gray"
           size="sm"
@@ -103,4 +103,6 @@ export function ProductDetails({ handleShow, showProduct, product }: any) {
       </DialogBody>
     </Dialog>
   );
-}
+};
+
+export default ProductDetails;

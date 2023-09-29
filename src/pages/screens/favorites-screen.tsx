@@ -1,8 +1,10 @@
+import UnavailableComponent from "../components/unavailable";
+
 const FavoritesScreenPage = () => {
   return (
-    <div>
-      <h1>FavoritesScreenPage</h1>
-    </div>
+    <>
+      <UnavailableComponent />
+    </>
   );
 };
 
