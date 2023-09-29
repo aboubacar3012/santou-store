@@ -1,6 +1,10 @@
-const RegistrationComponent = () => {
+interface RegistrationProps {
+  setIsLogin: (value: boolean) => void;
+}
+
+const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
   return (
-    <div className="relative flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className="relative flex w-96 mt-32  flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="relative mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-border text-white shadow-lg shadow-blue-500/40">
         <h3 className="block font-sans text-3xl font-semibold leading-snug tracking-normal text-white antialiased">
           Créer un compte
@@ -45,12 +49,12 @@ const RegistrationComponent = () => {
         </button>
         <p className="mt-6 flex justify-center font-sans text-sm font-light leading-normal text-inherit antialiased">
           J&apos;ai déjà un compte
-          <a
-            href="#signup"
+          <button
+            onClick={() => setIsLogin(true)}
             className="ml-1 block font-sans text-sm font-bold leading-normal text-blue-500 antialiased"
           >
             Se connecter
-          </a>
+          </button>
         </p>
       </div>
     </div>

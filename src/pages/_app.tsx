@@ -7,5 +7,18 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setSafeArea();
   }, []);
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Component {...pageProps} />;{/* <!-- from node_modules --> */}
+      <script
+        async
+        src="node_modules/@material-tailwind/html@latest/scripts/dialog.js"
+      ></script>
+      {/* <!-- from cdn --> */}
+      <script
+        async
+        src="https://unpkg.com/@material-tailwind/html@latest/scripts/dialog.js"
+      ></script>
+    </>
+  );
 }
