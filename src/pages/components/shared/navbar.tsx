@@ -24,9 +24,7 @@ const NavbarComponent = () => {
         </div> */}
         <div className="inline-flex">
           <Link href="/">
-            <div className="">
-              <h1>AfriStore</h1>
-            </div>
+            <div className="">{/* <h1>Aboubcar Diallo</h1> */}</div>
           </Link>
         </div>
         <div

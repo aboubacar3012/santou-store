@@ -4,8 +4,8 @@ import ProductListComponent from "../components/product/product-list";
 
 const HomeScreenPage = () => {
   return (
-    <div>
-      {/* <FilterComponent /> */}
+    <div className="p-3 space-y-4 z-0 h-screen">
+      <FilterComponent />
       <ProductListComponent />
       {/* <EventListComponent /> */}
     </div>

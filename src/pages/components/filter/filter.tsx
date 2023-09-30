@@ -1,16 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
 import CategoryFilterComponent from "./category";
 import CityFilterComponent from "./city";
 import SellerFilterComponent from "./seller";
 
 const FilterComponent = () => {
   return (
-    <div>
-      <h4 className="font-semibold">Filter</h4>
+    <Fragment>
+      {/* <h4 className="font-semibold">Filter</h4> */}
       <CategoryFilterComponent />
-      <CityFilterComponent />
-      <SellerFilterComponent />
-    </div>
+      {/* <CityFilterComponent /> */}
+      {/* <SellerFilterComponent /> */}
+    </Fragment>
   );
 };
 
