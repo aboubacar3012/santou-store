@@ -1,7 +1,10 @@
 import { GiShoppingCart } from "react-icons/gi";
 import { FaStoreAlt } from "react-icons/fa";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { updateControl } from "@/redux/features/controlsSlice";
 const NavbarComponent = () => {
+  const dispatch = useDispatch();
   return (
     <div
       className="realtive sticky top-0  w-full rounded-b-2xl bg-center cursor-pointer object-cover z-10 shadow-lg"
@@ -26,10 +29,14 @@ const NavbarComponent = () => {
             </div>
           </Link>
         </div>
-        <div className="flex-initial">
+        <div
+          onClick={() => dispatch(updateControl({ showCart: true }))}
+          className="flex-initial"
+        >
           <div className="flex justify-end items-center relative">
             <div className="inline relative">
-              <div className="block flex-grow-0 flex-shrink-0">
+              <div className="flex flex-col justify-end items-center">
+                <span className="-mb-3">3</span>
                 <GiShoppingCart className="w-10 h-10" />
               </div>
             </div>

@@ -4,7 +4,7 @@ import UnavailableComponent from "../components/unavailable";
 const OrdersScreenPage = () => {
   return (
     <>
-      {/* <div className="flex mt-3 items-center justify-center">
+      <div className="flex mt-3 items-center justify-center">
         <div className="flex items-center space-x-2 p-1 border border-blue-600 dark:border-blue-400 rounded-xl">
           <button className="px-4 py-2 text-sm font-medium text-white capitalize bg-blue-600 md:py-3 rounded-xl md:px-12">
             Commandes en cours
@@ -14,8 +14,8 @@ const OrdersScreenPage = () => {
           </button>
         </div>
       </div>
-      <OrderListComponent /> */}
-      <UnavailableComponent />
+      <OrderListComponent />
+      {/* <UnavailableComponent /> */}
     </>
   );
 };

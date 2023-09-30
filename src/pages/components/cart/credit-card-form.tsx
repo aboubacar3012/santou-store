@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ContinueShoppingBtn from "./continue-shopping-btn";
 
 const CreditCardForm = () => {
   const [cardholder, setCardholder] = useState("");
@@ -37,7 +38,7 @@ const CreditCardForm = () => {
 
   return (
     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-      <div className="credit-card w-full sm:w-auto shadow-lg mx-auto rounded-xl bg-white">
+      <div className="credit-card w-full sm:w-auto shadow-lg mx-auto  bg-white">
         <header className="flex flex-col justify-center items-center">
           <div
             className="relative"
@@ -212,6 +213,7 @@ const CreditCardForm = () => {
           >
             Terminer l&apos;achat
           </button>
+          <ContinueShoppingBtn />
         </footer>
       </div>
     </div>
