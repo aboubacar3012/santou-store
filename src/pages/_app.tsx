@@ -4,6 +4,17 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { store } from "../redux/store";
 import { Provider } from "react-redux";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+// Create a client
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -12,7 +23,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <Component {...pageProps} />;{/* <!-- from node_modules --> */}
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </Provider>
   );
 }

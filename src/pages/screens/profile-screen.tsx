@@ -5,6 +5,8 @@ import UserDetails from "../components/profile/user-details";
 import { useState } from "react";
 import MerchantOrders from "../components/profile/merchant-orders";
 import ProductManagement from "../components/profile/product-management";
+import { logout } from "@/redux/features/authSlice";
+import { useDispatch } from "react-redux";
 
 export const user: UserType = {
   id: "12345",
@@ -32,6 +34,7 @@ export enum PageToShow {
 
 const ProfileScreenPage = () => {
   const [pageToShow, setPageToShow] = useState<PageToShow>(PageToShow.profile);
+  const dispatch = useDispatch();
 
   if (pageToShow === PageToShow.profile)
     return (
@@ -83,6 +86,9 @@ const ProfileScreenPage = () => {
             Gestion de produits <BsArrowRight className="w-6 h-6" />
           </Button>
         </div>{" "}
+        <Button onClick={() => dispatch(logout())} color="red" fullWidth>
+          Se deconnecter
+        </Button>
         {/* <div className=" border-b space-y-2 pb-2">
         {" "}
         <h1 className="text-3xl font-medium text-gray-700 text-center">

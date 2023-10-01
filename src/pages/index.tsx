@@ -20,8 +20,8 @@ export type Menu = "home" | "orders" | "favorites" | "profile";
 
 export default function Home() {
   const [menu, setMenu] = useState<Menu>("home");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const controls = useSelector((state: RootState) => state.controls.values);
+  const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,14 +32,11 @@ export default function Home() {
   const containerStyle =
     "fixed w-full  sm:w-6/12  overflow-y-scroll rounded-1xl  z-10";
 
-  if (!isAuthenticated)
+  if (!auth.isAuthenticated)
     return (
       <div className={containerStyle}>
         <NavbarComponent />
-        <AuthenticationScreen
-          isAuthenticated={isAuthenticated}
-          setIsAuthenticated={setIsAuthenticated}
-        />
+        <AuthenticationScreen isAuthenticated={auth.isAuthenticated} />
       </div>
     );
   if (controls.showCart)

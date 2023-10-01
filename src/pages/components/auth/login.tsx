@@ -1,11 +1,40 @@
+import { loginService } from "@/services/login.service";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import NotificationMessage from "../shared/notification-message";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/features/authSlice";
+
 interface RegistrationProps {
   setIsLogin: (value: boolean) => void;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
 }
-const LoginComponent = ({
-  setIsLogin,
-  setIsAuthenticated,
-}: RegistrationProps) => {
+const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+
+  // Mutations
+  const mutation = useMutation(
+    (loginInfo: { email: string; password: string }) => loginService(loginInfo),
+    {
+      onSuccess: (data) => {
+        if (data.success) {
+          dispatch(login({ isAuthenticated: true, user: data.user }));
+        } else alert("Email ou mot de passe incorrect");
+      },
+      onError: (error) => {
+        alert(error);
+      },
+    }
+  );
+
+  const handleLogin = () => {
+    mutation.mutate({ email, password });
+  };
+
+  mutation.isLoading && <div>Loading...</div>;
+
   return (
     <div className="relative flex w-96 flex-col mt-32 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="relative mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-border text-white shadow-lg shadow-blue-500/40">
@@ -13,9 +42,13 @@ const LoginComponent = ({
           Connexion
         </h3>
       </div>
+
       <div className="flex flex-col gap-4 p-6">
         <div className="relative h-11 w-full min-w-[200px]">
           <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="peer h-full w-full rounded-md border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
             placeholder=" "
           />
@@ -25,6 +58,9 @@ const LoginComponent = ({
         </div>
         <div className="relative h-11 w-full min-w-[200px]">
           <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="peer h-full w-full rounded-md border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
             placeholder=" "
           />
@@ -35,7 +71,7 @@ const LoginComponent = ({
       </div>
       <div className="p-6 pt-0">
         <button
-          onClick={() => setIsAuthenticated(true)}
+          onClick={handleLogin}
           className="block w-full select-none rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
           data-ripple-light="true"
