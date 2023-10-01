@@ -13,13 +13,20 @@ import {
 } from "@material-tailwind/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { GiShoppingCart } from "react-icons/gi";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/features/cartSlice";
+import { ProductType, ProductTypeInCart } from "@/types/cart.type";
 const ProductDetails = ({ handleShow, showProduct, product }: any) => {
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
-  const onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantity(Number(target.value));
+  const handleAddProductToCart = (product: ProductType) => () => {
+    const productInCart: ProductTypeInCart = { ...product, quantity };
+    dispatch(addToCart(productInCart));
+    handleShow();
   };
 
+  if (!product) return <></>;
   return (
     <Dialog
       open={showProduct}
@@ -44,7 +51,7 @@ const ProductDetails = ({ handleShow, showProduct, product }: any) => {
       <DialogBody divider>
         <CardHeader shadow={false} floated={false} className="h-60">
           <img
-            src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80"
+            src={product.images[0]}
             alt="card-image"
             className="h-full w-full object-cover"
           />
@@ -52,10 +59,10 @@ const ProductDetails = ({ handleShow, showProduct, product }: any) => {
         <CardBody>
           <div className="mb-2 flex items-center justify-between">
             <Typography color="blue-gray" className="font-medium">
-              Apple AirPods
+              {product.name}
             </Typography>
             <Typography color="blue-gray" className="font-medium">
-              $95.00
+              {product.price} €
             </Typography>
           </div>
           <Typography
@@ -63,8 +70,7 @@ const ProductDetails = ({ handleShow, showProduct, product }: any) => {
             color="gray"
             className="font-normal opacity-75"
           >
-            With plenty of talk and listen time, voice-activated Siri access,
-            and an available wireless charging case.
+            {product.description}
           </Typography>
         </CardBody>
         <CardFooter className="pt-0">
@@ -94,6 +100,7 @@ const ProductDetails = ({ handleShow, showProduct, product }: any) => {
               size="sm"
               className="flex items-center gap-3 ml-1"
               fullWidth
+              onClick={handleAddProductToCart(product)}
             >
               <GiShoppingCart className="h-6 w-6" />
               <span>Ajouter</span>

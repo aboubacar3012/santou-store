@@ -13,21 +13,18 @@ import { BsCreditCard2Front } from "react-icons/bs";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { GrSecure } from "react-icons/gr";
 
-const PaiementMethod = () => {
-  const [method, setMethod] = useState<"apple-pay" | "credit-card">(
-    "credit-card"
-  );
+type PaiementMethodProps = {
+  method: string;
+  setMethod: React.Dispatch<React.SetStateAction<"apple-pay" | "credit-card">>;
+};
+const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
   const [saveCreditCard, setSaveCreditCard] = useState(true);
 
   return (
     <div>
       <Card className="bg-gray-50">
         <List>
-          <ListItem
-            disabled
-            onClick={() => setMethod("apple-pay")}
-            className="p-0"
-          >
+          <ListItem onClick={() => setMethod("apple-pay")} className="p-0">
             <label
               htmlFor="vertical-list-react"
               className="flex w-full cursor-pointer items-center px-3 "

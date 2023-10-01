@@ -11,6 +11,7 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 import { Card, Typography } from "@material-tailwind/react";
+import { Select, Option } from "@material-tailwind/react";
 
 const TABLE_HEAD = ["Name", "Job", "Employed", ""];
 
@@ -137,6 +138,23 @@ const OrderComponent = () => {
           </div>
           <div>Commande n° 0001</div>
           <div>Date: {new Date().toLocaleDateString()}</div>
+          <div className="mt-3">
+            <Select
+              className="flex items-center"
+              label="Changer le status de la commande"
+            >
+              <Option className="flex justify-start items-center">
+                EN ATTENTE
+              </Option>
+              <Option className="flex justify-start items-center">
+                EN COURS
+              </Option>
+              <Option className="flex justify-start items-center">LIVRÉ</Option>
+              <Option className="flex justify-start items-center">
+                ANNULÉ
+              </Option>
+            </Select>
+          </div>
         </div>
         <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
           <AccordionHeader className="py-0" onClick={() => handleOpen(1)}>

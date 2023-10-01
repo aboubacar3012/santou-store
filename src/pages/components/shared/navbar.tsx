@@ -1,10 +1,12 @@
 import { GiShoppingCart } from "react-icons/gi";
 import { FaStoreAlt } from "react-icons/fa";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateControl } from "@/redux/features/controlsSlice";
+import { RootState } from "@/redux/store";
 const NavbarComponent = () => {
   const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart);
   return (
     <div
       className="realtive sticky top-0  w-full rounded-b-2xl bg-center cursor-pointer object-cover z-10 shadow-lg"
@@ -34,7 +36,9 @@ const NavbarComponent = () => {
           <div className="flex justify-end items-center relative">
             <div className="inline relative">
               <div className="flex flex-col justify-end items-center">
-                <span className="-mb-3">3</span>
+                <span className="-mb-3 text-red-500 text-xl">
+                  {cart.products.length}
+                </span>
                 <GiShoppingCart className="w-10 h-10" />
               </div>
             </div>
