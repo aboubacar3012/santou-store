@@ -14,14 +14,11 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Head from "next/head";
 
+
 // Create a client
 const queryClient = new QueryClient();
 
-export default function App({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    setSafeArea();
-  }, []);
-
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
@@ -36,4 +33,6 @@ export default function App({ Component, pageProps }: AppProps) {
       </QueryClientProvider>
     </Provider>
   );
-}
+};
+
+export default App;
