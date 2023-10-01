@@ -1,54 +1,35 @@
-import React from "react";
-import {
-  Drawer,
-  Button,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import React, { Dispatch, SetStateAction } from "react";
+import OrderListComponent from "../order/order-list";
 
-const ProductManagement = () => {
-  const [open, setOpen] = React.useState(false);
+import BackButton from "../shared/back-button";
+import { PageToShow } from "@/pages/screens/profile-screen";
+import TabSelector from "../shared/tab-selector";
+import ProductListComponent from "../product/product-list";
+import AddProduct from "./add-product";
 
-  const openDrawer = () => setOpen(true);
-  const closeDrawer = () => setOpen(false);
-
+type ProductManagementProps = {
+  setPageToShow: Dispatch<SetStateAction<PageToShow>>;
+};
+const ProductManagement = ({ setPageToShow }: ProductManagementProps) => {
+  const [mode, setMode] = React.useState<"list" | "add">("list");
   return (
-    <React.Fragment>
-      <Button onClick={openDrawer}>Open Drawer</Button>
-      <Drawer open={open} onClose={closeDrawer} className="p-4">
-        <div className="mb-6 flex items-center justify-between">
-          <Typography variant="h5" color="blue-gray">
-            Material Tailwind
-          </Typography>
-          <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </IconButton>
-        </div>
-        <Typography color="gray" className="mb-8 pr-4 font-normal">
-          Material Tailwind features multiple React and HTML components, all
-          written with Tailwind CSS classes and Material Design guidelines.
-        </Typography>
-        <div className="flex gap-2">
-          <Button size="sm">Get Started</Button>
-          <Button size="sm" variant="outlined">
-            Documentation
-          </Button>
-        </div>
-      </Drawer>
-    </React.Fragment>
+    <div>
+      {/* Back Button */}
+      <BackButton
+        screenName="Profil"
+        onClick={() => setPageToShow("profile" as PageToShow)}
+      />
+      <TabSelector
+        tab1="Liste des produits"
+        tab2="+ Ajouter un produit"
+        handleClickTab1={() => setMode("list")}
+        handleClickTab2={() => setMode("add")}
+      />
+      <div className="p-3 space-y-4 h-screen">
+        {mode === "list" && <ProductListComponent />}
+        {mode === "add" && <AddProduct />}
+      </div>
+    </div>
   );
 };
 

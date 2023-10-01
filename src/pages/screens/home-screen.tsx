@@ -6,6 +6,7 @@ const HomeScreenPage = () => {
   return (
     <div className="p-3 space-y-4 z-0 h-screen">
       <FilterComponent />
+      <h4 className="font-semibold">Nos Produits</h4>
       <ProductListComponent />
       {/* <EventListComponent /> */}
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -13,12 +13,50 @@ import {
 } from "@material-tailwind/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { GiShoppingCart } from "react-icons/gi";
+import { VscTrash } from "react-icons/vsc";
+import { AiOutlineEdit } from "react-icons/ai";
+import { FiSave } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cartSlice";
-import { ProductType, ProductTypeInCart } from "@/types/cart.type";
-const ProductDetails = ({ handleShow, showProduct, product }: any) => {
+import {
+  CategoryType,
+  ProductType,
+  ProductTypeInCart,
+} from "@/types/cart.type";
+
+type ProductDetailsProps = {
+  handleShow: () => void;
+  showProduct: boolean;
+  product: ProductType;
+  isMerchant: boolean;
+};
+
+const ProductDetails = ({
+  handleShow,
+  showProduct,
+  product,
+  isMerchant,
+}: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const [showEdit, setShowEdit] = useState(true);
+
+  // use state for product edit
+  // const [name, setName] = useState<string | null>(null);
+  // const [price, setPrice] = useState<number | null>(null);
+  // const [description, setDescription] = useState<string | null>(null);
+  // const [category, setCategory] = useState<CategoryType[] | null>(null);
+  // const [images, setImages] = useState<string[] | null>(null);
+
+  // useEffect(() => {
+  //   if (product) {
+  //     setName(product.name);
+  //     setPrice(product.price);
+  //     setDescription(product.description);
+  //     setCategory(product.category);
+  //     setImages(product.images);
+  //   }
+  // }, [product]);
 
   const handleAddProductToCart = (product: ProductType) => () => {
     const productInCart: ProductTypeInCart = { ...product, quantity };
@@ -26,7 +64,94 @@ const ProductDetails = ({ handleShow, showProduct, product }: any) => {
     handleShow();
   };
 
-  if (!product) return <></>;
+  if (!product) return <p>Loading</p>;
+
+  const clientFooter = (
+    <div className=" flex w-full justify-around items-center ">
+      <div className="flex flex-row h-10 w-28  rounded-lg relative bg-transparent ">
+        <button
+          onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
+          className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"
+        >
+          <span className="m-auto text-2xl font-thin">−</span>
+        </button>
+        <input
+          type="number"
+          className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
+          name="custom-input-number"
+          value={quantity}
+        />
+        <button
+          onClick={() => setQuantity(quantity + 1)}
+          className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"
+        >
+          <span className="m-auto text-2xl font-thin">+</span>
+        </button>
+      </div>
+
+      <Button
+        size="sm"
+        className="flex items-center gap-3 ml-1"
+        fullWidth
+        onClick={handleAddProductToCart(product)}
+      >
+        <GiShoppingCart className="h-6 w-6" />
+        <span>Ajouter</span>
+      </Button>
+    </div>
+  );
+
+  const merchantFooter = (
+    <div className=" flex w-full justify-around items-center ">
+      {showEdit ? (
+        <Button
+          color="green"
+          size="sm"
+          className="flex items-center gap-3 ml-1"
+          fullWidth
+          onClick={() => {
+            alert("Produit modifié");
+            setShowEdit(false);
+          }}
+        >
+          <FiSave className="h-6 w-6" />
+          <span>Enregistrer</span>
+        </Button>
+      ) : (
+        <Button
+          color="light-blue"
+          size="sm"
+          className="flex items-center gap-3 ml-1"
+          fullWidth
+          onClick={() => {
+            if (window.confirm("Voulez-vous vraiment modifier ce produit ?")) {
+              setShowEdit(true);
+            }
+          }}
+        >
+          <AiOutlineEdit className="h-6 w-6" />
+          <span>Modifier</span>
+        </Button>
+      )}
+
+      {!showEdit && (
+        <Button
+          color="red"
+          size="sm"
+          className="flex items-center gap-3 ml-1"
+          fullWidth
+          onClick={() => {
+            if (window.confirm("Voulez-vous vraiment supprimer ce produit ?"))
+              alert("Produit supprimé");
+          }}
+        >
+          <VscTrash className="h-6 w-6" />
+          <span>Supprimer</span>
+        </Button>
+      )}
+    </div>
+  );
+
   return (
     <Dialog
       open={showProduct}
@@ -38,7 +163,7 @@ const ProductDetails = ({ handleShow, showProduct, product }: any) => {
       className=""
     >
       <DialogHeader className="justify-between">
-        {product?.name}
+        {product.name}
         <IconButton
           color="blue-gray"
           size="sm"
@@ -57,14 +182,22 @@ const ProductDetails = ({ handleShow, showProduct, product }: any) => {
           />
         </CardHeader>
         <CardBody>
-          <div className="mb-2 flex items-center justify-between">
+          <div className=" flex items-center justify-between">
             <Typography color="blue-gray" className="font-medium">
               {product.name}
             </Typography>
+
             <Typography color="blue-gray" className="font-medium">
               {product.price} €
             </Typography>
           </div>
+          <Typography
+            variant="small"
+            color="blue-gray"
+            className="font-normal mb-2"
+          >
+            {product.category.map((cat) => cat.name + ", ")}
+          </Typography>
           <Typography
             variant="small"
             color="gray"
@@ -74,38 +207,7 @@ const ProductDetails = ({ handleShow, showProduct, product }: any) => {
           </Typography>
         </CardBody>
         <CardFooter className="pt-0">
-          <div className=" flex w-full justify-around items-center ">
-            <div className="flex flex-row h-10 w-28  rounded-lg relative bg-transparent ">
-              <button
-                onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
-                className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"
-              >
-                <span className="m-auto text-2xl font-thin">−</span>
-              </button>
-              <input
-                type="number"
-                className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
-                name="custom-input-number"
-                value={quantity}
-              />
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"
-              >
-                <span className="m-auto text-2xl font-thin">+</span>
-              </button>
-            </div>
-
-            <Button
-              size="sm"
-              className="flex items-center gap-3 ml-1"
-              fullWidth
-              onClick={handleAddProductToCart(product)}
-            >
-              <GiShoppingCart className="h-6 w-6" />
-              <span>Ajouter</span>
-            </Button>
-          </div>
+          {isMerchant ? merchantFooter : clientFooter}
         </CardFooter>
       </DialogBody>
     </Dialog>

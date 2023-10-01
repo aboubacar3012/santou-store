@@ -12,6 +12,8 @@ import {
 } from "@material-tailwind/react";
 import { Card, Typography } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
+import UserDetails from "../profile/user-details";
+import { user } from "../../screens/profile-screen";
 
 const TABLE_HEAD = ["Name", "Job", "Employed", ""];
 
@@ -64,11 +66,25 @@ function Icon({ id, open }: { id: number; open: number }) {
   );
 }
 
+const isMerchantUser = false;
+
 const OrderComponent = () => {
   const [step, setStep] = useState(1);
-  const [open, setOpen] = useState(0);
+  const [openProductAccordion, setOpenProductAccordion] = useState(0);
+  const [openUserDetailsAccordion, setOpenUserDetailsAccordion] = useState(0);
+  const [openMerchantDetailsAccordion, setOpenMerchantDetailsAccordion] =
+    useState(0);
 
-  const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
+  const handleOpenProductAccordion = (value: number) =>
+    setOpenProductAccordion(openProductAccordion === value ? 0 : value);
+
+  const handleOpenUserDetailsAccordion = (value: number) =>
+    setOpenUserDetailsAccordion(openUserDetailsAccordion === value ? 0 : value);
+
+  const handleOpenMerchantDetailsAccordion = (value: number) =>
+    setOpenMerchantDetailsAccordion(
+      openMerchantDetailsAccordion === value ? 0 : value
+    );
 
   return (
     <div>
@@ -78,7 +94,6 @@ const OrderComponent = () => {
             className={`flex items-center ${
               step === 1 && "text-blue-600 dark:text-blue-500"
             }`}
-            onClick={() => setStep(1)}
           >
             <GiSandsOfTime
               className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
@@ -92,7 +107,6 @@ const OrderComponent = () => {
             className={`flex items-center ${
               step === 2 && "text-blue-600 dark:text-blue-500"
             }`}
-            onClick={() => setStep(2)}
           >
             <TbTruckDelivery
               className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
@@ -106,7 +120,6 @@ const OrderComponent = () => {
             className={`flex items-center ${
               step === 3 && "text-blue-600 dark:text-blue-500"
             }`}
-            onClick={() => setStep(3)}
           >
             <MdDoneAll
               className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
@@ -138,26 +151,74 @@ const OrderComponent = () => {
           </div>
           <div>Commande n° 0001</div>
           <div>Date: {new Date().toLocaleDateString()}</div>
-          <div className="mt-3">
-            <Select
-              className="flex items-center"
-              label="Changer le status de la commande"
-            >
-              <Option className="flex justify-start items-center">
-                EN ATTENTE
-              </Option>
-              <Option className="flex justify-start items-center">
-                EN COURS
-              </Option>
-              <Option className="flex justify-start items-center">LIVRÉ</Option>
-              <Option className="flex justify-start items-center">
-                ANNULÉ
-              </Option>
-            </Select>
-          </div>
+
+          {isMerchantUser && (
+            <div className="mt-3">
+              <Select
+                className="flex items-center"
+                label="Changer le status de la commande"
+              >
+                <Option className="flex justify-start items-center">
+                  EN ATTENTE
+                </Option>
+                <Option className="flex justify-start items-center">
+                  EN COURS
+                </Option>
+                <Option className="flex justify-start items-center">
+                  LIVRÉ
+                </Option>
+                <Option className="flex justify-start items-center">
+                  ANNULÉ
+                </Option>
+              </Select>
+            </div>
+          )}
         </div>
-        <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
-          <AccordionHeader className="py-0" onClick={() => handleOpen(1)}>
+        {/* Client Details Accordion */}
+        {isMerchantUser && (
+          <Accordion
+            open={openUserDetailsAccordion === 1}
+            icon={<Icon id={1} open={openUserDetailsAccordion} />}
+          >
+            <AccordionHeader
+              className="py-0"
+              onClick={() => handleOpenUserDetailsAccordion(1)}
+            >
+              Informations Client
+            </AccordionHeader>
+            <AccordionBody className="py-0">
+              <UserDetails user={user} />
+            </AccordionBody>
+          </Accordion>
+        )}
+
+        {/* Merchant Details Accordion */}
+        {!isMerchantUser && (
+          <Accordion
+            open={openMerchantDetailsAccordion === 1}
+            icon={<Icon id={1} open={openMerchantDetailsAccordion} />}
+          >
+            <AccordionHeader
+              className="py-0"
+              onClick={() => handleOpenMerchantDetailsAccordion(1)}
+            >
+              Informations Vendeur
+            </AccordionHeader>
+            <AccordionBody className="py-0">
+              <UserDetails user={user} />
+            </AccordionBody>
+          </Accordion>
+        )}
+
+        {/* Products Accordion */}
+        <Accordion
+          open={openProductAccordion === 1}
+          icon={<Icon id={1} open={openProductAccordion} />}
+        >
+          <AccordionHeader
+            className="py-0"
+            onClick={() => handleOpenProductAccordion(1)}
+          >
             Produits
           </AccordionHeader>
           <AccordionBody className="py-0">
