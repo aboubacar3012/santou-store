@@ -1,4 +1,5 @@
-import { CartType, ProductType, ProductTypeInCart } from "@/types/cart.type";
+import { CartType, ProductTypeInCart } from "@/types/cart.type";
+import { ProductType } from "@/types/product.type";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 

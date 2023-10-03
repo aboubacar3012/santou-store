@@ -18,8 +18,8 @@
 */
 
 body {
-  touch-action: manipulation; /* Désactive le zoom tactile sur certains navigateurs mobiles */
-  user-select: none; /* Désactive la sélection de texte pour éviter le zoom tactile */
+  /* touch-action: manipulation; Désactive le zoom tactile sur certains navigateurs mobiles */
+  /* user-select: none; Désactive la sélection de texte pour éviter le zoom tactile */
 }
 
 ::-webkit-scrollbar {

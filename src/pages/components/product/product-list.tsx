@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductComponent from "./product";
 import { generate50Products } from "@/docs/generateProduct";
-import { ProductType } from "@/types/cart.type";
 
 const productList = generate50Products();
 const ProductListComponent = () => {

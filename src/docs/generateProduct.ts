@@ -1,8 +1,5 @@
-import {
-  CategoryType,
-  ProductStatusEnum,
-  ProductType,
-} from "@/types/cart.type";
+import { CategoryType } from "@/types/category.type";
+import { ProductStatusEnum, ProductType } from "@/types/product.type";
 
 const images = [
   "https://www.junglescout.com/wp-content/uploads/2021/01/product-photo-water-bottle-hero.png",
@@ -23,21 +20,21 @@ const generateProduct = (productId: number): ProductType => {
     {
       id: "cat123",
       name: "Category 1",
-      products: [],
+      description: "Category 1 description",
       createdAt: "",
       updatedAt: "",
     },
     {
       id: "cat456",
       name: "Category 2",
-      products: [],
+      description: "Category 2 description",
       createdAt: "",
       updatedAt: "",
     },
     {
       id: "cat789",
       name: "Category 3",
-      products: [],
+      description: "Category 3 description",
       createdAt: "",
       updatedAt: "",
     },

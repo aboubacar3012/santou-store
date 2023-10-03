@@ -18,11 +18,8 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { FiSave } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cartSlice";
-import {
-  CategoryType,
-  ProductType,
-  ProductTypeInCart,
-} from "@/types/cart.type";
+import { ProductTypeInCart } from "@/types/cart.type";
+import { ProductType } from "@/types/product.type";
 
 type ProductDetailsProps = {
   handleShow: () => void;

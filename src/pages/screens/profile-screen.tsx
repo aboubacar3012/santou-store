@@ -1,4 +1,3 @@
-import { GenderEnum, RoleEnum, UserType } from "@/types/cart.type";
 import { Button, Chip } from "@material-tailwind/react";
 import { BsArrowRight } from "react-icons/bs";
 import UserDetails from "../components/profile/user-details";
@@ -7,6 +6,7 @@ import MerchantOrders from "../components/profile/merchant-orders";
 import ProductManagement from "../components/profile/product-management";
 import { logout } from "@/redux/features/authSlice";
 import { useDispatch } from "react-redux";
+import { GenderEnum, RoleEnum, UserType } from "@/types/user.type";
 
 export const user: UserType = {
   id: "12345",
@@ -19,10 +19,16 @@ export const user: UserType = {
   avatar: "path/to/avatar.jpg",
   role: RoleEnum.USER,
   isActive: true,
-  country: "USA",
-  city: "New York",
-  street: "1234 Elm St",
-  zipCode: "10001",
+  address: {
+    street: "1234 Main St",
+    city: "City",
+    number: "1234",
+    id: "12345",
+    zipCode: "12345",
+    country: "Country",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };

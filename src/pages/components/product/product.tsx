@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import ProductDetails from "./product-details";
-import { ProductType } from "@/types/cart.type";
+import { ProductType } from "@/types/product.type";
 
 interface ProductProps {
   product: ProductType;

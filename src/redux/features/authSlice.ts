@@ -1,4 +1,4 @@
-import { GenderEnum, RoleEnum, UserType } from "@/types/cart.type";
+import { GenderEnum, RoleEnum, UserType } from "@/types/user.type";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -19,10 +19,17 @@ const initialState: Auth = {
     avatar: "https://example.com/avatar1.jpg",
     role: RoleEnum.USER,
     isActive: true,
-    country: "USA",
-    city: "Anytown",
-    zipCode: "12345",
-    street: "123 Main St",
+    address: {
+      id: "65160bd16f17038b4e5d65f4",
+      number: "123",
+      street: "123 Main Street",
+      city: "New York",
+      zipCode: "10001",
+      country: "USA",
+      complement: "Apt 123",
+      createdAt: "2023-09-28T23:19:38.790Z",
+      updatedAt: "2023-09-28T23:19:38.790Z",
+    },
     createdAt: "2023-09-28T23:19:38.790Z",
     updatedAt: "2023-09-28T23:19:38.790Z",
     id: "65160bd16f17038b4e5d65f4",

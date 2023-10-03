@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { login } from "@/redux/features/authSlice";
 import { Plugins } from "@capacitor/core";
 import { setSafeArea } from "@/utils/fixStatusBarHeight";
+import { GenderEnum, RoleEnum } from "@/types/user.type";
+
 const { Keyboard } = Plugins;
 
 interface RegistrationProps {
@@ -57,8 +59,57 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
     }
   );
 
+  const handleValidInfo = () => {
+    if (!email || !password) {
+      alert("Veuillez remplir tous les champs");
+      return false;
+    }
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      alert("Adresse email invalide");
+      return false;
+    }
+
+    if (password.length < 8) {
+      alert("Le mot de passe doit contenir au moins 8 caractères");
+      return false;
+    }
+    return true;
+  };
+
   const handleLogin = () => {
-    mutation.mutate({ email, password });
+    // mutation.mutate({ email, password });
+    if (!handleValidInfo()) return;
+    dispatch(
+      login({
+        isAuthenticated: true,
+        user: {
+          firstName: "Aboubacar",
+          lastName: "Doe",
+          email: "abou.doe@example.com",
+          dateOfBirth: "1985-05-20",
+          phone: "123-456789",
+          gender: GenderEnum.UNKNOWN,
+          avatar: "https://example.com/avatar1.jpg",
+          role: RoleEnum.USER,
+          isActive: true,
+          address: {
+            street: "Rue de la paix",
+            city: "Paris",
+            zipCode: "75000",
+            country: "France",
+            complement: "Complément d'adresse",
+            number: "12",
+            createdAt: "2023-09-28T23:19:38.790Z",
+            updatedAt: "2023-09-28T23:19:38.790Z",
+            id: "65160bd16f17038b4e5d65f4",
+          },
+          createdAt: "2023-09-28T23:19:38.790Z",
+          updatedAt: "2023-09-28T23:19:38.790Z",
+          id: "65160bd16f17038b4e5d65f4",
+        },
+      })
+    );
   };
 
   mutation.isLoading && <div>Loading...</div>;

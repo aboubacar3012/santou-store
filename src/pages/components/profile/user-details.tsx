@@ -1,4 +1,4 @@
-import { UserType } from "@/types/cart.type";
+import { UserType } from "@/types/user.type";
 import { Chip } from "@material-tailwind/react";
 import React from "react";
 type UserDetailsProps = {
@@ -34,19 +34,19 @@ const UserDetails = ({ user }: UserDetailsProps) => {
       {/* Address */}
       <p className="font-light text-gray-600 ">
         <span className="text-gray-900">Adresse: </span>
-        {user.street}
+        {user.address.street}
       </p>
       <p className="font-light text-gray-600 ">
         <span className="text-gray-900">Ville: </span>
-        {user.city}
+        {user.address.city}
       </p>
       <p className="font-light text-gray-600 ">
         <span className="text-gray-900">Pays: </span>
-        {user.country}
+        {user.address.country}
       </p>
       <p className="font-light text-gray-600 ">
         <span className="text-gray-900">Code postal: </span>
-        {user.zipCode}
+        {user.address.zipCode}
       </p>
     </div>
   );
