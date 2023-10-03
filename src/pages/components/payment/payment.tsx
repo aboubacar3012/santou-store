@@ -37,7 +37,7 @@ const Payement = () => {
   };
 
   return (
-    <div className="App">
+    <div className="p-2">
       {clientSecret && (
         <Elements
           options={{ ...options, appearance: { theme: "stripe" } }}

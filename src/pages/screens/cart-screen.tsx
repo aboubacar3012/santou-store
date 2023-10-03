@@ -18,6 +18,7 @@ import PaiementMethod from "../components/cart/paiement-method";
 import { ProductTypeInCart } from "@/types/cart.type";
 import { removeFromCart } from "@/redux/features/cartSlice";
 import { RootState } from "@/redux/store";
+import Payement from "../components/payment/payment";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
@@ -194,7 +195,8 @@ const CartScreen = () => {
       </div>
     );
 
-  if (step === 2) return <CreditCardForm />;
+  // if (step === 2) return <CreditCardForm />;
+  if (step === 2) return <Payement />;
 };
 
 export default CartScreen;
