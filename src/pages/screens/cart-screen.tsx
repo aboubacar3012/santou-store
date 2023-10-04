@@ -77,7 +77,9 @@ const CartScreen = () => {
                             <h3>
                               <a href="#">{product.name}</a>
                             </h3>
-                            <p className="ml-4">{product.price}€</p>
+                            <p className="ml-4">
+                              {product.price * product.quantity}€
+                            </p>
                           </div>
                           <p className=" text-sm text-gray-500">
                             {product.category.map((cat) => cat.name).join(", ")}
@@ -146,17 +148,18 @@ const CartScreen = () => {
           </div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Sous-total</p>
-            <p>62.00€</p>
+            <p>{cart.amount.toFixed(2)}€</p>
           </div>
           <hr className="my-1" />
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Frais de livraisons</p>
-            <p>0€</p>
+            <p>Offert</p>
+            {/* <p>0€</p> */}
           </div>
           <hr className="my-1" />
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Total</p>
-            <p>62.00€</p>
+            <p>{cart.amount.toFixed(2)}€</p>
           </div>
 
           {/* <PaiementMethod method={method} setMethod={setMethod} /> */}
@@ -205,7 +208,7 @@ const CartScreen = () => {
     );
 
   // if (step === 2) return <CreditCardForm />;
-  if (step === 2) return <Payement />;
+  if (step === 2) return <Payement cart={cart} />;
 };
 
 export default CartScreen;

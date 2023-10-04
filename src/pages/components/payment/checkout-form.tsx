@@ -7,6 +7,8 @@ import {
 } from "@stripe/react-stripe-js";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import NotificationMessage from "../shared/notification-message";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -15,6 +17,7 @@ export default function CheckoutForm() {
   const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState<string | undefined | null>();
   const [isLoading, setIsLoading] = React.useState(false);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     if (!stripe) {
@@ -56,18 +59,18 @@ export default function CheckoutForm() {
       confirmParams: {
         // add order details for the PaymentIntent
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/payment-success`,
+        return_url: `${window.location.origin}/payment-validation-screen`,
         payment_method_data: {
           billing_details: {
-            email: "abou@diallo.com",
-            phone: "+33600000000",
-            name: "Jenny Rosen",
+            email: user.email,
+            phone: user.phone,
+            name: user.firstName + " " + user.lastName,
             address: {
-              line1: "510 Townsend St",
-              postal_code: "98140",
-              city: "San Francisco",
-              state: "CA",
-              country: "US",
+              line1: user.address.number + " " + user.address.street,
+              postal_code: user.address.zipCode,
+              city: user.address.city,
+              state: user.address.city,
+              country: user.address.country,
             },
           },
         },

@@ -1,20 +1,22 @@
+import { CartType } from "@/types/cart.type";
 import { NextApiRequest, NextApiResponse } from "next";
 
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
-const calculateOrderAmount = (items: any) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1500;
+const calculateCartAmount = (cart: CartType) => {
+  let amount = 0;
+  cart.products.map((product) => {
+    amount += product.price * product.quantity;
+  });
+  return amount * 100;
 };
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { items } = req.body;
+  const { cart } = req.body;
 
   try {
     // const paymentMethodOrder =
@@ -23,7 +25,7 @@ export default async function handler(
     //     : ["card"];
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: calculateOrderAmount(items),
+      amount: calculateCartAmount(cart),
       currency: "eur",
       automatic_payment_methods: {
         enabled: true,

@@ -419,7 +419,7 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
 
   if (step === 0)
     return (
-      <div className="relative flex w-96 mt-32  flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+      <div className="relative flex w-96 mt-32 mb-2 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
         <div className="relative mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-border text-white shadow-lg shadow-blue-500/40">
           <h3 className="block font-sans text-3xl font-semibold leading-snug tracking-normal text-white antialiased">
             Créer un compte

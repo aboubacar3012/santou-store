@@ -1,13 +1,19 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import NavbarComponent from "./components/shared/navbar";
 
-const PaiementSucess = () => {
+const PaymentValidationScreen = () => {
   const router = useRouter();
-  const [paied, setPaied] = useState(false);
+  const [paied, setPaied] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string | undefined>("");
+  const [pageStatus, setPageStatus] = useState<"loading" | "paied" | "unpaied">(
+    "loading"
+  );
+
   const checkPaymentStatus = async (payementInt: any) => {
+    setPageStatus("loading");
     try {
       const response = await fetch(
         `https://api.stripe.com/v1/payment_intents/${payementInt}`,
@@ -23,43 +29,47 @@ const PaiementSucess = () => {
 
       if (paymentIntent.status === "succeeded") {
         setMessage("Le paiement a réussi.");
-        setPaied(true);
+        setPageStatus("paied");
       } else {
         setMessage("Le paiement a échoué.");
-        setPaied(false);
+        setPageStatus("unpaied");
       }
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération du statut du paiement:",
-        error
-      );
       setMessage(
         "Une erreur est survenue lors de la récupération du statut du paiement."
       );
-      setPaied(false);
+      setPageStatus("unpaied");
     }
   };
 
   useEffect(() => {
-    setIsLoading(true);
     if (router.isReady) {
       const payementInt = router.query.payment_intent;
       const payementIntClientSecret = router.query.payment_intent_client_secret;
       const redirectStatus = router.query.redirect_status;
-
-      console.log({ payementInt, payementIntClientSecret, redirectStatus });
       checkPaymentStatus(payementInt).then(() => null);
     }
-    setIsLoading(false);
   }, [router, paied]);
 
-  if (isLoading) return <div>Loading...</div>;
+  // Automatically redirect to the payment page in 10 seconds
+  useEffect(() => {
+    if (pageStatus === "loading") {
+      setTimeout(() => {
+        router.push("/");
+      }, 10000);
+    }
+  }, []);
 
-  if (paied)
-    return (
-      <div>
-        <div className="bg-gray-100 h-screen">
-          <div className="bg-white p-6  md:mx-auto">
+  const containerStyle =
+    "fixed w-full  sm:w-6/12  overflow-y-scroll rounded-1xl  z-10";
+
+  return (
+    <div className={`${containerStyle}`}>
+      <NavbarComponent />
+      {pageStatus === "loading" && <div>Loading...</div>}
+      {pageStatus === "paied" && (
+        <div className="bg-white  mt-12 mx-2 rounded-3xl border">
+          <div className="bg-gray-100 rounded-3xl p-6  md:mx-auto">
             <svg
               viewBox="0 0 24 24"
               className="text-green-600 w-16 h-16 mx-auto my-6"
@@ -74,28 +84,24 @@ const PaiementSucess = () => {
                 {message}
               </h3>
               <p className="text-gray-600 my-2">
-                Thank you for completing your secure online payment.
+                Merci d&apos;avoir effectué votre paiement en ligne sécurisé.
               </p>
-              <p> Have a great day!</p>
+              <p> Nous avons hâte de vous retrouver très bientôt !</p>
               <div className="py-10 text-center">
                 <Link
                   href="/"
                   className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
                 >
-                  GO BACK
+                  Retourné à l&apos;accueil
                 </Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
-
-  if (!paied)
-    return (
-      <div>
-        <div className="bg-gray-100 h-screen">
-          <div className="bg-white p-6  md:mx-auto">
+      )}
+      {pageStatus === "unpaied" && (
+        <div className="bg-white  mt-12 mx-2 rounded-3xl border">
+          <div className="bg-gray-100 rounded-3xl p-6  md:mx-auto">
             <svg
               viewBox="0 0 24 24"
               className="text-red-600 w-16 h-16 mx-auto my-6"
@@ -110,22 +116,28 @@ const PaiementSucess = () => {
                 {message}
               </h3>
               <p className="text-gray-600 my-2">
-                Thank you for completing your secure online payment.
+                Nous regrettons de vous informer que votre paiement en ligne
+                n&apos;a pas été effectué avec succès. Veuillez vérifier les
+                détails de votre paiement et réessayer. Si vous rencontrez
+                toujours des difficultés, n&apos;hésitez pas à nous contacter
+                pour obtenir de l&apos;aide. Nous sommes là pour vous
+                accompagner.
               </p>
-              <p> Have a great day!</p>
+              <p> Merci pour votre compréhension.</p>
               <div className="py-10 text-center">
                 <Link
                   href="/"
                   className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
                 >
-                  GO BACK
+                  Retourné à l&apos;accueil
                 </Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      )}
+    </div>
+  );
 };
 
-export default PaiementSucess;
+export default PaymentValidationScreen;

@@ -15,12 +15,13 @@ const ProductListComponent = () => {
     refetchOnWindowFocus: false, // ne pas rafraîchir la requête quand on focus la fenêtre
     retry: false, // ne pas réessayer la requête en cas d'erreur
     staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes
-    onSuccess: (data) => {
-      // callback exécuté en cas de succès
-      setProducts(data.products);
-      console.log("data", data);
-    }, // callback exécuté en cas de succès
   });
+
+  useEffect(() => {
+    if (data) {
+      setProducts(data.products);
+    }
+  }, [data]);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Erreur lors du chargement des produits</div>;
