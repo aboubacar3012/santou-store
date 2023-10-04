@@ -159,9 +159,18 @@ const CartScreen = () => {
             <p>62.00€</p>
           </div>
 
-          <PaiementMethod method={method} setMethod={setMethod} />
+          {/* <PaiementMethod method={method} setMethod={setMethod} /> */}
+          <div onClick={() => setStep(2)} className="mt-2">
+            <a
+              href="#"
+              className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            >
+              <BsCreditCard2Front className="w-8 h-8" />
+              <span className="px-2">Payer ma commande</span>
+            </a>
+          </div>
 
-          {method === "credit-card" && (
+          {/* {method === "credit-card" && (
             <div onClick={() => setStep(2)} className="mt-2">
               <a
                 href="#"
@@ -189,7 +198,7 @@ const CartScreen = () => {
                 <span className="px-2">Payer ma commande</span>
               </a>
             </div>
-          )}
+          )} */}
           <ContinueShoppingBtn />
         </div>
       </div>
