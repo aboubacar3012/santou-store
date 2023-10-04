@@ -55,7 +55,7 @@ export default function Home() {
       {menu === "orders" && <OrdersScreenPage />}
       {menu === "profile" && <ProfileScreenPage />}
       {menu === "favorites" && <FavoritesScreenPage />}
-      {controls.showCart && <CartScreen />}
+
       <BottomTabBarComponent menu={menu} setMenu={setMenu} />
     </div>
   );

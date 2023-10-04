@@ -8,7 +8,7 @@ interface ProductProps {
   product: ProductType;
 }
 
-const isMerchant = true;
+const isMerchant = false;
 
 const ProductComponent = ({ product }: ProductProps) => {
   const [showProduct, setShowProduct] = useState(false);
@@ -28,7 +28,7 @@ const ProductComponent = ({ product }: ProductProps) => {
         </div>
         <div className="p-1">
           <div className="flex flex-col items-center justify-between">
-            <h5 className="block font-sans text-xl font-medium leading-snug tracking-normal text-blue-gray-900 antialiased">
+            <h5 className="block font-sans text-md font-medium leading-snug tracking-normal text-blue-gray-900 antialiased">
               {product.name}
             </h5>
             <p className="flex items-center gap-1.5 font-sans text-base font-normal leading-relaxed text-blue-gray-900 antialiased">
