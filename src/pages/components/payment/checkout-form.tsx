@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   PaymentElement,
   LinkAuthenticationElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { RiSecurePaymentFill } from "react-icons/ri";
+import NotificationMessage from "../shared/notification-message";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
   const [email, setEmail] = React.useState("");
-  const [message, setMessage] = React.useState<string | undefined>("");
+  const [message, setMessage] = React.useState<string | undefined | null>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!stripe) {
       return;
     }
@@ -27,6 +29,16 @@ export default function CheckoutForm() {
       return;
     }
   }, [stripe]);
+
+  // hide div with class="p-Grid p-BillingAddressForm u-mt-grid"
+  useEffect(() => {
+    const billingAddressForm = document.querySelector(
+      ".p-Grid.p-BillingAddressForm.u-mt-grid"
+    );
+    if (billingAddressForm) {
+      billingAddressForm.classList.add("hidden");
+    }
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -83,13 +95,31 @@ export default function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
+      <button disabled={isLoading || !stripe || !elements} id="submit"></button>
+      <button
+        className="mt-2 flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm"
+        disabled={isLoading || !stripe || !elements}
+        id="submit"
+      >
+        <a href="#" className="flex items-center justify-center  ">
+          <span id="button-text">
+            {isLoading ? (
+              <div className="spinner px-2" id="spinner"></div>
+            ) : (
+              "Payer ma commande"
+            )}
+          </span>
+          <RiSecurePaymentFill className="w-8 h-8 px-2" />
+        </a>
       </button>
       {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <NotificationMessage
+          color="light-blue"
+          message={message}
+          setErrorMessage={setMessage}
+        />
+      )}
     </form>
   );
 }

@@ -23,7 +23,9 @@ type color =
 
 interface NotificationProps {
   message: string;
-  setErrorMessage: Dispatch<SetStateAction<null>>;
+  setErrorMessage: React.Dispatch<
+    React.SetStateAction<string | null | undefined>
+  >;
   color: color;
 }
 
@@ -43,7 +45,7 @@ const NotificationMessage = ({
   if (!message) return null;
 
   return (
-    <div className="flex justify-center items-center px-2">
+    <div id="payment-message" className="flex justify-center items-center py-2">
       <Alert color={color}>{message}</Alert>
     </div>
   );
