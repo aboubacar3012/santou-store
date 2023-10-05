@@ -91,7 +91,7 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
           phone: "123-456789",
           gender: GenderEnum.UNKNOWN,
           avatar: "https://example.com/avatar1.jpg",
-          role: RoleEnum.ADMIN,
+          role: RoleEnum.USER,
           isActive: true,
           address: {
             street: "Rue de la paix",
