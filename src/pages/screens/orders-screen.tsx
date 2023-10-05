@@ -11,7 +11,7 @@ const OrdersScreenPage = () => {
         handleClickTab1={() => {}}
         handleClickTab2={() => {}}
       />
-      <OrderListComponent />
+      <OrderListComponent isAdmin={false} />
       {/* <UnavailableComponent /> */}
     </>
   );

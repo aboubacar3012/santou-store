@@ -1,54 +1,48 @@
-import { useState } from "react";
-import { AiFillAccountBook } from "react-icons/ai";
-import { FiChevronsRight } from "react-icons/fi";
-import { GiSandsOfTime } from "react-icons/gi";
-import { TbTruckDelivery } from "react-icons/tb";
-import { MdDoneAll } from "react-icons/md";
-import { FcCancel } from "react-icons/fc";
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
-import { Card, Typography } from "@material-tailwind/react";
+import { useEffect, useState } from "react";
+
 import OrderComponent from "./order";
+import { getOrders } from "@/services/orders";
+import { OrderType } from "@/types/order.type";
 
-function Icon({ id, open }: { id: number; open: number }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      className={`${
-        id === open ? "rotate-180" : ""
-      } h-5 w-5 transition-transform`}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-      />
-    </svg>
-  );
-}
+type OrderListComponentProps = {
+  isAdmin: boolean;
+};
+const OrderListComponent = ({ isAdmin }: OrderListComponentProps) => {
+  const [orders, setOrders] = useState([]); // TODO: replace with [OrderType]
 
-const OrderListComponent = () => {
-  const [step, setStep] = useState(1);
-  const [open, setOpen] = useState(0);
+  const fetchOrders = async () => {
+    try {
+      const response = await getOrders();
+      if (response.success) {
+        setOrders(response.orders);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
-  const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
+  if (orders && orders.length === 0)
+    return (
+      <div className="flex items-center justify-center h-[38rem]">
+        <div className="flex flex-col items-center justify-center space-y-2">
+          <div className="flex items-center justify-center space-x-2">
+            <p className="text-2xl font-bold">Aucune commande</p>
+          </div>
+        </div>
+      </div>
+    );
 
   return (
     <div className="p-3 space-y-4 z-0 h-[38rem] overflow-y-scroll scroll-b">
       <div className="grid grid-cols-1 space-y-2  ">
-        <OrderComponent />
-        <OrderComponent />
-        <OrderComponent />
-        <OrderComponent />
-        <OrderComponent />
-        <OrderComponent />
+        {orders &&
+          orders.length > 0 &&
+          orders.map((order: OrderType) => (
+            <OrderComponent key={order.id} order={order} isAdmin={isAdmin} />
+          ))}
       </div>
     </div>
   );

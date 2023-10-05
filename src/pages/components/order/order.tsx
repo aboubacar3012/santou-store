@@ -12,38 +12,9 @@ import {
 } from "@material-tailwind/react";
 import { Card, Typography } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
-import UserDetails from "../profile/user-details";
-import { user } from "../../screens/profile-screen";
-
-const TABLE_HEAD = ["Name", "Job", "Employed", ""];
-
-const TABLE_ROWS = [
-  {
-    name: "John Michael",
-    job: "Manager",
-    date: "23/04/18",
-  },
-  {
-    name: "Alexa Liras",
-    job: "Developer",
-    date: "23/04/18",
-  },
-  {
-    name: "Laurent Perrier",
-    job: "Executive",
-    date: "19/09/17",
-  },
-  {
-    name: "Michael Levi",
-    job: "Developer",
-    date: "24/12/08",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-];
+import { OrderType } from "@/types/order.type";
+import { formatDate } from "@/utils/format-date";
+import { updateOrderById } from "@/services/orders";
 
 function Icon({ id, open }: { id: number; open: number }) {
   return (
@@ -66,10 +37,18 @@ function Icon({ id, open }: { id: number; open: number }) {
   );
 }
 
-const isMerchantUser = false;
+const isMerchantUser = true;
 
-const OrderComponent = () => {
-  const [step, setStep] = useState(1);
+type OrderComponentProps = {
+  order: OrderType;
+  isAdmin?: boolean;
+};
+
+const OrderComponent = ({ order, isAdmin }: OrderComponentProps) => {
+  const [orderStatus, setOrderStatus] = useState<
+    "PENDING" | "SHIPPED" | "DELIVERED" | "CANCELLED"
+  >(order.orderStatus);
+
   const [openProductAccordion, setOpenProductAccordion] = useState(0);
   const [openUserDetailsAccordion, setOpenUserDetailsAccordion] = useState(0);
   const [openMerchantDetailsAccordion, setOpenMerchantDetailsAccordion] =
@@ -86,18 +65,38 @@ const OrderComponent = () => {
       openMerchantDetailsAccordion === value ? 0 : value
     );
 
+  if (!order) return null;
+
+  const TABLE_HEAD = ["Nom du produit", "Prix", "Image"];
+
+  const TABLE_ROWS = order.products.map((product) => {
+    return {
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+    };
+  });
+
+  const handleUpdateOrder = async (id: string, order: any) => {
+    const response = await updateOrderById(id, order);
+    if (response.success) {
+      setOrderStatus(response.order.orderStatus);
+    }
+  };
+
   return (
     <div>
       <div className=" space-y-2 bg-white shadow-md border border-gray-500 rounded-2xl p-2">
-        <ol className="flex items-center w-full p-1 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4">
+        <ol className="flex items-center w-full py-1 space-x-2 text-sm font-sm text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400  dark:bg-gray-800 dark:border-gray-700 ">
           <li
             className={`flex items-center ${
-              step === 1 && "text-blue-600 dark:text-blue-500"
+              orderStatus === "PENDING" && "text-blue-600 dark:text-blue-500"
             }`}
           >
             <GiSandsOfTime
               className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
-                step === 1 && "border-blue-600 dark:border-blue-500"
+                orderStatus === "PENDING" &&
+                "border-blue-600 dark:border-blue-500"
               }  shrink-0 `}
             />
             EN ATTENTE
@@ -105,69 +104,110 @@ const OrderComponent = () => {
           </li>
           <li
             className={`flex items-center ${
-              step === 2 && "text-blue-600 dark:text-blue-500"
+              orderStatus === "SHIPPED" && "text-blue-600 dark:text-blue-500"
             }`}
           >
             <TbTruckDelivery
               className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
-                step === 1 && "border-blue-600 dark:border-blue-500"
+                orderStatus === "SHIPPED" &&
+                "border-blue-600 dark:border-blue-500"
               }  shrink-0 `}
             />
             EN COURS
             <FiChevronsRight className="h-4 w-4" />
           </li>
-          <li
-            className={`flex items-center ${
-              step === 3 && "text-blue-600 dark:text-blue-500"
-            }`}
-          >
-            <MdDoneAll
-              className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
-                step === 1 && "border-blue-600 dark:border-blue-500"
-              }  shrink-0 `}
-            />
-            LIVRÉ
-          </li>
+          {orderStatus !== "CANCELLED" && (
+            <li
+              className={`flex items-center ${
+                orderStatus === "DELIVERED" &&
+                "text-blue-600 dark:text-blue-500"
+              }`}
+            >
+              <MdDoneAll
+                className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
+                  orderStatus === "DELIVERED" &&
+                  "border-blue-600 dark:border-blue-500"
+                }  shrink-0 `}
+              />
+              LIVRÉ
+            </li>
+          )}
 
-          {/* <li
-          className={`flex items-center ${
-            step === 3 && "text-blue-600 dark:text-blue-500"
-          }`}
-          onClick={() => setStep(3)}
-        >
-          <FcCancel
-            className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
-              step === 1 && "border-blue-600 dark:border-blue-500"
-            }  shrink-0 `}
-          />
-          ANNULÉ
-        </li> */}
+          {orderStatus === "CANCELLED" && (
+            <li
+              className={`flex items-center ${
+                orderStatus === "CANCELLED" &&
+                "text-blue-600 dark:text-blue-500"
+              }`}
+            >
+              <FcCancel
+                className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
+                  orderStatus === "CANCELLED" &&
+                  "border-blue-600 dark:border-blue-500"
+                }  shrink-0 `}
+              />
+              ANNULÉ
+            </li>
+          )}
         </ol>
         <hr className="border-gray-500" />
         <div className="flex flex-col">
           <div className="flex justify-between">
             <div>Vendeur: AfriStore</div>
-            <div>Prix TTC: 18.00E</div>
+            <div>Prix TTC: {order.totalAmount.toFixed(2)}€</div>
           </div>
-          <div>Commande n° 0001</div>
-          <div>Date: {new Date().toLocaleDateString()}</div>
+          <div>Commande n°: {order.orderNumber.toLowerCase()}</div>
+          <div>Date: {formatDate(order.orderDate)}</div>
 
-          {isMerchantUser && (
+          {isAdmin && (
             <div className="mt-3">
               <Select
                 className="flex items-center"
                 label="Changer le status de la commande"
+                value={
+                  orderStatus === "PENDING"
+                    ? "EN ATTENTE"
+                    : orderStatus === "SHIPPED"
+                    ? "EN COURS"
+                    : orderStatus === "DELIVERED"
+                    ? "LIVRÉ"
+                    : "ANNULÉ"
+                }
               >
-                <Option className="flex justify-start items-center">
+                <Option
+                  value="PENDING"
+                  className="flex justify-start items-center"
+                  onClick={() =>
+                    handleUpdateOrder(order.id, { orderStatus: "PENDING" })
+                  }
+                >
                   EN ATTENTE
                 </Option>
-                <Option className="flex justify-start items-center">
+                <Option
+                  value="SHIPPED"
+                  className="flex justify-start items-center"
+                  onClick={() =>
+                    handleUpdateOrder(order.id, { orderStatus: "SHIPPED" })
+                  }
+                >
                   EN COURS
                 </Option>
-                <Option className="flex justify-start items-center">
+                <Option
+                  value="DELIVERED"
+                  className="flex justify-start items-center"
+                  onClick={() =>
+                    handleUpdateOrder(order.id, { orderStatus: "DELIVERED" })
+                  }
+                >
                   LIVRÉ
                 </Option>
-                <Option className="flex justify-start items-center">
+                <Option
+                  value="CANCELLED"
+                  className="flex justify-start items-center"
+                  onClick={() =>
+                    handleUpdateOrder(order.id, { orderStatus: "CANCELLED" })
+                  }
+                >
                   ANNULÉ
                 </Option>
               </Select>
@@ -175,7 +215,7 @@ const OrderComponent = () => {
           )}
         </div>
         {/* Client Details Accordion */}
-        {isMerchantUser && (
+        {/* {isMerchantUser && (
           <Accordion
             open={openUserDetailsAccordion === 1}
             icon={<Icon id={1} open={openUserDetailsAccordion} />}
@@ -190,10 +230,10 @@ const OrderComponent = () => {
               <UserDetails user={user} />
             </AccordionBody>
           </Accordion>
-        )}
+        )} */}
 
         {/* Merchant Details Accordion */}
-        {!isMerchantUser && (
+        {/* {!isMerchantUser && (
           <Accordion
             open={openMerchantDetailsAccordion === 1}
             icon={<Icon id={1} open={openMerchantDetailsAccordion} />}
@@ -208,7 +248,7 @@ const OrderComponent = () => {
               <UserDetails user={user} />
             </AccordionBody>
           </Accordion>
-        )}
+        )} */}
 
         {/* Products Accordion */}
         <Accordion
@@ -222,7 +262,7 @@ const OrderComponent = () => {
             Produits
           </AccordionHeader>
           <AccordionBody className="py-0">
-            <Card className="h-full w-full overflow-scroll">
+            <Card className="h-full w-full overflow-scroll mt-2">
               <table className="w-full min-w-max table-auto text-left">
                 <thead>
                   <tr>
@@ -243,7 +283,7 @@ const OrderComponent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {TABLE_ROWS.map(({ name, job, date }, index) => (
+                  {TABLE_ROWS.map(({ name, price, image }, index) => (
                     <tr key={name} className="even:bg-blue-gray-50/50">
                       <td className="p-4">
                         <Typography
@@ -260,17 +300,15 @@ const OrderComponent = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {job}
+                          {price}
                         </Typography>
                       </td>
                       <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {date}
-                        </Typography>
+                        <img
+                          src={image}
+                          alt={name}
+                          className="w-10 h-10 rounded-md"
+                        />
                       </td>
                     </tr>
                   ))}
@@ -285,3 +323,6 @@ const OrderComponent = () => {
 };
 
 export default OrderComponent;
+function updateOrder(order: any) {
+  throw new Error("Function not implemented.");
+}

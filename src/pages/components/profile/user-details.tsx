@@ -9,45 +9,44 @@ const UserDetails = ({ user }: UserDetailsProps) => {
 
   return (
     <div className="mt-10  border-b">
-      {" "}
       <h1 className="text-3xl font-medium text-gray-700 text-center">
         {user.firstName} {user.lastName}
-      </h1>{" "}
+      </h1>
       {/* role */}
-      <p className="text-sm font-light text-gray-600 text-center">
+      <div className="text-sm font-light text-gray-600 text-center">
         <Chip color="cyan" value={`Status: ${user.role}`} />
-      </p>
-      <p className="font-light text-gray-600 ">
+      </div>
+      <div className="font-light text-gray-600 ">
         <span className="text-gray-900">E-mail:</span> {user.email}
-      </p>
-      <p className="font-light text-gray-600 ">
+      </div>
+      <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Phone: </span>
         {user.phone}
-      </p>
-      <p className="font-light text-gray-600 ">
+      </div>
+      <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Ne(e) le :</span> {user.dateOfBirth}
-      </p>
-      <p className="font-light text-gray-600 ">
+      </div>
+      <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Genre: </span>
         {user.gender}
-      </p>
+      </div>
       {/* Address */}
-      <p className="font-light text-gray-600 ">
+      <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Adresse: </span>
         {user.address.street}
-      </p>
-      <p className="font-light text-gray-600 ">
+      </div>
+      <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Ville: </span>
         {user.address.city}
-      </p>
-      <p className="font-light text-gray-600 ">
+      </div>
+      <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Pays: </span>
         {user.address.country}
-      </p>
-      <p className="font-light text-gray-600 ">
+      </div>
+      <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Code postal: </span>
         {user.address.zipCode}
-      </p>
+      </div>
     </div>
   );
 };

@@ -21,7 +21,7 @@ const MerchantOrders = ({ setPageToShow }: MerchantOrdersProps) => {
         handleClickTab1={() => {}}
         handleClickTab2={() => {}}
       />
-      <OrderListComponent />;
+      <OrderListComponent isAdmin={true} />;
     </div>
   );
 };

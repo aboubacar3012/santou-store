@@ -4,7 +4,7 @@ import { UserType } from "./user.type";
 
 export enum PaymentStatusEnum {
   PENDING = "PENDING",
-  COMPLETED = "COMPLETED",
+  PAID = "PAID",
   FAILED = "FAILED",
 }
 
@@ -16,8 +16,10 @@ export enum OrderStatusEnum {
 }
 
 export type OrderType = {
+  id: string;
   user: UserType;
   products: ProductType[];
+  orderNumber: string;
   orderDate: string;
   totalAmount: number;
   paymentStatus: PaymentStatusEnum;
