@@ -91,7 +91,7 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
           phone: "123-456789",
           gender: GenderEnum.UNKNOWN,
           avatar: "https://example.com/avatar1.jpg",
-          role: RoleEnum.USER,
+          role: RoleEnum.ADMIN,
           isActive: true,
           address: {
             street: "Rue de la paix",
@@ -106,7 +106,7 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
           },
           createdAt: "2023-09-28T23:19:38.790Z",
           updatedAt: "2023-09-28T23:19:38.790Z",
-          id: "65160bd16f17038b4e5d65f4",
+          id: "651ec04a439249f99f8cc3b3",
         },
       })
     );

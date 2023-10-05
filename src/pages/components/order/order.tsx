@@ -15,6 +15,8 @@ import { Select, Option } from "@material-tailwind/react";
 import { OrderType } from "@/types/order.type";
 import { formatDate } from "@/utils/format-date";
 import { updateOrderById } from "@/services/orders";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 function Icon({ id, open }: { id: number; open: number }) {
   return (
@@ -60,6 +62,7 @@ const OrderComponent = ({
   const [openUserDetailsAccordion, setOpenUserDetailsAccordion] = useState(0);
   const [openMerchantDetailsAccordion, setOpenMerchantDetailsAccordion] =
     useState(0);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handleOpenProductAccordion = (value: number) =>
     setOpenProductAccordion(openProductAccordion === value ? 0 : value);
@@ -72,7 +75,8 @@ const OrderComponent = ({
       openMerchantDetailsAccordion === value ? 0 : value
     );
 
-  if (!order) return null;
+  if (!order || (user?.role === "USER" && order.user?.id !== user?.id))
+    return null;
 
   const TABLE_HEAD = ["Nom du produit", "Prix", "Image"];
 
@@ -163,8 +167,11 @@ const OrderComponent = ({
             <div>Vendeur: AfriStore</div>
             <div>Prix TTC: {order.totalAmount.toFixed(2)}€</div>
           </div>
+          <div>
+            Client: {order.user?.firstName} {order.user?.lastName}
+          </div>
           <div>Commande n°: {order.orderNumber.toLowerCase()}</div>
-          <div>Date: {formatDate(order.orderDate)}</div>
+          <div>Commande effectue le: {formatDate(order.orderDate)}</div>
 
           {isAdmin && (
             <div className="mt-3">

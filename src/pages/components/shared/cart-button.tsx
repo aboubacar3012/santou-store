@@ -34,7 +34,14 @@ const CartButton = () => {
   return (
     <div className="absolute bottom-0 right-5">
       <SpeedDial open={open} placement="right">
-        <SpeedDialHandler onClick={() => setOpen(!open)}>
+        <SpeedDialHandler
+          onClick={() => {
+            setOpen(!open);
+            setTimeout(() => {
+              setOpen(false);
+            }, 2000);
+          }}
+        >
           <IconButton size="lg" className="rounded-full opacity-90">
             <div className="flex flex-col justify-end items-center">
               <span className="-mb-3 text-red-500 text-xl">

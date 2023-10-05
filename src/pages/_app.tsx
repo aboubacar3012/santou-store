@@ -32,7 +32,6 @@ const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dimension = useScreenDimension();
-  console.log(dimension);
   // const options = {
   //   clientSecret,
   //   appearance,

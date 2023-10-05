@@ -48,8 +48,6 @@ const OrderListComponent = ({ isAdmin }: OrderListComponentProps) => {
     setShowType("past");
   };
 
-  console.log({ filteredOrders });
-
   return (
     <>
       <TabSelector

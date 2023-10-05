@@ -2,7 +2,7 @@ import { UserType } from "@/types/user.type";
 import { Chip } from "@material-tailwind/react";
 import React from "react";
 type UserDetailsProps = {
-  user: UserType;
+  user: UserType | null;
 };
 const UserDetails = ({ user }: UserDetailsProps) => {
   if (!user) return <div>Loading</div>;
@@ -33,7 +33,11 @@ const UserDetails = ({ user }: UserDetailsProps) => {
       {/* Address */}
       <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Adresse: </span>
-        {user.address.street}
+        {user.address.number} {user.address.street}
+      </div>
+      <div className="font-light text-gray-600 ">
+        <span className="text-gray-900">Adresse: </span>
+        {user.address.complement}
       </div>
       <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Ville: </span>

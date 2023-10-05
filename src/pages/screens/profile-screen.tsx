@@ -5,8 +5,9 @@ import { useState } from "react";
 import MerchantOrders from "../components/profile/merchant-orders";
 import ProductManagement from "../components/profile/product-management";
 import { logout } from "@/redux/features/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GenderEnum, RoleEnum, UserType } from "@/types/user.type";
+import { RootState } from "@/redux/store";
 
 export const user: UserType = {
   id: "12345",
@@ -32,6 +33,7 @@ export const user: UserType = {
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };
+
 export enum PageToShow {
   profile = "profile",
   productManagement = "product-management",
@@ -41,6 +43,7 @@ export enum PageToShow {
 const ProfileScreenPage = () => {
   const [pageToShow, setPageToShow] = useState<PageToShow>(PageToShow.profile);
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
 
   if (pageToShow === PageToShow.profile)
     return (
@@ -67,32 +70,39 @@ const ProfileScreenPage = () => {
             </div>{" "}
           </div>{" "}
         </div>{" "}
-        <UserDetails user={user} />
-        <div className=" border-b space-y-2 pb-2">
-          {" "}
-          <h1 className="text-3xl font-medium text-gray-700 text-center">
-            Admin
-          </h1>
-          <Button
-            size="sm"
-            fullWidth
-            variant="text"
-            className="flex justify-between items-center gap-2 bg-gray-50"
-            onClick={() => setPageToShow(PageToShow.merchantOrders)}
-          >
-            Commandes <BsArrowRight className="w-6 h-6" />
-          </Button>
-          <Button
-            size="sm"
-            fullWidth
-            variant="text"
-            className="flex justify-between items-center gap-2 bg-gray-50"
-            onClick={() => setPageToShow(PageToShow.productManagement)}
-          >
-            Gestion de produits <BsArrowRight className="w-6 h-6" />
-          </Button>
-        </div>{" "}
-        <Button onClick={() => dispatch(logout())} color="red" fullWidth>
+        <UserDetails user={user || null} />
+        {user && user.role !== RoleEnum.USER && (
+          <div className=" border-b space-y-2 pb-2">
+            {" "}
+            <h1 className="text-3xl font-medium text-gray-700 text-center">
+              Admin
+            </h1>
+            <Button
+              size="sm"
+              fullWidth
+              variant="text"
+              className="flex justify-between items-center gap-2 bg-gray-50"
+              onClick={() => setPageToShow(PageToShow.merchantOrders)}
+            >
+              Commandes <BsArrowRight className="w-6 h-6" />
+            </Button>
+            <Button
+              size="sm"
+              fullWidth
+              variant="text"
+              className="flex justify-between items-center gap-2 bg-gray-50"
+              onClick={() => setPageToShow(PageToShow.productManagement)}
+            >
+              Gestion de produits <BsArrowRight className="w-6 h-6" />
+            </Button>
+          </div>
+        )}
+        <Button
+          className="mt-5"
+          onClick={() => dispatch(logout())}
+          color="red"
+          fullWidth
+        >
           Se deconnecter
         </Button>
         {/* <div className=" border-b space-y-2 pb-2">

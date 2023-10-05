@@ -29,21 +29,21 @@ const NavbarComponent = () => {
             <div className="">{/* <h1>Aboubcar Diallo</h1> */}</div>
           </Link>
         </div>
-        {/* <div
+        <div
           onClick={() => dispatch(updateControl({ showCart: true }))}
           className="flex-initial"
         >
           <div className="flex justify-end items-center relative">
             <div className="inline relative">
-              <div className="flex flex-col justify-end items-center">
-                <span className="-mb-3 text-red-500 text-xl">
+              <div className="flex flex-col justify-end items-center h-10">
+                {/* <span className="-mb-3 text-red-500 text-xl">
                   {cart.products.length}
                 </span>
-                <GiShoppingCart className="w-10 h-10" />
+                <GiShoppingCart className="w-10 h-10" /> */}
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </nav>
       <div className="p-3 rounded-lg  flex flex-col w-full">
         <h4 className="text-white text-xl font-semibold  leading-tight truncate">
