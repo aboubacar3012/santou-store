@@ -54,13 +54,13 @@ const PaymentValidationScreen = () => {
 
   const handleCreateOrder = async (cart: CartType) => {
     const order = {
-      user: user.id,
+      user: user?.id,
       products: cart.products.map((product) => product.id),
       orderDate: new Date().toISOString(),
       totalAmount: cart.amount,
       paymentStatus: PaymentStatusEnum.PAID,
       orderStatus: OrderStatusEnum.PENDING,
-      deliveryAddress: user.address.id,
+      deliveryAddress: user?.address.id,
     };
 
     const response = await createOrder(order);
