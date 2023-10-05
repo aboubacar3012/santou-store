@@ -29,7 +29,7 @@ const NavbarComponent = () => {
             <div className="">{/* <h1>Aboubcar Diallo</h1> */}</div>
           </Link>
         </div>
-        <div
+        {/* <div
           onClick={() => dispatch(updateControl({ showCart: true }))}
           className="flex-initial"
         >
@@ -43,7 +43,7 @@ const NavbarComponent = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </nav>
       <div className="p-3 rounded-lg  flex flex-col w-full">
         <h4 className="text-white text-xl font-semibold  leading-tight truncate">

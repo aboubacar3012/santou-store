@@ -13,6 +13,7 @@ import FavoritesScreenPage from "./screens/favorites-screen";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { updateControl } from "@/redux/features/controlsSlice";
+import CartButton from "./components/shared/cart-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +31,7 @@ export default function Home() {
   }, [menu]);
 
   const containerStyle =
-    "fixed w-full  sm:w-6/12  overflow-y-scroll rounded-1xl  z-10";
+    "fixed w-full  sm:w-6/12  overflow-y-scroll rounded-1xl  z-10 relative";
 
   if (!auth.isAuthenticated)
     return (
@@ -57,6 +58,7 @@ export default function Home() {
       {menu === "favorites" && <FavoritesScreenPage />}
 
       <BottomTabBarComponent menu={menu} setMenu={setMenu} />
+      <CartButton />
     </div>
   );
 }

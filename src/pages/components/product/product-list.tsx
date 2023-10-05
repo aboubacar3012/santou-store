@@ -32,7 +32,7 @@ const ProductListComponent = () => {
     return (
       <div>
         {/* <div className="grid grid-cols-2 gap-2  gap-x-2 overflow-y-scroll scroll-b justify-center items-center w-full "> */}
-        <div className="p-1 space-y-4 z-0 h-[38rem] overflow-y-scroll scroll-b">
+        <div className="p-3 space-y-4 z-0 h-[38rem] overflow-y-scroll scroll-b">
           <div className="grid grid-cols-2 gap-2  gap-x-2">
             {products.map((product: ProductType) => (
               <ProductComponent key={product.id} product={product} />
