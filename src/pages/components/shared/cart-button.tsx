@@ -32,7 +32,7 @@ const CartButton = () => {
 
   if (cart.products.length === 0) return null;
   return (
-    <div className="absolute bottom-5 right-5">
+    <div className="absolute bottom-0 right-5">
       <SpeedDial open={open} placement="right">
         <SpeedDialHandler onClick={() => setOpen(!open)}>
           <IconButton size="lg" className="rounded-full opacity-90">

@@ -44,7 +44,7 @@ const ProfileScreenPage = () => {
 
   if (pageToShow === PageToShow.profile)
     return (
-      <div className="p-8 bg-white shadow mt-20 h-screen ">
+      <div className="p-8 pb-20 bg-white shadow mt-20">
         {" "}
         <div className="grid grid-cols-1 md:grid-cols-3">
           {" "}
