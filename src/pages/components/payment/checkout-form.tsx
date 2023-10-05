@@ -9,6 +9,7 @@ import { RiSecurePaymentFill } from "react-icons/ri";
 import NotificationMessage from "../shared/notification-message";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { Spinner } from "@material-tailwind/react";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -62,15 +63,15 @@ export default function CheckoutForm() {
         return_url: `${window.location.origin}/payment-validation-screen`,
         payment_method_data: {
           billing_details: {
-            email: user.email,
-            phone: user.phone,
-            name: user.firstName + " " + user.lastName,
+            email: user?.email,
+            phone: user?.phone,
+            name: user?.firstName + " " + user?.lastName,
             address: {
-              line1: user.address.number + " " + user.address.street,
-              postal_code: user.address.zipCode,
-              city: user.address.city,
-              state: user.address.city,
-              country: user.address.country,
+              line1: user?.address.number + " " + user?.address.street,
+              postal_code: user?.address.zipCode,
+              city: user?.address.city,
+              state: user?.address.city,
+              country: user?.address.country,
             },
           },
         },
@@ -107,12 +108,19 @@ export default function CheckoutForm() {
         <a href="#" className="flex items-center justify-center  ">
           <span id="button-text">
             {isLoading ? (
-              <div className="spinner px-2" id="spinner"></div>
+              <div
+                className="spinner px-2 flex items-center space-x-3"
+                id="spinner"
+              >
+                <span>Paiement en cours</span> <Spinner className="h-4 w-4" />
+              </div>
             ) : (
-              "Payer ma commande"
+              <div className="flex items-center">
+                Payer ma commande
+                <RiSecurePaymentFill className="w-8 h-8 px-2" />
+              </div>
             )}
           </span>
-          <RiSecurePaymentFill className="w-8 h-8 px-2" />
         </a>
       </button>
       {/* Show any error or success messages */}

@@ -15,13 +15,7 @@ const MerchantOrders = ({ setPageToShow }: MerchantOrdersProps) => {
         screenName="Profil"
         onClick={() => setPageToShow("profile" as PageToShow)}
       />
-      <TabSelector
-        tab1="Commandes en cours"
-        tab2="Commandes terminées"
-        handleClickTab1={() => {}}
-        handleClickTab2={() => {}}
-      />
-      <OrderListComponent isAdmin={true} />;
+      <OrderListComponent isAdmin={true} />
     </div>
   );
 };

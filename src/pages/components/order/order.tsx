@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { AiFillAccountBook } from "react-icons/ai";
 import { FiChevronsRight } from "react-icons/fi";
 import { GiSandsOfTime } from "react-icons/gi";
@@ -42,9 +42,16 @@ const isMerchantUser = true;
 type OrderComponentProps = {
   order: OrderType;
   isAdmin?: boolean;
+  setStatusChanged: Dispatch<SetStateAction<boolean>>;
+  statusChanged: boolean;
 };
 
-const OrderComponent = ({ order, isAdmin }: OrderComponentProps) => {
+const OrderComponent = ({
+  order,
+  isAdmin,
+  setStatusChanged,
+  statusChanged,
+}: OrderComponentProps) => {
   const [orderStatus, setOrderStatus] = useState<
     "PENDING" | "SHIPPED" | "DELIVERED" | "CANCELLED"
   >(order.orderStatus);
@@ -164,49 +171,36 @@ const OrderComponent = ({ order, isAdmin }: OrderComponentProps) => {
               <Select
                 className="flex items-center"
                 label="Changer le status de la commande"
-                value={
-                  orderStatus === "PENDING"
-                    ? "EN ATTENTE"
-                    : orderStatus === "SHIPPED"
-                    ? "EN COURS"
-                    : orderStatus === "DELIVERED"
-                    ? "LIVRÉ"
-                    : "ANNULÉ"
-                }
+                value={orderStatus}
+                // disabled={
+                //   orderStatus === "CANCELLED" || orderStatus === "DELIVERED"
+                // }
+                onChange={(e) => {
+                  handleUpdateOrder(order.id, { orderStatus: e });
+                  setStatusChanged(!statusChanged);
+                }}
               >
                 <Option
                   value="PENDING"
                   className="flex justify-start items-center"
-                  onClick={() =>
-                    handleUpdateOrder(order.id, { orderStatus: "PENDING" })
-                  }
                 >
                   EN ATTENTE
                 </Option>
                 <Option
                   value="SHIPPED"
                   className="flex justify-start items-center"
-                  onClick={() =>
-                    handleUpdateOrder(order.id, { orderStatus: "SHIPPED" })
-                  }
                 >
                   EN COURS
                 </Option>
                 <Option
                   value="DELIVERED"
                   className="flex justify-start items-center"
-                  onClick={() =>
-                    handleUpdateOrder(order.id, { orderStatus: "DELIVERED" })
-                  }
                 >
                   LIVRÉ
                 </Option>
                 <Option
                   value="CANCELLED"
                   className="flex justify-start items-center"
-                  onClick={() =>
-                    handleUpdateOrder(order.id, { orderStatus: "CANCELLED" })
-                  }
                 >
                   ANNULÉ
                 </Option>

@@ -5,12 +5,6 @@ import TabSelector from "../components/shared/tab-selector";
 const OrdersScreenPage = () => {
   return (
     <>
-      <TabSelector
-        tab1="Commandes en cours"
-        tab2="Commandes terminées"
-        handleClickTab1={() => {}}
-        handleClickTab2={() => {}}
-      />
       <OrderListComponent isAdmin={false} />
       {/* <UnavailableComponent /> */}
     </>

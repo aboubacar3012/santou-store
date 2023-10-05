@@ -22,10 +22,22 @@ import Payement from "../components/payment/payment";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
+  const user = useSelector((state: RootState) => state.auth.user);
   const [step, setStep] = useState(1);
   const [method, setMethod] = useState<"apple-pay" | "credit-card">(
     "credit-card"
   );
+
+  // empty cart
+  if (!cart.products.length)
+    return (
+      <div className="flex flex-col justify-center items-center h-72">
+        <h1 className="text-2xl font-bold text-center">
+          Votre panier est vide
+        </h1>
+        <ContinueShoppingBtn />
+      </div>
+    );
 
   if (step === 1)
     return (
@@ -123,10 +135,25 @@ const CartScreen = () => {
               Adresse de livraison
             </h2>
             <hr className="my-1" />
-            <p className="pl-1">
-              23 rue mathieu stilatti, 13003 Marseille, France
-            </p>
-            <p className="pl-1">Bat A, Appt A512</p>
+            {user?.address && (
+              <div>
+                <p className="pl-1">
+                  {user.address.number} {user.address.street}
+                  <br />
+                  {user.address.zipCode} {user.address.city},{" "}
+                  {user.address.country}
+                </p>
+                <p className="pl-1">{user.address.complement}</p>
+              </div>
+            )}
+            {!user?.address && (
+              <div className="flex items-center">
+                <button className="ml-2">
+                  <BiMap className="h-6 w-6" />
+                </button>
+                <p className="pl-1">Aucune adresse de livraison</p>
+              </div>
+            )}
           </div>
         </div>
         <div className="border-t border-gray-200 px-4 py-2 sm:px-6">
@@ -163,7 +190,7 @@ const CartScreen = () => {
           </div>
 
           {/* <PaiementMethod method={method} setMethod={setMethod} /> */}
-          <div onClick={() => setStep(2)} className="mt-2">
+          <div onClick={() => setStep(2)} className="mt-5">
             <a
               href="#"
               className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"

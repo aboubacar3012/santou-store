@@ -7,7 +7,7 @@ const UnavailableComponent = () => {
         <h1 className="text-2xl font-semibold">
           Pas disponible pour le moment
         </h1>
-        <h1 className="text-xl">Revenez plus tard</h1>
+        <h1 className="text-xl">cette page est cours de conception</h1>
       </div>
     </div>
   );
