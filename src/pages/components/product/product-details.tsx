@@ -16,10 +16,10 @@ import { GiShoppingCart } from "react-icons/gi";
 import { VscTrash } from "react-icons/vsc";
 import { AiOutlineEdit } from "react-icons/ai";
 import { FiSave } from "react-icons/fi";
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/features/cartSlice";
-import { ProductTypeInCart } from "@/types/cart.type";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, addUserId } from "@/redux/features/cartSlice";
 import { ProductType } from "@/types/product.type";
+import { RootState } from "@/redux/store";
 
 type ProductDetailsProps = {
   handleShow: () => void;
@@ -37,6 +37,8 @@ const ProductDetails = ({
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const [showEdit, setShowEdit] = useState(true);
+  const user = useSelector((state: RootState) => state.auth.user);
+  const cart = useSelector((state: RootState) => state.cart);
 
   // use state for product edit
   // const [name, setName] = useState<string | null>(null);
@@ -56,8 +58,9 @@ const ProductDetails = ({
   // }, [product]);
 
   const handleAddProductToCart = (product: ProductType) => () => {
-    const productInCart: ProductTypeInCart = { ...product, quantity };
+    const productInCart: ProductType = { ...product, quantity };
     dispatch(addToCart(productInCart));
+    if (!cart.userId) dispatch(addUserId(user?.id as string));
     handleShow();
   };
 

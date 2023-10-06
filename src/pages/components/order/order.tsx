@@ -63,6 +63,7 @@ const OrderComponent = ({
   const [openMerchantDetailsAccordion, setOpenMerchantDetailsAccordion] =
     useState(0);
   const user = useSelector((state: RootState) => state.auth.user);
+  const token = useSelector((state: RootState) => state.auth.token);
 
   const handleOpenProductAccordion = (value: number) =>
     setOpenProductAccordion(openProductAccordion === value ? 0 : value);
@@ -89,7 +90,7 @@ const OrderComponent = ({
   });
 
   const handleUpdateOrder = async (id: string, order: any) => {
-    const response = await updateOrderByIdService(id, order);
+    const response = await updateOrderByIdService(id, order, token);
     if (response.success) {
       setOrderStatus(response.order.orderStatus);
     }
@@ -301,7 +302,7 @@ const OrderComponent = ({
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {price}
+                          {price.toFixed(2)} €
                         </Typography>
                       </td>
                       <td className="p-4">

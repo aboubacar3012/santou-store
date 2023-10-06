@@ -13,10 +13,11 @@ export type ProductType = {
   merchant?: UserType;
   description: string;
   price: number;
+  quantity?: number;
   discount: number;
   stock: number;
   status: ProductStatusEnum;
   images: string[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

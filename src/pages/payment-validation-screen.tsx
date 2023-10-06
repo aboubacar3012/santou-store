@@ -6,7 +6,7 @@ import { CartType } from "@/types/cart.type";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { OrderStatusEnum, PaymentStatusEnum } from "@/types/order.type";
-import { createOrderService } from "@/services/orders";
+import { createOrderService, updateOrderByIdService } from "@/services/orders";
 import { clearCart } from "@/redux/features/cartSlice";
 
 const PaymentValidationScreen = () => {
@@ -20,6 +20,7 @@ const PaymentValidationScreen = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.auth.token);
 
   const checkPaymentStatus = async (payementInt: any) => {
     setPageStatus("loading");
@@ -39,7 +40,7 @@ const PaymentValidationScreen = () => {
       if (paymentIntent.status === "succeeded") {
         setMessage("Le paiement a réussi.");
         setPageStatus("paied");
-        handleCreateOrder(cart);
+        handleUpdateOrderStatus(token);
       } else {
         setMessage("Le paiement a échoué.");
         setPageStatus("unpaied");
@@ -52,20 +53,20 @@ const PaymentValidationScreen = () => {
     }
   };
 
-  const handleCreateOrder = async (cart: CartType) => {
-    const order = {
-      user: user?.id,
-      products: cart.products.map((product) => product.id),
-      orderDate: new Date().toISOString(),
-      totalAmount: cart.amount,
-      paymentStatus: PaymentStatusEnum.PAID,
-      orderStatus: OrderStatusEnum.PENDING,
-      deliveryAddress: user?.address.id,
-    };
-
-    const response = await createOrderService(order);
-    if (response.success) {
-      dispatch(clearCart());
+  const handleUpdateOrderStatus = async (token: string | null) => {
+    const orderId = localStorage.getItem("orderId");
+    if (orderId) {
+      const response = await updateOrderByIdService(
+        orderId,
+        {
+          paymentStatus: PaymentStatusEnum.PAID,
+        },
+        token
+      );
+      if (response.success) {
+        dispatch(clearCart());
+        localStorage.removeItem("orderId");
+      }
     }
   };
 

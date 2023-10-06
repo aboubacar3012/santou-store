@@ -15,10 +15,13 @@ import { BsCreditCard2Front } from "react-icons/bs";
 import ContinueShoppingBtn from "../components/cart/continue-shopping-btn";
 import { IconButton } from "@material-tailwind/react";
 import PaiementMethod from "../components/cart/paiement-method";
-import { ProductTypeInCart } from "@/types/cart.type";
+
 import { removeFromCart } from "@/redux/features/cartSlice";
 import { RootState } from "@/redux/store";
 import Payement from "../components/payment/payment";
+import { ProductType } from "@/types/product.type";
+import { CartType } from "@/types/cart.type";
+import { validateCart } from "@/services/cart";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
@@ -27,6 +30,15 @@ const CartScreen = () => {
   const [method, setMethod] = useState<"apple-pay" | "credit-card">(
     "credit-card"
   );
+  const token = useSelector((state: RootState) => state.auth?.token);
+
+  const handleValidateCart = async (cart: CartType, token: string | null) => {
+    const response = await validateCart(cart, token);
+    if (response.success) {
+      setStep(2);
+      localStorage.setItem("orderId", response.data.id);
+    }
+  };
 
   // empty cart
   if (!cart.products.length)
@@ -74,7 +86,7 @@ const CartScreen = () => {
             <div className="flow-root">
               <ul role="list" className=" divide-y divide-gray-200">
                 {cart &&
-                  cart.products.map((product: ProductTypeInCart) => (
+                  cart.products.map((product: ProductType) => (
                     <li className="flex py-1" key={product.name}>
                       <div className="h-14 w-14 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         <img
@@ -90,7 +102,9 @@ const CartScreen = () => {
                               <a href="#">{product.name}</a>
                             </h3>
                             <p className="ml-4">
-                              {product.price * product.quantity}€
+                              {product.quantity &&
+                                product.price * product.quantity}
+                              €
                             </p>
                           </div>
                           <p className=" text-sm text-gray-500">
@@ -190,7 +204,12 @@ const CartScreen = () => {
           </div>
 
           {/* <PaiementMethod method={method} setMethod={setMethod} /> */}
-          <div onClick={() => setStep(2)} className="mt-5">
+          <div
+            onClick={() => {
+              handleValidateCart(cart, token);
+            }}
+            className="mt-5"
+          >
             <a
               href="#"
               className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
