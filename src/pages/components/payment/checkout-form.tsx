@@ -16,7 +16,7 @@ export default function CheckoutForm() {
   const elements = useElements();
 
   const [email, setEmail] = React.useState("");
-  const [message, setMessage] = React.useState<string | undefined | null>();
+  const [message, setMessage] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -84,7 +84,7 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
+      setMessage(error.message as string);
     } else {
       setMessage("An unexpected error occurred.");
     }
