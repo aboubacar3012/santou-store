@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
 import OrderComponent from "./order";
-import { getOrders } from "@/services/orders";
+import { getOrdersService } from "@/services/orders";
 import { OrderType } from "@/types/order.type";
 import TabSelector from "../shared/tab-selector";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type OrderListComponentProps = {
   isAdmin: boolean;
@@ -12,10 +14,11 @@ const OrderListComponent = ({ isAdmin }: OrderListComponentProps) => {
   const [orders, setOrders] = useState([]); // TODO: replace with [OrderType]
   const [showType, setShowType] = useState("current" as "current" | "past");
   const [statusChanged, setStatusChanged] = useState(false);
+  const token = useSelector((state: RootState) => state.auth.token);
 
   const fetchOrders = async () => {
     try {
-      const response = await getOrders();
+      const response = await getOrdersService(token);
       if (response.success) {
         setOrders(response.orders);
       }

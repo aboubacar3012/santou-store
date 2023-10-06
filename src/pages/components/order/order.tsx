@@ -14,7 +14,7 @@ import { Card, Typography } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
 import { OrderType } from "@/types/order.type";
 import { formatDate } from "@/utils/format-date";
-import { updateOrderById } from "@/services/orders";
+import { updateOrderByIdService } from "@/services/orders";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
@@ -89,7 +89,7 @@ const OrderComponent = ({
   });
 
   const handleUpdateOrder = async (id: string, order: any) => {
-    const response = await updateOrderById(id, order);
+    const response = await updateOrderByIdService(id, order);
     if (response.success) {
       setOrderStatus(response.order.orderStatus);
     }

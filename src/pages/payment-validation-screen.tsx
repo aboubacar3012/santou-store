@@ -6,7 +6,7 @@ import { CartType } from "@/types/cart.type";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { OrderStatusEnum, PaymentStatusEnum } from "@/types/order.type";
-import { createOrder } from "@/services/orders";
+import { createOrderService } from "@/services/orders";
 import { clearCart } from "@/redux/features/cartSlice";
 
 const PaymentValidationScreen = () => {
@@ -63,7 +63,7 @@ const PaymentValidationScreen = () => {
       deliveryAddress: user?.address.id,
     };
 
-    const response = await createOrder(order);
+    const response = await createOrderService(order);
     if (response.success) {
       dispatch(clearCart());
     }

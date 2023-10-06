@@ -7,6 +7,11 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { useMutation } from "@tanstack/react-query";
+import { RegisterType } from "@/types/auth.type";
+import { registerService } from "@/services/auth";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/features/authSlice";
 
 interface RegistrationProps {
   setIsLogin: (value: boolean) => void;
@@ -142,8 +147,8 @@ const _InformationFormComponent = ({
 type _AdresseFormComponentProps = Props & {
   street: string;
   setStreet: (value: string) => void;
-  optionalAddress: string;
-  setOptionalAddress: (value: string) => void;
+  complement: string;
+  setcomplement: (value: string) => void;
   city: string;
   setCity: (value: string) => void;
   country: string;
@@ -156,8 +161,8 @@ const _AdresseFormComponent = ({
   setStep,
   street,
   setStreet,
-  optionalAddress,
-  setOptionalAddress,
+  complement,
+  setcomplement,
   city,
   setCity,
   country,
@@ -181,8 +186,8 @@ const _AdresseFormComponent = ({
         </div>
         <div className="relative h-11 w-full min-w-[200px]">
           <input
-            value={optionalAddress}
-            onChange={(e) => setOptionalAddress(e.target.value)}
+            value={complement}
+            onChange={(e) => setcomplement(e.target.value)}
             className="peer h-full w-full rounded-md border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
           />
           <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
@@ -313,11 +318,37 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
   const [phone, setPhone] = useState("");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("Marseille");
-  const [optionalAddress, setOptionalAddress] = useState("");
+  const [complement, setcomplement] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [country, setCountry] = useState("France");
 
+  const [message, setMessage] = useState("");
+
   const [step, setStep] = useState(0);
+
+  const dispatch = useDispatch();
+
+  // Mutations
+  const mutation = useMutation(
+    (register: RegisterType) => registerService(register),
+    {
+      onSuccess: (data: any) => {
+        if (data.success) {
+          dispatch(
+            login({ isAuthenticated: true, user: data.user, token: data.token })
+          );
+          setMessage(data.message);
+        } else {
+          // alert("Email ou mot de passe incorrect");
+          setMessage(data?.error);
+        }
+      },
+      onError: (error: any) => {
+        // alert(error);
+        setMessage(error?.message);
+      },
+    }
+  );
 
   function validateFrenchPhoneNumber(phoneNumber: string) {
     // Regex pattern
@@ -340,7 +371,7 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
       return false;
     }
 
-    if (password.length <= 8) {
+    if (password.length < 8) {
       alert("Le mot de passe doit contenir au moins 8 caractères");
       return false;
     }
@@ -379,7 +410,7 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
   };
 
   const handleValidStepTwo = () => {
-    if (!street || !city || !optionalAddress || !zipCode || !country) {
+    if (!street || !city || !complement || !zipCode || !country) {
       alert("Veuillez remplir tous les champs");
       return false;
     }
@@ -411,7 +442,21 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
       phone,
       street,
       city,
-      optionalAddress,
+      complement,
+      zipCode,
+      country,
+    });
+    mutation.mutate({
+      email,
+      password,
+      firstName,
+      lastName,
+      dateOfBirth,
+      gender,
+      phone,
+      street,
+      city,
+      complement,
       zipCode,
       country,
     });
@@ -588,8 +633,8 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
             setStreet={setStreet}
             city={city}
             setCity={setCity}
-            optionalAddress={optionalAddress}
-            setOptionalAddress={setOptionalAddress}
+            complement={complement}
+            setcomplement={setcomplement}
             zipCode={zipCode}
             setZipCode={setZipCode}
             country={country}

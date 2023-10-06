@@ -5,11 +5,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 type Auth = {
   isAuthenticated: boolean;
   user: UserType | null;
+  token: string | null;
 };
 
 const initialState: Auth = {
   isAuthenticated: false,
   user: null,
+  token: null,
 };
 
 export const authSlice = createSlice({

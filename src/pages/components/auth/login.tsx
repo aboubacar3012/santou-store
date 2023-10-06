@@ -1,18 +1,15 @@
-import { loginService } from "@/services/login.service";
+import { loginService } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import NotificationMessage from "../shared/notification-message";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/features/authSlice";
-import { Plugins } from "@capacitor/core";
 import { setSafeArea } from "@/utils/fixStatusBarHeight";
-import { GenderEnum, RoleEnum } from "@/types/user.type";
-
-const { Keyboard } = Plugins;
 
 interface RegistrationProps {
   setIsLogin: (value: boolean) => void;
 }
+
 const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,38 +17,19 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
 
   const dispatch = useDispatch();
 
-  const handleInputFocus = () => {
-    if (Keyboard) Keyboard.setResizeMode({ mode: "ionic" }); // Empêche le déplacement des éléments
-  };
-
-  const handleInputBlur = () => {
-    if (Keyboard) Keyboard.setResizeMode({ mode: "native" }); // Restaure le comportement par défaut
-  };
   useEffect(() => {
     setSafeArea();
-  }, []);
-
-  useEffect(() => {
-    handleInputBlur();
-    handleInputFocus();
-    // Ajouter des écouteurs d'événements
-    window.addEventListener("keyboardDidShow", handleInputFocus);
-    window.addEventListener("keyboardDidHide", handleInputBlur);
-
-    // Nettoyer les écouteurs d'événements lors du démontage du composant
-    return () => {
-      window.removeEventListener("keyboardDidShow", handleInputFocus);
-      window.removeEventListener("keyboardDidHide", handleInputBlur);
-    };
   }, []);
 
   // Mutations
   const mutation = useMutation(
     (loginInfo: { email: string; password: string }) => loginService(loginInfo),
     {
-      onSuccess: (data) => {
+      onSuccess: (data: any) => {
         if (data.success) {
-          dispatch(login({ isAuthenticated: true, user: data.user }));
+          dispatch(
+            login({ isAuthenticated: true, user: data.user, token: data.token })
+          );
         } else {
           // alert("Email ou mot de passe incorrect");
           setMessage("Email ou mot de passe incorrect");
@@ -133,8 +111,6 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
       <div className="flex flex-col gap-4 p-6">
         <div className="relative h-11 w-full min-w-[200px]">
           <input
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -147,8 +123,6 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
         </div>
         <div className="relative h-11 w-full min-w-[200px]">
           <input
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
