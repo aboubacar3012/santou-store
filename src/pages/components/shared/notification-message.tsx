@@ -23,9 +23,7 @@ type color =
 
 interface NotificationProps {
   message: string;
-  setErrorMessage: React.Dispatch<
-    React.SetStateAction<string | null | undefined>
-  >;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>;
   color: color;
 }
 
