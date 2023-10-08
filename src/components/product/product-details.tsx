@@ -201,7 +201,7 @@ const ProductDetails = ({
           <Typography
             variant="small"
             color="gray"
-            className="font-normal opacity-75"
+            className="font-normal opacity-75 h-[6rem] overflow-y-scroll scroll-b text-justify"
           >
             {product.description}
           </Typography>

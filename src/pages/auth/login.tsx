@@ -1,21 +1,23 @@
 import { loginService } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import NotificationMessage from "../shared/notification-message";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/features/authSlice";
 import { setSafeArea } from "@/utils/fixStatusBarHeight";
+import NotificationMessage from "@/components/shared/notification-message";
+import { useRouter } from "next/router";
 
-interface RegistrationProps {
-  setIsLogin: (value: boolean) => void;
-}
+// interface RegistrationProps {
+//   setIsLogin: (value: boolean) => void;
+// }
 
-const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
+const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>("");
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     setSafeArea();
@@ -30,6 +32,9 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
           dispatch(
             login({ isAuthenticated: true, user: data.user, token: data.token })
           );
+          router.push("/screens/home-screen");
+          // setMessage(data.message);
+
         } else {
           // alert("Email ou mot de passe incorrect");
           setMessage("Email ou mot de passe incorrect");
@@ -101,7 +106,7 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
   mutation.isLoading && <div>Loading...</div>;
 
   return (
-    <div className="relative flex w-96 flex-col mt-32 rounded-xl mb-2 bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className="relative flex w-full flex-col mt-44 rounded-xl mb-2 bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="relative mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-border text-white shadow-lg shadow-blue-500/40">
         <h3 className="block font-sans text-3xl font-semibold leading-snug tracking-normal text-white antialiased">
           Connexion
@@ -153,7 +158,7 @@ const LoginComponent = ({ setIsLogin }: RegistrationProps) => {
         <p className="mt-6 flex justify-center font-sans text-sm font-light leading-normal text-inherit antialiased">
           Je n&apos;ai pas encore de compte
           <button
-            onClick={() => setIsLogin(false)}
+            onClick={() => router.push("/auth/registration")}
             className="ml-1 block font-sans text-sm font-bold leading-normal text-blue-500 antialiased"
           >
             S&apos;inscrire

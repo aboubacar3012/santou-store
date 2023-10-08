@@ -19,8 +19,8 @@ const TabSelector = ({
     "text-blue-600  transition-colors duration-300 focus:outline-none hover:bg-blue-600 hover:text-white";
 
   return (
-    <div className="flex mt-3 items-center justify-center">
-      <div className="flex items-center space-x-2 p-1 border border-blue-600 dark:border-blue-400 rounded-xl">
+    <div className="flex mt-3 items-center justify-center z-50">
+      <div className="flex items-center justify-center space-x-2 p-1 border border-blue-600 dark:border-blue-400 rounded-xl">
         <button
           onClick={() => {
             setSelectedTab(1);

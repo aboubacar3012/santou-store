@@ -1,4 +1,4 @@
-import UnavailableComponent from "../components/unavailable";
+import UnavailableComponent from "../../components/unavailable";
 
 const FavoritesScreenPage = () => {
   return (

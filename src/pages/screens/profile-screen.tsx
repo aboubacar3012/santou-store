@@ -1,13 +1,14 @@
 import { Button, Chip } from "@material-tailwind/react";
 import { BsArrowRight } from "react-icons/bs";
-import UserDetails from "../components/profile/user-details";
+import UserDetails from "../../components/profile/user-details";
 import { useState } from "react";
-import MerchantOrders from "../components/profile/merchant-orders";
-import ProductManagement from "../components/profile/product-management";
+import MerchantOrders from "../../components/profile/merchant-orders";
+import ProductManagement from "../../components/profile/product-management";
 import { logout } from "@/redux/features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { GenderEnum, RoleEnum, UserType } from "@/types/user.type";
 import { RootState } from "@/redux/store";
+import { useRouter } from "next/router";
 
 export const user: UserType = {
   id: "12345",
@@ -44,10 +45,11 @@ const ProfileScreenPage = () => {
   const [pageToShow, setPageToShow] = useState<PageToShow>(PageToShow.profile);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+  const router = useRouter()
 
   if (pageToShow === PageToShow.profile)
     return (
-      <div className="p-8 pb-20 bg-white shadow mt-20">
+      <div className="p-8 pb-20 bg-white shadow mt-52">
         {" "}
         <div className="grid grid-cols-1 md:grid-cols-3">
           {" "}
@@ -99,7 +101,10 @@ const ProfileScreenPage = () => {
         )}
         <Button
           className="mt-5"
-          onClick={() => dispatch(logout())}
+          onClick={() => {
+            dispatch(logout());
+            router.push("/auth/login")
+          }}
           color="red"
           fullWidth
         >

@@ -12,10 +12,8 @@ import { RegisterType } from "@/types/auth.type";
 import { registerService } from "@/services/auth";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/features/authSlice";
-
-interface RegistrationProps {
-  setIsLogin: (value: boolean) => void;
-}
+import { useRouter } from "next/router";
+import NotificationMessage from "@/components/shared/notification-message";
 
 interface Props {
   setStep: (value: number) => void;
@@ -51,7 +49,7 @@ const _InformationFormComponent = ({
   handleValidStepOne,
 }: _InformationFormComponentProps) => {
   return (
-    <div className="relative flex w-96 flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className="relative flex w-full flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="flex flex-col gap-4 p-6">
         <div className="relative h-11 w-full min-w-[200px]">
           <input
@@ -172,7 +170,7 @@ const _AdresseFormComponent = ({
   handleValidStepTwo,
 }: _AdresseFormComponentProps) => {
   return (
-    <div className="relative flex w-96 flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className="relative flex w-full flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="flex flex-col gap-4 p-6">
         <div className="relative h-11 w-full min-w-[200px]">
           <input
@@ -265,7 +263,7 @@ const _FinalisationComponent = ({
   handleSubmitLogin,
 }: _FinalisationComponentProps) => {
   return (
-    <div className="relative flex w-96 flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className="relative flex w-full flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <Card className="mt-6 w-96 h-screen">
         <CardHeader color="blue-gray" className="relative h-72">
           <img src="/images/13508.jpg" alt="card-image" />
@@ -307,7 +305,7 @@ const _FinalisationComponent = ({
   );
 };
 
-const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
+const RegistrationComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
@@ -322,11 +320,12 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
   const [zipCode, setZipCode] = useState("");
   const [country, setCountry] = useState("France");
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
 
   const [step, setStep] = useState(0);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   // Mutations
   const mutation = useMutation(
@@ -338,6 +337,9 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
             login({ isAuthenticated: true, user: data.user, token: data.token })
           );
           setMessage(data.message);
+          setTimeout(() => {
+            router.push("/screens/home-screen");
+          }, 2000);
         } else {
           // alert("Email ou mot de passe incorrect");
           setMessage(data?.error);
@@ -464,7 +466,7 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
 
   if (step === 0)
     return (
-      <div className="relative flex w-96 mt-32 mb-2 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+      <div className="relative flex w-full mt-44 mb-2 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
         <div className="relative mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-border text-white shadow-lg shadow-blue-500/40">
           <h3 className="block font-sans text-3xl font-semibold leading-snug tracking-normal text-white antialiased">
             Créer un compte
@@ -520,7 +522,7 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
           <p className="mt-6 flex justify-center font-sans text-sm font-light leading-normal text-inherit antialiased">
             J&apos;ai déjà un compte
             <button
-              onClick={() => setIsLogin(true)}
+              onClick={() => router.push("/auth/login")}
               className="ml-1 block font-sans text-sm font-bold leading-normal text-blue-500 antialiased"
             >
               Se connecter
@@ -533,7 +535,7 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
   if (step !== 0)
     return (
       <div>
-        <ol className="flex mt-8 items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4">
+        <ol className="flex mt-8 justify-center items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4">
           <li
             className={`flex items-center ${
               step === 1 && "text-blue-600 dark:text-blue-500"
@@ -606,9 +608,10 @@ const RegistrationComponent = ({ setIsLogin }: RegistrationProps) => {
               {" "}
               3
             </span>
-            Finalisation
+            Fin
           </li>
         </ol>
+        <NotificationMessage message={message as string} color="blue" setErrorMessage={setMessage}  />
         {step === 1 && (
           <_InformationFormComponent
             phone={phone}

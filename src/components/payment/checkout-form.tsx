@@ -7,9 +7,11 @@ import {
 } from "@stripe/react-stripe-js";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import NotificationMessage from "../shared/notification-message";
-import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Spinner } from "@material-tailwind/react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateControl } from "@/redux/features/controlsSlice";
+
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -19,6 +21,8 @@ export default function CheckoutForm() {
   const [message, setMessage] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const user = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useDispatch()
+  
 
   useEffect(() => {
     if (!stripe) {
@@ -101,6 +105,10 @@ export default function CheckoutForm() {
       <PaymentElement id="payment-element" />
       <button disabled={isLoading || !stripe || !elements} id="submit"></button>
       <button
+         onClick={() => {
+          dispatch(updateControl({ showCart: false }))
+          
+        }}
         className="mt-2 flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm"
         disabled={isLoading || !stripe || !elements}
         id="submit"

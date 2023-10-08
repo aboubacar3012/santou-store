@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import NavbarComponent from "./components/shared/navbar";
+import NavbarComponent from "../components/shared/navbar";
 import { CartType } from "@/types/cart.type";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -81,23 +81,23 @@ const PaymentValidationScreen = () => {
 
   // Automatically redirect to the payment page in 10 seconds
   useEffect(() => {
-    if (pageStatus === "loading") {
-      setTimeout(() => {
-        router.push("/");
-      }, 10000);
-    }
+    // if (pageStatus === "loading") {
+    //   setTimeout(() => {
+    //     router.push("/screens/home-screen");
+    //   }, 10000);
+    // }
   }, []);
 
   const containerStyle =
-    "fixed w-full  sm:w-6/12  overflow-y-scroll rounded-1xl  z-10";
+    "fixed w-full  overflow-y-scroll rounded-1xl  z-10";
 
   return (
     <div className={`${containerStyle}`}>
-      <NavbarComponent />
+     
       {pageStatus === "loading" && <div>Loading...</div>}
       {pageStatus === "paied" && (
-        <div className="bg-white  mt-12 mx-2 rounded-3xl border">
-          <div className="bg-gray-100 rounded-3xl p-6  md:mx-auto">
+        <div className="bg-white  mt-12 rounded-3xl border">
+          <div className="bg-gray-100 rounded-3xl p-6 ">
             <svg
               viewBox="0 0 24 24"
               className="text-green-600 w-16 h-16 mx-auto my-6"
@@ -117,7 +117,7 @@ const PaymentValidationScreen = () => {
               <p> Nous avons hâte de vous retrouver très bientôt !</p>
               <div className="py-10 text-center">
                 <Link
-                  href="/"
+                  href="/screens/home-screen"
                   className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
                 >
                   Retourné à l&apos;accueil
@@ -154,7 +154,7 @@ const PaymentValidationScreen = () => {
               <p> Merci pour votre compréhension.</p>
               <div className="py-10 text-center">
                 <Link
-                  href="/"
+                  href="/screens/home-screen"
                   className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
                 >
                   Retourné à l&apos;accueil

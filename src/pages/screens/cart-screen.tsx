@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BiMap } from "react-icons/bi";
-import CreditCardForm from "../components/cart/credit-card-form";
+import CreditCardForm from "../../components/cart/credit-card-form";
 import { updateControl } from "@/redux/features/controlsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineCloseCircle } from "react-icons/ai";
@@ -12,13 +12,13 @@ import {
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { SiApplepay } from "react-icons/si";
 import { BsCreditCard2Front } from "react-icons/bs";
-import ContinueShoppingBtn from "../components/cart/continue-shopping-btn";
+import ContinueShoppingBtn from "../../components/cart/continue-shopping-btn";
 import { IconButton } from "@material-tailwind/react";
-import PaiementMethod from "../components/cart/paiement-method";
+import PaiementMethod from "../../components/cart/paiement-method";
 
 import { removeFromCart } from "@/redux/features/cartSlice";
 import { RootState } from "@/redux/store";
-import Payement from "../components/payment/payment";
+import Payement from "../../components/payment/payment";
 import { ProductType } from "@/types/product.type";
 import { CartType } from "@/types/cart.type";
 import { validateCart } from "@/services/cart";

@@ -60,9 +60,9 @@ const OrderListComponent = ({ isAdmin }: OrderListComponentProps) => {
         handleClickTab2={handleClickTab2}
       />
       <div
-        className={`p-3 space-y-4 z-0 ${
+        className={`space-y-4 z-0 ${
           isAdmin ? "h-[32rem]" : "h-[36rem]"
-        } overflow-y-scroll scroll-b`}
+        } overflow-y-scroll scroll-b pt-5`}
       >
         <div className="grid grid-cols-1 space-y-2  ">
           {filteredOrders &&

@@ -32,7 +32,7 @@ const BottomTabBarComponent = ({ menu, setMenu }: MenuProps) => {
     //     <BiUserCircle className="h-6 w-6" />
     //   </div>
     // </div>
-    <div className="fixed bottom-0 left-0 z-50 w-full pb-3  h-16  bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer ">
+    <div className="fixed bottom-0 left-0 z-50 w-full pb-3  h-16 mt-3  bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer ">
       <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
         <button
           onClick={() => setMenu("home")}

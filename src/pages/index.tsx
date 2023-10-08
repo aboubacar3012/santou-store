@@ -2,8 +2,8 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 
 import HomeScreenPage from "./screens/home-screen";
-import NavbarComponent from "./components/shared/navbar";
-import BottomTabBarComponent from "./components/shared/bottom-tab-bar";
+import NavbarComponent from "../components/shared/navbar";
+import BottomTabBarComponent from "../components/shared/bottom-tab-bar";
 import AuthenticationScreen from "./screens/authentication-screen";
 import OrdersScreenPage from "./screens/orders-screen";
 import ProfileScreenPage from "./screens/profile-screen";
@@ -13,7 +13,7 @@ import FavoritesScreenPage from "./screens/favorites-screen";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { updateControl } from "@/redux/features/controlsSlice";
-import CartButton from "./components/shared/cart-button";
+import CartButton from "../components/shared/cart-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +31,7 @@ export default function Home() {
   }, [menu]);
 
   const containerStyle =
-    "fixed w-full  sm:w-6/12  overflow-y-scroll rounded-1xl  z-10 relative";
+    "fixed w-full  sm:w-6/12  overflow-y-scroll rounded-1xl  z-10";
 
   if (!auth.isAuthenticated)
     return (
@@ -51,14 +51,14 @@ export default function Home() {
 
   return (
     <div className={containerStyle}>
-      <NavbarComponent />
-      {menu === "home" && <HomeScreenPage />}
+      {/* <NavbarComponent /> */}
+      {/* {menu === "home" && <HomeScreenPage />}
       {menu === "orders" && <OrdersScreenPage />}
       {menu === "profile" && <ProfileScreenPage />}
-      {menu === "favorites" && <FavoritesScreenPage />}
+      {menu === "favorites" && <FavoritesScreenPage />} */}
 
-      <BottomTabBarComponent menu={menu} setMenu={setMenu} />
-      <CartButton />
+      {/* <BottomTabBarComponent menu={menu} setMenu={setMenu} /> */}
+      {/* <CartButton /> */}
     </div>
   );
 }
