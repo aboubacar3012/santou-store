@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addUserId } from "@/redux/features/cartSlice";
 import { ProductType } from "@/types/product.type";
 import { RootState } from "@/redux/store";
+import { Select, Option } from "@material-tailwind/react";
 
 type ProductDetailsProps = {
   handleShow: () => void;
@@ -35,10 +36,14 @@ const ProductDetails = ({
   isMerchant,
 }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState<"S" | "M" | "L" | "XL" | "XXL">("M");
+  const [color, setColor] = useState<"RED" | "BLUE" | "GREEN" | "YELLOW" | "BLACK" | "BLANC">("BLACK");
+  const [sex, setSex] = useState<"MAN" | "WOMAN" | "UNISEX">("UNISEX");
   const dispatch = useDispatch();
   const [showEdit, setShowEdit] = useState(true);
   const user = useSelector((state: RootState) => state.auth.user);
   const cart = useSelector((state: RootState) => state.cart);
+
 
   // use state for product edit
   // const [name, setName] = useState<string | null>(null);
@@ -58,7 +63,8 @@ const ProductDetails = ({
   // }, [product]);
 
   const handleAddProductToCart = (product: ProductType) => () => {
-    const productInCart: ProductType = { ...product, quantity };
+
+    const productInCart: any = { ...product, quantity, size, color, sex };
     dispatch(addToCart(productInCart));
     if (!cart.userId) dispatch(addUserId(user?.id as string));
     handleShow();
@@ -68,7 +74,7 @@ const ProductDetails = ({
 
   const clientFooter = (
     <div className=" flex w-full justify-around items-center ">
-      <div className="flex flex-row h-10 w-28  rounded-lg relative bg-transparent ">
+      <div className="flex flex-row h-10 w-20  rounded-lg relative bg-transparent ">
         <button
           onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
           className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"
@@ -91,12 +97,12 @@ const ProductDetails = ({
 
       <Button
         size="sm"
-        className="flex items-center gap-3 ml-1"
+        className="flex items-center gap-3 ml-1 text-[0.7rem]"
         fullWidth
         onClick={handleAddProductToCart(product)}
       >
-        <GiShoppingCart className="h-6 w-6" />
-        <span>Ajouter</span>
+        <GiShoppingCart className="h-5 w-5" />
+        <span>Ajouter au panier</span>
       </Button>
     </div>
   );
@@ -191,7 +197,7 @@ const ProductDetails = ({
               {product.price} €
             </Typography>
           </div>
-          <Typography
+          {/* <Typography
             variant="small"
             color="blue-gray"
             className="font-normal mb-2"
@@ -204,7 +210,134 @@ const ProductDetails = ({
             className="font-normal opacity-75 h-[6rem] overflow-y-scroll scroll-b text-justify"
           >
             {product.description}
-          </Typography>
+          </Typography> */}
+          {/* Taille */}
+
+          <div className="mt-3">
+            <Select
+              className="flex items-center"
+              label="Choisissez la taille"
+              value={size}
+              // disabled={
+              //   orderStatus === "CANCELLED" || orderStatus === "DELIVERED"
+              // }
+              onChange={(e) => setSize(e as "S" | "M" | "L" | "XL" | "XXL")}
+            >
+              <Option
+                value="S"
+                className="flex justify-start items-center"
+              >
+                S
+              </Option>
+              <Option
+                value="M"
+                className="flex justify-start items-center"
+              >
+                M
+              </Option>
+              <Option
+                value="L"
+                className="flex justify-start items-center"
+              >
+                L
+              </Option>
+              <Option
+                value="XL"
+                className="flex justify-start items-center"
+              >
+                XL
+              </Option>
+              <Option
+                value="XXL"
+                className="flex justify-start items-center"
+              >
+                XXL
+              </Option>
+              
+            </Select>
+          </div>
+          {/* Couleur */}
+          <div className="mt-3">
+            <Select
+              className="flex items-center"
+              label="Choisissez la couleur"
+              value={color}
+              // disabled={
+              //   orderStatus === "CANCELLED" || orderStatus === "DELIVERED"
+              // }
+              onChange={(e) => setColor(e as "RED" | "BLUE" | "GREEN" | "YELLOW" | "BLACK" | "BLANC")}
+            >
+              <Option
+                value="RED"
+                className="flex justify-start items-center"
+              >
+                ROUGE
+              </Option>
+              <Option
+                value="BLUE"
+                className="flex justify-start items-center"
+              >
+                BLEU
+              </Option>
+              <Option
+                value="GREEN"
+                className="flex justify-start items-center"
+              >
+                VERT
+              </Option>
+              <Option
+                value="YELLOW"
+                className="flex justify-start items-center"
+              >
+                JAUNE
+              </Option>
+              <Option
+                value="BLACK"
+                className="flex justify-start items-center"
+              >
+                NOIR
+              </Option>
+              <Option
+                value="BLANC"
+                className="flex justify-start items-center"
+              >
+                BLANC
+              </Option>
+             
+              
+            </Select>
+          </div>
+          {/* Sexe */}
+          <div className="mt-3">
+            <Select
+              className="flex items-center"
+              label="Choisissez la taille"
+              value={sex}
+              // disabled={
+              //   orderStatus === "CANCELLED" || orderStatus === "DELIVERED"
+              // }
+              onChange={(e) => setSex(e as "MAN" | "WOMAN" | "UNISEX")}
+            >
+              <Option
+                value="MAN"
+                className="flex justify-start items-center"
+              >
+                HOMME
+              </Option>
+              <Option
+                value="WOMAN"
+                className="flex justify-start items-center"
+              >
+                FEMME
+              </Option>
+              <Option
+                value="UNISEX"
+                className="flex justify-start items-center"
+              >
+                UNISEX
+              </Option>
+            </Select>
+          </div>
         </CardBody>
         <CardFooter className="pt-0">
           {isMerchant ? merchantFooter : clientFooter}

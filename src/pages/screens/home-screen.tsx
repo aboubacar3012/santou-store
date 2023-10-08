@@ -10,9 +10,6 @@ const HomeScreenPage = () => {
       <h4 className="font-semibold p-3">Nos Produits</h4>
       <hr className="" />
       <ProductListComponent />
-      <h4 className="font-semibold p-3">Nos Produits</h4>
-      <hr className="" />
-      <ProductListComponent />
       {/* <EventListComponent /> */}
     </div>
   );

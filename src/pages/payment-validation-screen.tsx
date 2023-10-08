@@ -81,11 +81,11 @@ const PaymentValidationScreen = () => {
 
   // Automatically redirect to the payment page in 10 seconds
   useEffect(() => {
-    // if (pageStatus === "loading") {
-    //   setTimeout(() => {
-    //     router.push("/screens/home-screen");
-    //   }, 10000);
-    // }
+    if (pageStatus === "loading") {
+      setTimeout(() => {
+        router.push("/screens/home-screen");
+      }, 10000);
+    }
   }, []);
 
   const containerStyle =

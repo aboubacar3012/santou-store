@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import ProductDetails from "./product-details";
 import { ProductType } from "@/types/product.type";
+import { Button } from "@material-tailwind/react";
 
 interface ProductProps {
   product: ProductType;
@@ -45,6 +46,9 @@ const ProductComponent = ({ product }: ProductProps) => {
                 </span>
               </button>
             )} */}
+            <Button fullWidth color="blue" ripple={true} className="flex justify-around items-center">
+              Afficher <AiOutlineEye className="h-6 w-6" />
+            </Button>
           </div>
         </div>
       </div>

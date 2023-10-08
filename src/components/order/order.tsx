@@ -79,13 +79,16 @@ const OrderComponent = ({
   if (!order || (user?.role === "USER" && order.user?.id !== user?.id))
     return null;
 
-  const TABLE_HEAD = ["Nom du produit", "Prix", "Image"];
+  const TABLE_HEAD = ["Nom du produit", "Prix", "Taille", "Couleur", "Sexe", "Image"];
 
   const TABLE_ROWS = order.products.map((product) => {
     return {
       name: product.name,
       price: product.price,
       image: product.images[0],
+      size: product.size,
+      color: product.color,
+      sex: product.sex
     };
   });
 
@@ -285,7 +288,7 @@ const OrderComponent = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {TABLE_ROWS.map(({ name, price, image }, index) => (
+                  {TABLE_ROWS.map(({ name, price, image, size, color, sex }, index) => (
                     <tr key={name} className="even:bg-blue-gray-50/50">
                       <td className="p-4">
                         <Typography
@@ -303,6 +306,33 @@ const OrderComponent = ({
                           className="font-normal"
                         >
                           {price.toFixed(2)} €
+                        </Typography>
+                      </td>
+                      <td className="p-4">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {size}
+                        </Typography>
+                      </td>
+                      <td className="p-4">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {color}
+                        </Typography>
+                      </td>
+                      <td className="p-4">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {sex}
                         </Typography>
                       </td>
                       <td className="p-4">
@@ -325,6 +355,3 @@ const OrderComponent = ({
 };
 
 export default OrderComponent;
-function updateOrder(order: any) {
-  throw new Error("Function not implemented.");
-}

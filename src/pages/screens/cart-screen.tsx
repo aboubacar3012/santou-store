@@ -22,6 +22,7 @@ import Payement from "../../components/payment/payment";
 import { ProductType } from "@/types/product.type";
 import { CartType } from "@/types/cart.type";
 import { validateCart } from "@/services/cart";
+import { useRouter } from "next/router";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
@@ -31,6 +32,7 @@ const CartScreen = () => {
     "credit-card"
   );
   const token = useSelector((state: RootState) => state.auth?.token);
+  const router = useRouter();
 
   const handleValidateCart = async (cart: CartType, token: string | null) => {
     const response = await validateCart(cart, token);
@@ -72,7 +74,7 @@ const CartScreen = () => {
             {/* close button */}
             <div className="ml-3 flex h-7 items-center">
               <button
-                onClick={() => dispatch(updateControl({ showCart: false }))}
+                onClick={() => router.back()}
                 type="button"
                 className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
               >

@@ -6,6 +6,29 @@ export enum ProductStatusEnum {
   INACTIVE = "INACTIVE",
 }
 
+export enum ProductSizeEnum {
+  S = "S",
+  M = "M",
+  L = "L",
+  XL = "XL",
+  XXL = "XXL",
+}
+
+export enum ProductColorEnum {
+  RED = "RED",
+  GREEN = "GREEN",
+  BLUE = "BLUE",
+  YELLOW = "YELLOW",
+  BLACK = "BLACK",
+  WHITE = "WHITE",
+}
+
+export enum ProductGenderEnum {
+  MAN = "MAN",
+  WOMAN = "WOMAN",
+  UNISEX = "UNISEX",
+}
+
 export type ProductType = {
   id: string;
   name: string;
@@ -13,6 +36,9 @@ export type ProductType = {
   merchant?: UserType;
   description: string;
   price: number;
+  size?: ProductSizeEnum;
+  color?: ProductColorEnum;
+  sex?: ProductGenderEnum;
   quantity?: number;
   discount: number;
   stock: number;
