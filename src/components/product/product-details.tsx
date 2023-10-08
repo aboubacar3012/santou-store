@@ -168,7 +168,7 @@ const ProductDetails = ({
       }}
       className=""
     >
-      <DialogHeader className="justify-between">
+      <DialogHeader className="text-md justify-between">
         {product.name}
         <IconButton
           color="blue-gray"
@@ -180,21 +180,17 @@ const ProductDetails = ({
         </IconButton>
       </DialogHeader>
       <DialogBody divider>
-        <CardHeader shadow={false} floated={false} className="h-60">
+        <CardHeader shadow={false} floated={false} className="h-56">
           <img
             src={product.images[0]}
             alt="card-image"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-fill"
           />
         </CardHeader>
         <CardBody>
           <div className=" flex items-center justify-between">
             <Typography color="blue-gray" className="font-medium">
-              {product.name}
-            </Typography>
-
-            <Typography color="blue-gray" className="font-medium">
-              {product.price} €
+              <strong>Prix:</strong> {product.price} €
             </Typography>
           </div>
           {/* <Typography

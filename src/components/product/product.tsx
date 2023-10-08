@@ -4,6 +4,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import ProductDetails from "./product-details";
 import { ProductType } from "@/types/product.type";
 import { Button } from "@material-tailwind/react";
+import { truncateText } from "@/utils/truncate-text";
 
 interface ProductProps {
   product: ProductType;
@@ -23,17 +24,17 @@ const ProductComponent = ({ product }: ProductProps) => {
         onClick={handleShow}
         className="relative flex w-full max-w-[26rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg"
       >
-        <div className="relative mx-4 mt-4 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
-          <img src={product.images[0]} alt="ui/ux review check" />
+        <div className="relative h-24 mx-4 mt-4 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
+          <img src={product.images[0]} alt="ui/ux review check" className="h-full w-full object-fill" />
           <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60" />
         </div>
         <div className="p-1">
           <div className="flex flex-col items-center justify-between">
             <h5 className="block font-sans text-md font-medium leading-snug tracking-normal text-blue-gray-900 antialiased">
-              {product.name}
+              {truncateText(product.name, 18)}
             </h5>
             <p className="flex items-center gap-1.5 font-sans text-base font-normal leading-relaxed text-blue-gray-900 antialiased">
-              Prix: {product.price} €
+              <strong>Prix:</strong> {product.price} €
             </p>
             {/* {!isMerchant && (
               <button
