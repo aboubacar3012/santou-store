@@ -167,7 +167,7 @@ const Layout = ({ children }: any) => {
                 Commandes
               </span>
             </button>
-            <button
+            {/* <button
               onClick={() => router.push("/screens/favorites-screen")}
               type="button"
               className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
@@ -176,7 +176,7 @@ const Layout = ({ children }: any) => {
               <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
                 Favoris
               </span>
-            </button>
+            </button> */}
             <button
               onClick={() => router.push("/screens/profile-screen")}
               type="button"

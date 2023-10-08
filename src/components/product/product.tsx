@@ -34,7 +34,7 @@ const ProductComponent = ({ product }: ProductProps) => {
             <p className="flex items-center gap-1.5 font-sans text-base font-normal leading-relaxed text-blue-gray-900 antialiased">
               Prix: {product.price} €
             </p>
-            {!isMerchant && (
+            {/* {!isMerchant && (
               <button
                 className="!absolute top-4 right-4 h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-full text-center align-middle font-sans text-xs font-medium uppercase text-red-500 transition-all hover:bg-red-500/10 active:bg-red-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
@@ -44,7 +44,7 @@ const ProductComponent = ({ product }: ProductProps) => {
                   <AiOutlineHeart className="h-6 w-6" />
                 </span>
               </button>
-            )}
+            )} */}
           </div>
         </div>
       </div>
