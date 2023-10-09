@@ -19,7 +19,7 @@ export default function CheckoutForm() {
 
   const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState<string | null>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const loading = useSelector((state: RootState) => state.controls.values.spinner);
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch()
   
@@ -57,7 +57,7 @@ export default function CheckoutForm() {
       return;
     }
 
-    setIsLoading(true);
+    dispatch(updateControl({ spinner: true }))
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -93,7 +93,7 @@ export default function CheckoutForm() {
       setMessage("An unexpected error occurred.");
     }
 
-    setIsLoading(false);
+    dispatch(updateControl({ spinner: false }))
   };
 
   const paymentElementOptions = {
@@ -103,31 +103,31 @@ export default function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
-      <button disabled={isLoading || !stripe || !elements} id="submit"></button>
+      <button disabled={loading || !stripe || !elements} id="submit"></button>
       <button
          onClick={() => {
           dispatch(updateControl({ showCart: false }))
           
         }}
         className="mt-2 flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm"
-        disabled={isLoading || !stripe || !elements}
+        disabled={loading || !stripe || !elements}
         id="submit"
       >
         <a href="#" className="flex items-center justify-center  ">
           <span id="button-text">
-            {isLoading ? (
+            {/* {loading ? (
               <div
                 className="spinner px-2 flex items-center space-x-3"
                 id="spinner"
               >
                 <span>Paiement en cours</span> <Spinner className="h-4 w-4" />
               </div>
-            ) : (
+            ) : ( */}
               <div className="flex items-center">
                 Payer ma commande
                 <RiSecurePaymentFill className="w-8 h-8 px-2" />
               </div>
-            )}
+            {/* )} */}
           </span>
         </a>
       </button>

@@ -4,12 +4,14 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 type Controls = {
   values: {
     showCart: boolean;
+    spinner: boolean;
   };
 };
 
 const initialState: Controls = {
   values: {
     showCart: false,
+    spinner: false,
   },
 };
 

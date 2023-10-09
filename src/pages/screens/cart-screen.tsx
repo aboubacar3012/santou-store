@@ -23,6 +23,7 @@ import { ProductType } from "@/types/product.type";
 import { CartType } from "@/types/cart.type";
 import { validateCart } from "@/services/cart";
 import { useRouter } from "next/router";
+import Toast from "@/components/shared/toast";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
@@ -39,8 +40,16 @@ const CartScreen = () => {
     if (response.success) {
       setStep(2);
       localStorage.setItem("orderId", response.data.id);
-    }
+    } else if (response.error && response.status === 401){
+      // windows confirm 
+      const confirm = window.confirm("Vous devez vous connecter pour valider votre commande");
+      if (confirm) {
+        router.push("/auth/login");
+      }
+    }else 
+      router.push("/screens/home-screen");
   };
+  
 
   // empty cart
   if (!cart.products.length)

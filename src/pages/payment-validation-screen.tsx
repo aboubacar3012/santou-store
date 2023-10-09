@@ -8,11 +8,11 @@ import { RootState } from "@/redux/store";
 import { OrderStatusEnum, PaymentStatusEnum } from "@/types/order.type";
 import { createOrderService, updateOrderByIdService } from "@/services/orders";
 import { clearCart } from "@/redux/features/cartSlice";
+import { updateControl } from "@/redux/features/controlsSlice";
 
 const PaymentValidationScreen = () => {
   const router = useRouter();
   const [paied, setPaied] = useState<boolean | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string | undefined>("");
   const [pageStatus, setPageStatus] = useState<"loading" | "paied" | "unpaied">(
     "loading"
@@ -21,9 +21,10 @@ const PaymentValidationScreen = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
+  const loading = useSelector((state: RootState) => state.controls.values.spinner);
 
   const checkPaymentStatus = async (payementInt: any) => {
-    setPageStatus("loading");
+    dispatch(updateControl({ spinner: true }))
     try {
       const response = await fetch(
         `https://api.stripe.com/v1/payment_intents/${payementInt}`,
@@ -45,6 +46,7 @@ const PaymentValidationScreen = () => {
         setMessage("Le paiement a échoué.");
         setPageStatus("unpaied");
       }
+      dispatch(updateControl({ spinner: false }))
     } catch (error) {
       setMessage(
         "Une erreur est survenue lors de la récupération du statut du paiement."
@@ -79,28 +81,28 @@ const PaymentValidationScreen = () => {
     }
   }, [router, paied]);
 
+
   // Automatically redirect to the payment page in 10 seconds
   useEffect(() => {
-    if (pageStatus === "loading") {
+      if(!loading)
       setTimeout(() => {
         router.push("/screens/home-screen");
       }, 10000);
-    }
   }, []);
 
   const containerStyle =
-    "fixed w-full  overflow-y-scroll rounded-1xl  z-10";
+    "overflow-y-scroll rounded-1xl  z-10";
 
   return (
     <div className={`${containerStyle}`}>
      
-      {pageStatus === "loading" && <div>Loading...</div>}
+      {pageStatus === "loading" && <div>Chargement de la page...</div>}
       {pageStatus === "paied" && (
-        <div className="bg-white  mt-12 rounded-3xl border">
+        <div className="bg-white  mt-8 rounded-3xl border">
           <div className="bg-gray-100 rounded-3xl p-6 ">
             <svg
               viewBox="0 0 24 24"
-              className="text-green-600 w-16 h-16 mx-auto my-6"
+              className="text-green-600 w-16 h-16 mx-auto my-4"
             >
               <path
                 fill="currentColor"
@@ -128,8 +130,8 @@ const PaymentValidationScreen = () => {
         </div>
       )}
       {pageStatus === "unpaied" && (
-        <div className="bg-white  mt-12 mx-2 rounded-3xl border">
-          <div className="bg-gray-100 rounded-3xl p-6  md:mx-auto">
+        <div className="bg-white  mt-8 rounded-3xl border">
+          <div className="bg-gray-100 rounded-3xl p-6 ">
             <svg
               viewBox="0 0 24 24"
               className="text-red-600 w-16 h-16 mx-auto my-6"

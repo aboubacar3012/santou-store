@@ -9,6 +9,7 @@ import { updateControl } from "@/redux/features/controlsSlice";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/router";
 import CartButton from "./cart-button";
+import SpinnerOverlay from "./spinner-overlay";
 
 const Layout = ({ children }: any) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Layout = ({ children }: any) => {
     (state: RootState) => state.controls.values.showCart
   );
   const auth = useSelector((state: RootState) => state.auth);
+  const loading = useSelector((state: RootState) => state.controls.values.spinner);
   const router = useRouter();
 
   // if (
@@ -258,6 +260,7 @@ const Layout = ({ children }: any) => {
       )}
 
       {/* <CartButton /> */}
+      <SpinnerOverlay show={loading} />
     </div>
   );
 };

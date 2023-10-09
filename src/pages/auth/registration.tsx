@@ -15,6 +15,7 @@ import { login } from "@/redux/features/authSlice";
 import { useRouter } from "next/router";
 import NotificationMessage from "@/components/shared/notification-message";
 import { RootState } from "@/redux/store";
+import Select from 'react-select'
 
 interface Props {
   setStep: (value: number) => void;
@@ -170,6 +171,7 @@ const _AdresseFormComponent = ({
   setZipCode,
   handleValidStepTwo,
 }: _AdresseFormComponentProps) => {
+  
   return (
     <div className="relative flex w-full flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="flex flex-col gap-4 p-6">
@@ -206,23 +208,22 @@ const _AdresseFormComponent = ({
         </div>
 
         <div className="relative h-10  min-w-[200px]">
-          <select
+         <div className="relative h-11 w-full min-w-[200px]">
+          <input
             value={city}
+            type="text"
             onChange={(e) => setCity(e.target.value)}
-            className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-          >
-            <option value="paris">Paris</option>
-            <option value="marseille">Marseille</option>
-            <option value="lyon">Lyon</option>
-            <option value="toulouse">Toulouse</option>
-          </select>
-          <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+            className="peer h-full w-full rounded-md border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+          />
+          <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
             Ville
           </label>
         </div>
+        </div>
 
-        <div className="relative h-10  min-w-[200px]">
+        <div  className="relative h-10  min-w-[200px]">
           <select
+          disabled={true}
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
@@ -428,7 +429,7 @@ const RegistrationComponent = () => {
       return false;
     }
 
-    const streetRegex = /^[0-9]{1,4} [a-zA-Z0-9\s]{1,}$/;
+    const streetRegex = /^[0-9]{1,4} [a-zA-Z0-9\sÀ-ÿ]{1,}$/;
     if (!streetRegex.test(street)) {
       alert("Le numéro et le nom de rue ne sont pas valide");
       return false;

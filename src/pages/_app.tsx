@@ -1,16 +1,12 @@
 import "@/styles/globals.css";
 import { setSafeArea } from "@/utils/fixStatusBarHeight";
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
-import { store, persistor, RootState } from "../redux/store";
+import { store, persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Analytics } from '@vercel/analytics/react';
 
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import {
-  useQuery,
-  useMutation,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
@@ -21,7 +17,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import useScreenDimension from "@/hooks/useScreenDimension";
 import Layout from "../components/shared/layout";
-import { useRouter } from "next/router";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -35,6 +30,7 @@ const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dimension = useScreenDimension();
+
 
   // const options = {
   //   clientSecret,
@@ -59,6 +55,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 Accès disponible uniquement sur mobile
               </div>
             )}
+           
 
             <Layout>
               <Component {...pageProps} />

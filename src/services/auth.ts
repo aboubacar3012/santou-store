@@ -13,8 +13,8 @@ export const loginService = async (loginInfo: {
     },
     body: JSON.stringify(loginInfo),
   });
-  const data = await res.json();
-  return data;
+  return res.json();
+
 };
 
 export const registerService = async (registerInfo: RegisterType) => {
@@ -25,6 +25,6 @@ export const registerService = async (registerInfo: RegisterType) => {
     },
     body: JSON.stringify(registerInfo),
   });
-  const data = await res.json();
-  return data;
+  return res.json();
+
 };
