@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { store, persistor, RootState } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { Analytics } from '@vercel/analytics/react';
 
 import { Provider, useSelector } from "react-redux";
 import {
@@ -61,6 +62,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
             <Layout>
               <Component {...pageProps} />
+              <Analytics />
             </Layout>
           </Elements>
           <ReactQueryDevtools initialIsOpen={false} />

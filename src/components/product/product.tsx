@@ -34,7 +34,7 @@ const ProductComponent = ({ product }: ProductProps) => {
               {truncateText(product.name, 18)}
             </h5>
             <p className="flex items-center gap-1.5 font-sans text-base font-normal leading-relaxed text-blue-gray-900 antialiased">
-              <strong>Prix:</strong> {product.price} €
+              <strong>Prix:</strong> {product.price/100} €
             </p>
             {/* {!isMerchant && (
               <button

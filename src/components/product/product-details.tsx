@@ -190,7 +190,7 @@ const ProductDetails = ({
         <CardBody>
           <div className=" flex items-center justify-between">
             <Typography color="blue-gray" className="font-medium">
-              <strong>Prix:</strong> {product.price} €
+              <strong>Prix:</strong> {product.price/100} €
             </Typography>
           </div>
           {/* <Typography

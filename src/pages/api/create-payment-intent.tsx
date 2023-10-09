@@ -9,7 +9,7 @@ const calculateCartAmount = (cart: CartType) => {
   cart.products.map((product) => {
     product.quantity && (amount += product.price * product.quantity);
   });
-  return (amount * 100).toFixed(0);
+  return amount * 100;
 };
 
 export default async function handler(

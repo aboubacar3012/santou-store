@@ -168,7 +168,7 @@ const OrderComponent = ({
         <hr className="border-gray-500" />
         <div className="flex flex-col">
           <div className="flex justify-between">
-            <div>Vendeur: AfriStore</div>
+            <div>Vendeur: Guistore</div>
             <div>Prix TTC: {order.totalAmount.toFixed(2)}€</div>
           </div>
           <div>

@@ -47,7 +47,7 @@ const NavbarComponent = () => {
       </nav>
       <div className="p-3 rounded-lg  flex flex-col w-full">
         <h4 className="text-white text-xl font-semibold  leading-tight truncate">
-          AfriStore
+          GuiStore
         </h4>
         <div className="flex justify-between items-center ">
           <div className="flex flex-col">

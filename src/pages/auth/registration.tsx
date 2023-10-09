@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -10,10 +10,11 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { RegisterType } from "@/types/auth.type";
 import { registerService } from "@/services/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/redux/features/authSlice";
 import { useRouter } from "next/router";
 import NotificationMessage from "@/components/shared/notification-message";
+import { RootState } from "@/redux/store";
 
 interface Props {
   setStep: (value: number) => void;
@@ -322,10 +323,13 @@ const RegistrationComponent = () => {
 
   const [message, setMessage] = useState<string | null>(null);
 
+  const auth = useSelector((state: RootState) => state.auth);
+
   const [step, setStep] = useState(0);
 
   const dispatch = useDispatch();
   const router = useRouter();
+
 
   // Mutations
   const mutation = useMutation(
@@ -351,6 +355,13 @@ const RegistrationComponent = () => {
       },
     }
   );
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      router.push("/screens/home-screen");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.isAuthenticated]);
 
   function validateFrenchPhoneNumber(phoneNumber: string) {
     // Regex pattern

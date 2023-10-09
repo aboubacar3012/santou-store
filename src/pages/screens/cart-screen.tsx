@@ -105,7 +105,7 @@ const CartScreen = () => {
                             </h3>
                             <p className="ml-4">
                               {product.quantity &&
-                                product.price * product.quantity}
+                                (product.price * product.quantity)/100}
                               €
                             </p>
                           </div>
@@ -191,7 +191,7 @@ const CartScreen = () => {
           </div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Sous-total</p>
-            <p>{cart.amount.toFixed(2)}€</p>
+            <p>{cart.amount/100}€</p>
           </div>
           <hr className="my-1" />
           <div className="flex justify-between text-base font-medium text-gray-900">
@@ -202,7 +202,7 @@ const CartScreen = () => {
           <hr className="my-1" />
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Total</p>
-            <p>{cart.amount.toFixed(2)}€</p>
+            <p>{cart.amount/100}€</p>
           </div>
 
           {/* <PaiementMethod method={method} setMethod={setMethod} /> */}

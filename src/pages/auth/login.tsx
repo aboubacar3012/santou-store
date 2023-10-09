@@ -1,11 +1,12 @@
 import { loginService } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/redux/features/authSlice";
 import { setSafeArea } from "@/utils/fixStatusBarHeight";
 import NotificationMessage from "@/components/shared/notification-message";
 import { useRouter } from "next/router";
+import { RootState } from "@/redux/store";
 
 // interface RegistrationProps {
 //   setIsLogin: (value: boolean) => void;
@@ -15,6 +16,7 @@ const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>("");
+  const auth = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -22,6 +24,13 @@ const LoginComponent = () => {
   useEffect(() => {
     setSafeArea();
   }, []);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      router.push("/screens/home-screen");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.isAuthenticated]);
 
   // Mutations
   const mutation = useMutation(
@@ -34,7 +43,6 @@ const LoginComponent = () => {
           );
           router.push("/screens/home-screen");
           // setMessage(data.message);
-
         } else {
           // alert("Email ou mot de passe incorrect");
           setMessage("Email ou mot de passe incorrect");

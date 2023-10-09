@@ -43,7 +43,7 @@ const Layout = ({ children }: any) => {
         className="fixed w-full top-0 rounded-b-2xl bg-center cursor-pointer object-cover z-10 shadow-lg"
         style={{
           backgroundImage:
-            'url("https://images.unsplash.com/photo-1622180203374-9524a54b734d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")',
+            'url("https://png.pngtree.com/png-clipart/20190927/ourlarge/pngtree-guinea-waving-flag-png-image_1735000.jpg")',
         }}
       >
         <nav className="p-2 flex flex-grow relative justify-between z-10 items-center mx-auto h-18">
@@ -77,12 +77,12 @@ const Layout = ({ children }: any) => {
           </div>
         </nav>
         <div className="p-3 rounded-lg  flex flex-col w-full">
-          <h4 className="text-white text-xl font-semibold  leading-tight truncate">
-            AfriStore
+          <h4 className="text-black-900 text-xl font-semibold  leading-tight truncate">
+            Guistore
           </h4>
           <div className="flex justify-between items-center ">
             <div className="flex flex-col">
-              <h2 className="text-sm flex items-center text-gray-100 font-normal">
+              <h2 className="text-sm flex items-center text-black-900 font-normal">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 mr-1"
@@ -103,7 +103,7 @@ const Layout = ({ children }: any) => {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                Votre boutique 100% africaine
+                Votre boutique 100% guinéenne
               </h2>
             </div>
           </div>
