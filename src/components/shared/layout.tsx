@@ -218,7 +218,7 @@ const Layout = ({ children }: any) => {
             </button>
             </div>
             <div  onClick={() => router.push("/screens/cart-screen")} className="flex flex-col items-center  hover:text-blue-400 ">
-              <div className="absolute bottom-10 shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-14 h-14 p-2 text-white transition ease-in duration-500 ">
+              <div className="absolute bottom-9 shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-16 h-16 p-2 text-white transition ease-in duration-500 ">
               <div className="flex flex-col justify-end items-center">
               {cart.products.length > 0 && (
                 <span className="-mb-3 text-red-500 text-xl">
