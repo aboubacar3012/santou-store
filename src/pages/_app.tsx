@@ -65,7 +65,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               <Analytics />
             </Layout>
           </Elements>
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </QueryClientProvider>
       </PersistGate>
     </Provider>

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ProductComponent from "./product";
-import { generate50Products } from "@/docs/generateProduct";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/services/products";
 import { ProductType } from "@/types/product.type";
 
-const productList = generate50Products();
+
 const ProductListComponent = () => {
   const [products, setProducts] = useState([]);
   // Queries

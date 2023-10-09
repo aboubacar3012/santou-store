@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GenderEnum, RoleEnum, UserType } from "@/types/user.type";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/router";
+import NeedToConnectComponent from "@/components/shared/need-to-connect";
 
 export const user: UserType = {
   id: "12345",
@@ -45,7 +46,11 @@ const ProfileScreenPage = () => {
   const [pageToShow, setPageToShow] = useState<PageToShow>(PageToShow.profile);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const router = useRouter()
+
+  if(!isAuthenticated)
+  return <NeedToConnectComponent />
 
   if (pageToShow === PageToShow.profile)
     return (

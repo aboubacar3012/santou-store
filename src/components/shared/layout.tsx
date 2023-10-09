@@ -19,19 +19,19 @@ const Layout = ({ children }: any) => {
   const auth = useSelector((state: RootState) => state.auth);
   const router = useRouter();
 
-  if (
-    !auth.isAuthenticated &&
-    router.pathname !== "/auth/login" &&
-    router.pathname !== "/auth/registration"
-  ) {
-    router.push("/auth/login");
-  }
+  // if (
+  //   !auth.isAuthenticated &&
+  //   router.pathname !== "/auth/login" &&
+  //   router.pathname !== "/auth/registration"
+  // ) {
+  //   router.push("/auth/login");
+  // }
 
   const handleShowBottomTab = () => {
     return (
-      auth.isAuthenticated &&
-      router.pathname !== "/auth/login" &&
-      router.pathname !== "/auth/registration" &&
+      // auth.isAuthenticated &&
+      // router.pathname !== "/auth/login" &&
+      // router.pathname !== "/auth/registration" &&
       router.pathname !== "/screens/cart-screen"
     );
   };
