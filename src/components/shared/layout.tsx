@@ -19,7 +19,6 @@ const Layout = ({ children }: any) => {
   const auth = useSelector((state: RootState) => state.auth);
   const router = useRouter();
 
-
   if (
     !auth.isAuthenticated &&
     router.pathname !== "/auth/login" &&
@@ -33,7 +32,7 @@ const Layout = ({ children }: any) => {
       auth.isAuthenticated &&
       router.pathname !== "/auth/login" &&
       router.pathname !== "/auth/registration" &&
-      router.pathname !== "/screens/cart-screen" 
+      router.pathname !== "/screens/cart-screen"
     );
   };
   return (
@@ -145,42 +144,109 @@ const Layout = ({ children }: any) => {
       </main>
       {/* Tab inférieur fixe */}
       {handleShowBottomTab() && (
-        <footer className=" bg-gray-900 shadow-3xl rounded-2xl cursor-pointer text-white p-4 fixed bottom-0 w-full">
-          <div className="container mx-auto flex justify-between">
+        // <footer className=" bg-gray-900 shadow-3xl rounded-2xl cursor-pointer text-white p-4 fixed bottom-0 w-full">
+        //   <div className="container mx-auto flex justify-between">
+        // <button
+        //   onClick={() => router.push("/screens/home-screen")}
+        //   type="button"
+        //   className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
+        // >
+        //   <BiHomeAlt2 className="h-6 w-6" />
+        //   <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
+        //     Home
+        //   </span>
+        // </button>
+        //     <button
+        //       onClick={() => router.push("/screens/orders-screen")}
+        //       type="button"
+        //       className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
+        //     >
+        //       <AiOutlineHistory className="h-6 w-6" />
+        //       <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
+        //         Commandes
+        //       </span>
+        //     </button>
+        //     <button className="absolute bottom-5 shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-20 h-20 p-2 text-white transition ease-in duration-200 ">
+        //       <i className="fas fa-phone-alt"></i>
+        //       <span className="animate-ping absolute inline-flex h-full w-full rounded-full border-4 opacity-50"></span>
+        //     </button>
+        //     <button
+        //       onClick={() => router.push("/screens/favorites-screen")}
+        //       type="button"
+        //       className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
+        //     >
+        //       <BsBookmarks className="h-6 w-6" />
+        //       <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
+        //         Favoris
+        //       </span>
+        //     </button>
+        //     <button
+        //       onClick={() => router.push("/screens/profile-screen")}
+        //       type="button"
+        //       className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
+        //     >
+        //       <BiUserCircle className="h-6 w-6" />
+        //       <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
+        //         Profil
+        //       </span>
+        //     </button>
+        //   </div>
+        // </footer>
+        <div className="sticky bottom-2  p-5 px-6 m-2   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer">
+          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
             <button
               onClick={() => router.push("/screens/home-screen")}
               type="button"
-              className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
+              className="inline-flex flex-col items-center justify-center group"
             >
               <BiHomeAlt2 className="h-6 w-6" />
               <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
                 Home
               </span>
             </button>
+          </div>
+          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
             <button
               onClick={() => router.push("/screens/orders-screen")}
               type="button"
-              className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
+              className="inline-flex flex-col items-center justify-center group"
             >
               <AiOutlineHistory className="h-6 w-6" />
               <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
                 Commandes
               </span>
             </button>
-            {/* <button
+          </div>
+          <div className="flex flex-col items-center  hover:text-blue-400 ">
+            <div className="absolute bottom-10 shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-16 h-16 p-2 text-white transition ease-in duration-500 ">
+              <div className="flex flex-col justify-end items-center">
+                {cart.products.length > 0 && (
+                  <span className="-mb-3 text-red-500 text-xl">
+                    {cart.products.length}
+                  </span>
+                )}
+                <GiShoppingCart className="w-8 h-8" />
+              </div>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full border-4 opacity-50" />
+            </div>
+          </div>
+          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+            <button
               onClick={() => router.push("/screens/favorites-screen")}
               type="button"
-              className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
+              className="inline-flex flex-col items-center justify-center group"
             >
               <BsBookmarks className="h-6 w-6" />
               <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
                 Favoris
               </span>
-            </button> */}
+            </button>
+          </div>
+          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
             <button
               onClick={() => router.push("/screens/profile-screen")}
               type="button"
-              className="inline-flex flex-col items-center justify-center px-5 transition ease-in duration-200 hover:text-blue-400 group"
+              className="inline-flex flex-col items-center justify-center group"
             >
               <BiUserCircle className="h-6 w-6" />
               <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
@@ -188,7 +254,7 @@ const Layout = ({ children }: any) => {
               </span>
             </button>
           </div>
-        </footer>
+        </div>
       )}
 
       <CartButton />

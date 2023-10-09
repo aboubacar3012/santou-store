@@ -12,7 +12,7 @@ const NavbarComponent = () => {
       className="realtive sticky top-0  w-full rounded-b-2xl bg-center cursor-pointer object-cover z-10 shadow-lg"
       style={{
         backgroundImage:
-          'https://dbdzm869oupei.cloudfront.net/img/mantels/preview/45206.png")',
+          'url("https://images.unsplash.com/photo-1622180203374-9524a54b734d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")',
       }}
     >
       <nav className="p-2 flex flex-grow relative justify-between z-10 items-center mx-auto h-18">
@@ -47,7 +47,7 @@ const NavbarComponent = () => {
       </nav>
       <div className="p-3 rounded-lg  flex flex-col w-full">
         <h4 className="text-white text-xl font-semibold  leading-tight truncate">
-          GuiStore
+          AfriStore
         </h4>
         <div className="flex justify-between items-center ">
           <div className="flex flex-col">
