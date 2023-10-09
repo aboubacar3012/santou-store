@@ -169,7 +169,7 @@ const OrderComponent = ({
         <div className="flex flex-col">
           <div className="flex justify-between">
             <div>Vendeur: Guistore</div>
-            <div>Prix TTC: {order.totalAmount.toFixed(2)}€</div>
+            <div>Prix TTC: {order.totalAmount/100}€</div>
           </div>
           <div>
             Client: {order.user?.firstName} {order.user?.lastName}
@@ -305,7 +305,7 @@ const OrderComponent = ({
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {price.toFixed(2)} €
+                          {price/100} €
                         </Typography>
                       </td>
                       <td className="p-4">
