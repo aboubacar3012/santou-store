@@ -4,12 +4,13 @@ import cartSlice from "./features/cartSlice";
 import authSlice from "./features/authSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import thunk from "redux-thunk";
+import filterSlice from "./features/filterSlice";
 
 const rootReducer = combineReducers({
   controls: controlsSlice,
   cart: cartSlice,
   auth: authSlice,
+  filter: filterSlice,
 });
 
 const persistConfig = {

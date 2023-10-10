@@ -32,6 +32,7 @@ export enum ProductGenderEnum {
 export type ProductType = {
   id: string;
   name: string;
+  slug?: string,
   category: CategoryType[];
   merchant?: UserType;
   description: string;

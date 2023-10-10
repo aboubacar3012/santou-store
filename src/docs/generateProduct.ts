@@ -70,7 +70,7 @@ const generateProduct = (productId: number): ProductType => {
 
 export const generate50Products = (): ProductType[] => {
   const products: ProductType[] = [];
-  for (let i = 1; i <= 50; i++) {
+  for (let i = 1; i <= 10; i++) {
     const product = generateProduct(i);
     products.push(product);
   }

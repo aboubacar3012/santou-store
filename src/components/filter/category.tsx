@@ -20,11 +20,21 @@ const CategoryFilterComponent = () => {
     <div>
       <h4 className="font-semibold mt-1">Categories</h4>
       <div className="flex items-center justify-between overflow-y-scroll">
+        {/* Tout afficher */}
+        <div
+          className={`px-2 py-1 my-1 rounded-lg text-gray-600 bg-gray-100 border-gray-100 cursor-pointer mr-2 ${
+            selectedCategory === null ? "border border-green-900" : ""
+          }`}
+          onClick={() => handleCategoryClick(null)}
+          style={{ whiteSpace: "nowrap" }}
+        >
+          <p className="text-sm mt-1">Tout afficher</p>
+        </div>
         {categoriesData.map((category, index) => (
           <div
             key={index}
             className={`px-2 py-1 my-1 rounded-lg text-${category.color}-600 bg-gray-100 border-gray-100 cursor-pointer mr-2 ${
-              selectedCategory === category ? "border border-black" : ""
+              selectedCategory === category ? "border border-green-900" : ""
             }`}
             onClick={() => handleCategoryClick(category)}
             style={{ whiteSpace: "nowrap" }}

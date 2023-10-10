@@ -44,6 +44,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.1",
     "@capacitor/cli": "^5.4.1",
     "@tanstack/eslint-plugin-query": "^4.34.1"
   }

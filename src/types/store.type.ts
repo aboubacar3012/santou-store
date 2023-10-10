@@ -9,6 +9,7 @@ import { UserType } from "./user.type";
 export type StoreType = {
   id: string;
   name: string;
+  slug: string;
   address: AddressType;
   phoneNumbers: string[];
   email: string;
