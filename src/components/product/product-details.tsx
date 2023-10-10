@@ -307,7 +307,7 @@ const ProductDetails = ({
           <div className="mt-3">
             <Select
               className="flex items-center"
-              label="Choisissez la taille"
+              label="Choisissez le sexe"
               value={sex}
               // disabled={
               //   orderStatus === "CANCELLED" || orderStatus === "DELIVERED"

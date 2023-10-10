@@ -17,6 +17,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import useScreenDimension from "@/hooks/useScreenDimension";
 import Layout from "../components/shared/layout";
+import { useEffect } from "react";
+import { GlobalDebug } from "@/utils/removeConsoles";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -31,6 +33,10 @@ const queryClient = new QueryClient();
 const App = ({ Component, pageProps }: AppProps) => {
   const dimension = useScreenDimension();
 
+
+  useEffect(() => {
+    process.env.NODE_ENV === 'production' && GlobalDebug(false, false);
+  }, []);
 
   // const options = {
   //   clientSecret,

@@ -23,7 +23,12 @@ const checkIfProductAlreadyInCartAndUpdateQuantity = (
   state: CartType,
   product: ProductType
 ) => {
-  const index = state.products.findIndex((p) => p.id === product.id);
+  // verifier que le produit n'est pas déjà dans le panier, coparer directement le produit 
+
+  const index = state.products.findIndex((p) => {
+    if(p.id === product.id && p.color === product.color && p.size === product.size && p.sex === product.sex) return true;
+    else return false;
+  });
   if (index !== -1) {
     if (
       state.products &&
