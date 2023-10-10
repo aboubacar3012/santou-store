@@ -1,7 +1,10 @@
 export type CategoryType = {
-  id: string;
+  id?: string;
   name: string;
-  description: String;
-  createdAt: string;
-  updatedAt: string;
+  description?: String;
+  icon?: string;
+  color?: string;
+  bgColor?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

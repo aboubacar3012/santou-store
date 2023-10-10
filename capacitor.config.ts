@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: "public",
   server: {
     androidScheme: "https",
-    url: "https://santou-store.vercel.app/",
+    url: "https://guistore.vercel.app/screens/home-screen",
     // url: "http://10.188.174.232:3000/",
   },
   plugins: {

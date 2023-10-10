@@ -104,7 +104,7 @@ const Layout = ({ children }: any) => {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                Votre boutique 100% guinéenne
+                Votre boutique 100% Made in Guinea
               </h2>
             </div>
           </div>
