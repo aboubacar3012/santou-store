@@ -49,6 +49,8 @@ const CartScreen = () => {
     }else 
       router.push("/screens/home-screen");
   };
+
+  console.log(cart.products)
   
 
   // empty cart
@@ -118,9 +120,9 @@ const CartScreen = () => {
                               €
                             </p>
                           </div>
-                          <p className=" text-sm text-gray-500">
+                          {/* <p className=" text-sm text-gray-500">
                             {product.category.map((cat) => cat.name).join(", ")}
-                          </p>
+                          </p> */}
                         </div>
                         <div className="flex flex-1 items-end justify-between text-sm">
                           <p className="text-gray-500">
