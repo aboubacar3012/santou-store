@@ -10,6 +10,7 @@ import { GenderEnum, RoleEnum, UserType } from "@/types/user.type";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/router";
 import NeedToConnectComponent from "@/components/shared/need-to-connect";
+import TabSelector from "@/components/shared/tab-selector";
 
 export const user: UserType = {
   id: "12345",
@@ -46,11 +47,12 @@ const ProfileScreenPage = () => {
   const [pageToShow, setPageToShow] = useState<PageToShow>(PageToShow.profile);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const router = useRouter()
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  const router = useRouter();
 
-  if(!isAuthenticated)
-  return <NeedToConnectComponent />
+  if (!isAuthenticated) return <NeedToConnectComponent />;
 
   if (pageToShow === PageToShow.profile)
     return (
@@ -78,6 +80,17 @@ const ProfileScreenPage = () => {
           </div>{" "}
         </div>{" "}
         <UserDetails user={user || null} />
+        {/* <h1
+        className="text-3xl font-medium text-gray-700 text-center mt-5 cursor-pointer hover:text-blue-500"
+        >
+          Changer de mode 
+        </h1>
+        <TabSelector
+          tab1="Livraisons"
+          tab2="Commandes"
+          handleClickTab1={() => {}}
+          handleClickTab2={() => {}}
+        />
         {user && user.role !== RoleEnum.USER && (
           <div className=" border-b space-y-2 pb-2">
             {" "}
@@ -103,12 +116,12 @@ const ProfileScreenPage = () => {
               Gestion de produits <BsArrowRight className="w-6 h-6" />
             </Button>
           </div>
-        )}
+        )} */}
         <Button
           className="mt-5"
           onClick={() => {
             dispatch(logout());
-            router.push("/auth/login")
+            router.push("/auth/login");
           }}
           color="red"
           fullWidth

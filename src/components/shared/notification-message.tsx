@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Alert } from "@material-tailwind/react";
 type color =
   | "blue-gray"

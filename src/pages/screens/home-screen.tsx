@@ -2,6 +2,7 @@ import EventListComponent from "../../components/order/order-list";
 import FilterComponent from "../../components/filter/filter";
 import ProductListComponent from "../../components/product/product-list";
 import ProductByCategory from "@/components/product/product-by-categorie";
+import RiderHomeComponent from "@/components/rider/rider-home-screen";
 
 const HomeScreenPage = () => {
   return (
@@ -13,9 +14,15 @@ const HomeScreenPage = () => {
       {/* <ProductListComponent /> */}
       <ProductByCategory />
     
-      {/* <EventListComponent /> */}
+     {/* <RiderHomeComponent /> */}
     </div>
   );
 };
 
 export default HomeScreenPage;
+
+export const getServerSideProps = async () => {
+  return {
+    props: {},
+  };
+}

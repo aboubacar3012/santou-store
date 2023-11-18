@@ -4,6 +4,7 @@ export interface Options {
   readonly color: string;
   readonly isFixed?: boolean;
   readonly isDisabled?: boolean;
+  readonly id?: string;
 }
 
 export const cityOptions: readonly Options[] = [
@@ -32,12 +33,41 @@ export const cityOptions: readonly Options[] = [
 ];
 
 export const vendorOptions: readonly Options[] = [
-  { value: "aboubacar", label: "Aboubacar", color: "#00B8D9", isFixed: true },
-  { value: "ousmane", label: "Ousmane", color: "#0052CC" },
-  { value: "mohamed", label: "Mohamed", color: "#5243AA" },
-  { value: "mamadou", label: "Mamadou", color: "#FF5630" },
-  { value: "souleymane", label: "Souleymane", color: "#FF8B00" },
-  { value: "moussa", label: "Moussa", color: "#FFC400" },
-  { value: "samba", label: "Samba", color: "#36B37E" },
-  { value: "moustapha", label: "Moustapha", color: "#00875A" },
+  {
+    value: "kadimarket",
+    label: "Kadi Market",
+    color: "#00B8D9",
+    isFixed: true,
+    id: "243497hfdf97439323729323",
+  },
+  {
+    value: "afrograille",
+    label: "Afro Graille",
+    color: "#0052CC",
+    id: "2434974397dfg9323729323",
+  },
+  {
+    value: "afroshop",
+    label: "Afro Shop",
+    color: "#5243AA",
+    id: "2434974dfe7439323729jk3",
+  },
+  {
+    value: "abou&frere",
+    label: "Abou & Frère",
+    color: "#FFdd30",
+    id: "243cfe74397439323729jk3",
+  },
+  {
+    value: "mamediarra",
+    label: "Mame Diarra",
+    color: "#2402CA",
+    id: "243uiuire397439323729jk3",
+  },
+  {
+    value: "mamaafrica",
+    label: "Mama Africa",
+    color: "#FF9830",
+    id: "2434974397439323729jk3",
+  },
 ];

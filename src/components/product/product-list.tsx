@@ -11,25 +11,6 @@ const ProductListComponent = ({category, products}:any) => {
   const [displayType, setDisplayType] = useState<"vertical" | "horizontal">(
     "horizontal"
   );
-  // Queries
-  // const { data, isLoading, isFetching, error, isError } = useQuery({
-  //   queryKey: ["products"], // une clé simple car on récupère tous les todos
-  //   queryFn: getProducts, // la fonction qui va retourner les données
-  //   refetchOnWindowFocus: false, // ne pas rafraîchir la requête quand on focus la fenêtre
-  //   retry: false, // ne pas réessayer la requête en cas d'erreur
-  //   staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes
-  // });
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setProducts(data.products);
-  //   }
-  // }, [data]);
-
-  // if (isLoading) return <div>Loading...</div>;
-  // if (isError) return <div>Erreur lors du chargement des produits</div>;
-
-  // if (products.length === 0) return <div>Aucun produit</div>;
 
   const handleDisplayType = (type: "vertical" | "horizontal") => {
     setDisplayType(type);

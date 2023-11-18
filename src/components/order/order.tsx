@@ -104,12 +104,12 @@ const OrderComponent = ({
       <div className=" space-y-2 bg-white shadow-md border border-gray-500 rounded-2xl p-2">
         <ol className="flex items-center w-full py-1 space-x-2 text-sm font-sm text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400  dark:bg-gray-800 dark:border-gray-700 ">
           <li
-            className={`flex items-center ${
+            className={`flex items-center text-xs ${
               orderStatus === "PENDING" && "text-blue-600 dark:text-blue-500"
             }`}
           >
             <GiSandsOfTime
-              className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
+              className={`flex items-center justify-center w-5 h-5 mr-2   ${
                 orderStatus === "PENDING" &&
                 "border-blue-600 dark:border-blue-500"
               }  shrink-0 `}
@@ -118,7 +118,7 @@ const OrderComponent = ({
             <FiChevronsRight className="h-4 w-4" />
           </li>
           <li
-            className={`flex items-center ${
+            className={`flex items-center text-xs ${
               orderStatus === "SHIPPED" && "text-blue-600 dark:text-blue-500"
             }`}
           >
@@ -128,12 +128,12 @@ const OrderComponent = ({
                 "border-blue-600 dark:border-blue-500"
               }  shrink-0 `}
             />
-            EN COURS
+            EN LIVRAISON
             <FiChevronsRight className="h-4 w-4" />
           </li>
           {orderStatus !== "CANCELLED" && (
             <li
-              className={`flex items-center ${
+              className={`flex items-center text-xs ${
                 orderStatus === "DELIVERED" &&
                 "text-blue-600 dark:text-blue-500"
               }`}

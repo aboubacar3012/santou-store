@@ -7,9 +7,10 @@ const FilterComponent = () => {
   return (
     <Fragment>
       {/* <h4 className="font-semibold">Filter</h4> */}
-      <CategoryFilterComponent />
+      
       {/* <CityFilterComponent /> */}
       {/* <SellerFilterComponent /> */}
+      <CategoryFilterComponent />
     </Fragment>
   );
 };

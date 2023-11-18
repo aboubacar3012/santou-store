@@ -17,6 +17,7 @@ import { IconButton } from "@material-tailwind/react";
 import PaiementMethod from "../../components/cart/paiement-method";
 
 import { removeFromCart } from "@/redux/features/cartSlice";
+import {isAuthenticated} from "@/redux/features/authSlice";
 import { RootState } from "@/redux/store";
 import Payement from "../../components/payment/payment";
 import { ProductType } from "@/types/product.type";
@@ -44,6 +45,7 @@ const CartScreen = () => {
       // windows confirm 
       const confirm = window.confirm("Vous devez vous connecter pour valider votre commande");
       if (confirm) {
+        dispatch(isAuthenticated(false))
         router.push("/auth/login");
       }
     }else 
@@ -227,8 +229,10 @@ const CartScreen = () => {
               href="#"
               className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
             >
-              <BsCreditCard2Front className="w-8 h-8" />
-              <span className="px-2">Payer ma commande</span>
+              {/* <BsCreditCard2Front className="w-8 h-8" /> */}
+              <span className="px-2">
+                Valider mon panier
+              </span>
             </a>
           </div>
 

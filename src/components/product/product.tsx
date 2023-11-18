@@ -5,6 +5,7 @@ import ProductDetails from "./product-details";
 import { ProductType } from "@/types/product.type";
 import { Button } from "@material-tailwind/react";
 import { truncateText } from "@/utils/truncate-text";
+import { formatPrice } from "@/utils/formatPrice";
 
 interface ProductProps {
   product: ProductType;
@@ -25,7 +26,8 @@ const ProductComponent = ({ product }: ProductProps) => {
         className="relative flex w-40 mx-1 my-2 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg"
       >
         <div className="relative h-24 mx-2 mt-4 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
-          <img src={product.images[0]} alt="ui/ux review check" className="h-full w-full object-fill" />
+          {/* <img src={product.images[0]} alt="ui/ux review check" className="h-full w-full object-fill" /> */}
+          <img src={"https://www.epices.com/modules/amazzingblog/views/img/uploads/posts/20/1-61473daa62e78.jpg"} alt="ui/ux review check" className="h-full w-full object-fill" />
           <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60" />
         </div>
         <div className="p-1">
@@ -34,7 +36,8 @@ const ProductComponent = ({ product }: ProductProps) => {
               {truncateText(product.name, 16)}
             </h5>
             <p className="flex items-center gap-1.5 font-sans text-base font-normal leading-relaxed text-blue-gray-900 antialiased">
-              <strong>Prix:</strong> {product.price/100} €
+              {/* if two zero after dot not display two zeros */}
+              <strong>Prix:</strong> {formatPrice(product.price)}
             </p>
             {/* {!isMerchant && (
               <button
