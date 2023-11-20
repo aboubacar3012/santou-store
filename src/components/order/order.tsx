@@ -79,16 +79,14 @@ const OrderComponent = ({
   if (!order || (user?.role === "USER" && order.user?.id !== user?.id))
     return null;
 
-  const TABLE_HEAD = ["Nom du produit", "Prix", "Taille", "Couleur", "Sexe", "Image"];
+  const TABLE_HEAD = ["Nom du produit", "Prix", "Quantité", "Image"];
 
   const TABLE_ROWS = order.products.map((product) => {
     return {
       name: product.name,
       price: product.price,
       image: product.images[0],
-      size: product.size,
-      color: product.color,
-      sex: product.sex
+      quantity: product.quantity,
     };
   });
 
@@ -168,14 +166,14 @@ const OrderComponent = ({
         <hr className="border-gray-500" />
         <div className="flex flex-col">
           <div className="flex justify-between">
-            <div>Vendeur: Guistore</div>
-            <div>Prix TTC: {order.totalAmount/100}€</div>
+            <div><strong>Vendeur</strong>: AfroGraille</div>
+            <div><strong>Prix TTC:</strong> {order.totalAmount/100}€</div>
           </div>
           <div>
-            Client: {order.user?.firstName} {order.user?.lastName}
+            <strong>Client</strong>: {order.user?.firstName} {order.user?.lastName}
           </div>
-          <div>Commande n°: {order.orderNumber.toLowerCase()}</div>
-          <div>Commande effectue le: {formatDate(order.orderDate)}</div>
+          <div><strong>Commande n°:</strong> {order.orderNumber.toLowerCase()}</div>
+          <div><strong>Commande effectue le:</strong> {formatDate(order.orderDate)}</div>
 
           {isAdmin && (
             <div className="mt-3">
@@ -288,8 +286,8 @@ const OrderComponent = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {TABLE_ROWS.map(({ name, price, image, size, color, sex }, index) => (
-                    <tr key={name} className="even:bg-blue-gray-50/50">
+                  {TABLE_ROWS.map(({ name, price, image, quantity }, index) => (
+                    <tr key={name} className="even:bg-blue-gray-50/50 text-center">
                       <td className="p-4">
                         <Typography
                           variant="small"
@@ -314,10 +312,10 @@ const OrderComponent = ({
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {size}
+                          {quantity}
                         </Typography>
                       </td>
-                      <td className="p-4">
+                      {/* <td className="p-4">
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -325,8 +323,8 @@ const OrderComponent = ({
                         >
                           {color}
                         </Typography>
-                      </td>
-                      <td className="p-4">
+                      </td> */}
+                      {/* <td className="p-4">
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -334,7 +332,7 @@ const OrderComponent = ({
                         >
                           {sex}
                         </Typography>
-                      </td>
+                      </td> */}
                       <td className="p-4">
                         <img
                           src={image}

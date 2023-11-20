@@ -20,8 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addUserId } from "@/redux/features/cartSlice";
 import { ProductType } from "@/types/product.type";
 import { RootState } from "@/redux/store";
-import { Select, Option, Carousel} from "@material-tailwind/react";
-
+import { Select, Option, Carousel } from "@material-tailwind/react";
+import { formatPrice } from "@/utils/formatPrice";
 
 type ProductDetailsProps = {
   handleShow: () => void;
@@ -37,14 +37,15 @@ const ProductDetails = ({
   isMerchant,
 }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState<"S" | "M" | "L" | "XL" | "XXL">("M");
-  const [color, setColor] = useState<"RED" | "BLUE" | "GREEN" | "YELLOW" | "BLACK" | "BLANC">("BLACK");
-  const [sex, setSex] = useState<"MAN" | "WOMAN" | "UNISEX">("UNISEX");
+  // const [size, setSize] = useState<"S" | "M" | "L" | "XL" | "XXL">("M");
+  // const [color, setColor] = useState<
+  //   "RED" | "BLUE" | "GREEN" | "YELLOW" | "BLACK" | "BLANC"
+  // >("BLACK");
+  // const [sex, setSex] = useState<"MAN" | "WOMAN" | "UNISEX">("UNISEX");
   const dispatch = useDispatch();
   const [showEdit, setShowEdit] = useState(true);
   const user = useSelector((state: RootState) => state.auth.user);
   const cart = useSelector((state: RootState) => state.cart);
-
 
   // use state for product edit
   // const [name, setName] = useState<string | null>(null);
@@ -64,8 +65,7 @@ const ProductDetails = ({
   // }, [product]);
 
   const handleAddProductToCart = (product: ProductType) => () => {
-
-    const productInCart: any = { ...product, quantity, size, color, sex };
+    const productInCart: any = { ...product, quantity };
     dispatch(addToCart(productInCart));
     if (!cart.userId) dispatch(addUserId(user?.id as string));
     handleShow();
@@ -182,33 +182,31 @@ const ProductDetails = ({
       </DialogHeader>
       <DialogBody divider>
         <CardHeader shadow={false} floated={false} className="h-56">
-          {/* <img
-            src={product.images[0]}
-            alt="card-image"
-            className="h-full w-full object-fill"
-          /> */}
-          <Carousel className="rounded-xl">
-          <img
-            src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
-            alt="image 1"
-            className="h-full w-full object-cover"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
-            alt="image 2"
-            className="h-full w-full object-cover"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-            alt="image 3"
-            className="h-full w-full object-cover"
-          />
-        </Carousel>
+          {product.images.length === 1 && (
+            <img
+              src={product.images[0]}
+              alt="card-image"
+              className="h-full w-full object-fill"
+            />
+          )}
+
+          {product.images.length > 1 && (
+            <Carousel className="rounded-xl">
+              {product.images.map((image, index) => (
+                <img
+                  key={image}
+                  src={product.images[index]}
+                  alt="image 1"
+                  className="h-full w-full object-fill"
+                />
+              ))}
+            </Carousel>
+          )}
         </CardHeader>
         <CardBody>
           <div className=" flex items-center justify-between">
             <Typography color="blue-gray" className="font-medium">
-              <strong>Prix:</strong> {product.price/100} €
+              <strong>Prix:</strong> {formatPrice(product.price)}
             </Typography>
           </div>
           {/* <Typography
@@ -218,13 +216,13 @@ const ProductDetails = ({
           >
             {product.category.map((cat) => cat.name + ", ")}
           </Typography> */}
-          <Typography
+          {/* <Typography
             variant="small"
             color="gray"
             className="font-normal opacity-75 h-[6rem] overflow-y-scroll scroll-b text-justify"
           >
             {product?.description}
-          </Typography>
+          </Typography> */}
 
           {/* Taille */}
           {/* <div className="mt-3">

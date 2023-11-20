@@ -25,6 +25,7 @@ import { CartType } from "@/types/cart.type";
 import { validateCart } from "@/services/cart";
 import { useRouter } from "next/router";
 import Toast from "@/components/shared/toast";
+import { formatPrice } from "@/utils/formatPrice";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
@@ -118,8 +119,8 @@ const CartScreen = () => {
                             </h3>
                             <p className="ml-4">
                               {product.quantity &&
-                                (product.price * product.quantity)/100}
-                              €
+                               formatPrice(product.price * product.quantity)
+                               }
                             </p>
                           </div>
                           {/* <p className=" text-sm text-gray-500">
@@ -204,18 +205,18 @@ const CartScreen = () => {
           </div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Sous-total</p>
-            <p>{cart.amount/100}€</p>
+            <p>{formatPrice(cart.amount)}</p>
           </div>
           <hr className="my-1" />
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Frais de livraisons</p>
-            <p>Offert</p>
-            {/* <p>0€</p> */}
+            {/* <p>Offert</p> */}
+            <p>{formatPrice(cart.deliveryCharge)}</p>
           </div>
           <hr className="my-1" />
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Total</p>
-            <p>{cart.amount/100}€</p>
+            <p>{formatPrice(cart.amount + cart.deliveryCharge)}</p>
           </div>
 
           {/* <PaiementMethod method={method} setMethod={setMethod} /> */}

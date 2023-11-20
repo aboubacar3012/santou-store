@@ -13,6 +13,7 @@ import CartButton from "./cart-button";
 import SpinnerOverlay from "./spinner-overlay";
 import NavbarComponent from "./navbar";
 import { useState } from "react";
+import OrderChoiceDrawer from "./drawers/orderChoiceDrawer";
 
 const Layout = ({ children }: any) => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Layout = ({ children }: any) => {
       <main className="flex-grow p-4 overflow-y-auto">
         <div className="container mx-auto">
           {/* Contenu principal */}
-          <div className="my-20">{children}</div>
+          <div className="my-36">{children}</div>
         </div>
       </main>
       {/* Tab inférieur fixe */}
@@ -135,6 +136,7 @@ const Layout = ({ children }: any) => {
 
       {/* <CartButton /> */}
       <SpinnerOverlay show={loading} />
+      <OrderChoiceDrawer />
     </div>
   );
 };

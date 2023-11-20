@@ -16,6 +16,7 @@ interface ProductByCategory {
       images: string[];
       discount: number;
       stock: number;
+      status: string;
     }[];
   }
 }
@@ -57,6 +58,7 @@ const ProductByCategory = () => {
             images: product.images,
             discount: product.discount,
             stock: product.stock,
+            status: product.status
           });
         }
       });
@@ -64,7 +66,7 @@ const ProductByCategory = () => {
     return Object.values(productsByCategory)
   }
 
-  // console.log(data.products)
+  console.log(data.products)
  
 
 const groupedProducts = groupProductsByCategory(data.products);

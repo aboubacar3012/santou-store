@@ -5,7 +5,16 @@ import { RootState } from "@/redux/store";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/router";
 import { BsArrowLeftCircle } from "react-icons/bs";
-import { truncateText } from '../../utils/truncate-text';
+import { truncateText } from "../../utils/truncate-text";
+import {useState} from "react"
+import {
+  Drawer,
+  Button,
+  Typography,
+  IconButton
+} from "@material-tailwind/react";
+
+
 
 interface Props {
   singleShop?: boolean;
@@ -29,8 +38,9 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
     <header
       className="fixed w-full top-0 rounded-b-2xl bg-center cursor-pointer object-cover z-10 shadow-lg"
       style={{
-        backgroundImage:
-          'url("https://png.pngtree.com/png-clipart/20190927/ourlarge/pngtree-guinea-waving-flag-png-image_1735000.jpg")',
+        // backgroundImage:
+        //   'url("https://png.pngtree.com/png-clipart/20190927/ourlarge/pngtree-guinea-waving-flag-png-image_1735000.jpg")',
+        backgroundColor: "lightblue"
       }}
     >
       <nav className="p-2 flex flex-grow relative justify-between z-10 items-center mx-auto h-18">
@@ -105,31 +115,17 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
         </div>
       </div>
       {/* Input de recherche a reutiliser plus tard peut etre */}
-      {/* <div className="flex items-center justify-between mt-3 px-3 z-10">
+      <div className="flex items-center justify-between mt-1 px-3 z-10">
         <div className="relative w-full">
-          <input
-            type="text"
-            className="bg-purple-white shadow rounded-xl border-0 p-3 w-full"
-            placeholder="Rechercher un produit par son nom"
-          />
-          <div className="absolute top-0 right-0 p-4 pr-3 text-purple-lighter">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
+          <div className="flex justify-between items-center bg-white rounded-md p-1 text-sm">
+            <div>
+              <p><strong>En Livraison</strong> • <strong>Maintenant</strong> </p>
+              <p>8 <span>{truncateText("rue de la republique de Guinee", 18)}</span>, 13003 Marseille</p>
+            </div>
+            <div className="text-blue-700" onClick={() => dispatch(updateControl({orderChoiceDrawer:true}))}>Modifier</div>
           </div>
         </div>
-      </div> */}
+      </div>
     </header>
   );
 };

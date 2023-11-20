@@ -8,6 +8,12 @@ type Controls = {
     showCart: boolean;
     spinner: boolean;
     displayMode: DisplayMode;
+    orderChoiceDrawer:boolean;
+    takingOrderDrawer:boolean;
+    planningOrderDrawer:boolean;
+    selectAddressDrawer:boolean;
+    newAddressWindow:boolean;
+
   };
 };
 
@@ -15,7 +21,12 @@ const initialState: Controls = {
   values: {
     showCart: false,
     spinner: false,
-    displayMode: "client"
+    displayMode: "client",
+    orderChoiceDrawer:false,
+    takingOrderDrawer:false,
+    planningOrderDrawer:false,
+    selectAddressDrawer:false,
+    newAddressWindow:false,
   },
 };
 
