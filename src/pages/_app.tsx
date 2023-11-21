@@ -31,9 +31,9 @@ const queryClient = new QueryClient();
 const App = ({ Component, pageProps }: AppProps) => {
   const dimension = useScreenDimension();
 
-  useEffect(() => {
-    process.env.NODE_ENV === "production" && GlobalDebug(false, false);
-  }, []);
+  // useEffect(() => {
+  //   process.env.NODE_ENV === "production" && GlobalDebug(false, false);
+  // }, []);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
