@@ -115,9 +115,9 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
         </div>
       </div>
       {/* Input de recherche a reutiliser plus tard peut etre */}
-      <div className="flex items-center justify-between mt-1 px-3 z-10">
+      <div className="flex items-center justify-between -mb-5 px-3 z-10 ">
         <div className="relative w-full">
-          <div className="flex justify-between items-center bg-white rounded-md p-1 text-sm">
+          <div className="flex justify-between items-center  rounded-md p-1 text-sm bg-gray-200">
             <div>
               <p><strong>En Livraison</strong> • <strong>Maintenant</strong> </p>
               <p>8 <span>{truncateText("rue de la republique de Guinee", 18)}</span>, 13003 Marseille</p>

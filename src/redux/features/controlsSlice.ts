@@ -35,9 +35,7 @@ export const controlsSlice = createSlice({
   initialState,
   reducers: {
     updateControl: (state, action: PayloadAction<object>) => {
-      state.values = initialState.values;
       state.values = { ...state.values, ...action.payload };
-      return state;
     },
     clearControls: () => {
       return initialState;

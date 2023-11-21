@@ -14,6 +14,10 @@ import SpinnerOverlay from "./spinner-overlay";
 import NavbarComponent from "./navbar";
 import { useState } from "react";
 import OrderChoiceDrawer from "./drawers/orderChoiceDrawer";
+import TakingOrderDrawer from "./drawers/takingOrderDrawer";
+import PlanningOrderDrawer from "./drawers/planningOrderDrawer";
+import SelectAddressDrawer from "./drawers/selectAddressDrawer";
+import NewAddressDrawer from "./drawers/newAddressDrawer";
 
 const Layout = ({ children }: any) => {
   const dispatch = useDispatch();
@@ -137,6 +141,10 @@ const Layout = ({ children }: any) => {
       {/* <CartButton /> */}
       <SpinnerOverlay show={loading} />
       <OrderChoiceDrawer />
+      <TakingOrderDrawer />
+      <PlanningOrderDrawer />
+      <SelectAddressDrawer />
+      <NewAddressDrawer />
     </div>
   );
 };

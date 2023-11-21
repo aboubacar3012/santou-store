@@ -17,6 +17,7 @@ import { formatDate } from "@/utils/format-date";
 import { updateOrderByIdService } from "@/services/orders";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { formatPrice } from "@/utils/formatPrice";
 
 function Icon({ id, open }: { id: number; open: number }) {
   return (
@@ -167,7 +168,7 @@ const OrderComponent = ({
         <div className="flex flex-col">
           <div className="flex justify-between">
             <div><strong>Vendeur</strong>: AfroGraille</div>
-            <div><strong>Prix TTC:</strong> {order.totalAmount/100}€</div>
+            <div><strong>Total:</strong> {formatPrice(order.totalAmount)}</div>
           </div>
           <div>
             <strong>Client</strong>: {order.user?.firstName} {order.user?.lastName}
@@ -303,7 +304,7 @@ const OrderComponent = ({
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {price/100} €
+                          {formatPrice(price)}
                         </Typography>
                       </td>
                       <td className="p-4">

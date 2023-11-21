@@ -28,7 +28,7 @@ const ProductComponent = ({ product }: ProductProps) => {
         onClick={handleShow}
         className="relative flex w-40 mx-1 my-2 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg"
       >
-        <div className="relative h-24 mx-2 mt-4 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
+        <div className="relative h-40 mx-2 mt-4 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
           <img src={product.images[0]} alt="ui/ux review check" className="h-full w-full object-fill" width={200} height={300} />
           {/* <img src={"https://www.epices.com/modules/amazzingblog/views/img/uploads/posts/20/1-61473daa62e78.jpg"} alt="ui/ux review check" className="h-full w-full object-fill" /> */}
           <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60" />
