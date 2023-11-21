@@ -11,6 +11,7 @@ import { RootState } from "@/redux/store";
 import { useRouter } from "next/router";
 import NeedToConnectComponent from "@/components/shared/need-to-connect";
 import TabSelector from "@/components/shared/tab-selector";
+import { clearCart } from "@/redux/features/cartSlice";
 
 
 
@@ -98,6 +99,7 @@ const ProfileScreenPage = () => {
           className="mt-5"
           onClick={() => {
             dispatch(logout());
+            dispatch(clearCart());
             router.push("/auth/login");
           }}
           color="red"

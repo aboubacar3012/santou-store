@@ -16,7 +16,7 @@ import ContinueShoppingBtn from "../../components/cart/continue-shopping-btn";
 import { IconButton } from "@material-tailwind/react";
 import PaiementMethod from "../../components/cart/paiement-method";
 
-import { removeFromCart } from "@/redux/features/cartSlice";
+import { clearCart, removeFromCart } from "@/redux/features/cartSlice";
 import {isAuthenticated} from "@/redux/features/authSlice";
 import { RootState } from "@/redux/store";
 import Payement from "../../components/payment/payment";
@@ -29,7 +29,9 @@ import { formatPrice } from "@/utils/formatPrice";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
-  const user = useSelector((state: RootState) => state.auth.user);
+  const auth = useSelector((state: RootState) => state.auth);
+  const user = auth.user;
+  const isAuth = auth.isAuthenticated;
   const [step, setStep] = useState(1);
   const [method, setMethod] = useState<"apple-pay" | "credit-card">(
     "credit-card"
@@ -38,21 +40,29 @@ const CartScreen = () => {
   const router = useRouter();
   const selectedAddress = user?.addresses[0]; // A corriger
 
+  const handleShowConfirm = () => {
+    const confirm = window.confirm("Vous devez vous connecter pour valider votre commande");
+      if (confirm) {
+        dispatch(isAuthenticated(false))
+        return router.push("/auth/login");
+      }
+  }
 
   const handleValidateCart = async (cart: CartType, token: string | null) => {
+    if(!cart.userId || !isAuth) return handleShowConfirm()
     const response = await validateCart(cart, token);
     if (response.success) {
       setStep(2);
       localStorage.setItem("orderId", response.data.id);
+      return;
     } else if (response.error && response.status === 401){
-      // windows confirm 
-      const confirm = window.confirm("Vous devez vous connecter pour valider votre commande");
-      if (confirm) {
-        dispatch(isAuthenticated(false))
-        router.push("/auth/login");
-      }
+     return handleShowConfirm();
     }else 
-      router.push("/screens/home-screen");
+      {
+        alert("Une erreur s'est produite, veillez réprendre votre commande")
+        dispatch(clearCart());
+        return router.push("/screens/home-screen");
+      }
   };
 
   console.log(cart.products)
