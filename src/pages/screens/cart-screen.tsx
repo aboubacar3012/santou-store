@@ -36,6 +36,8 @@ const CartScreen = () => {
   );
   const token = useSelector((state: RootState) => state.auth?.token);
   const router = useRouter();
+  const selectedAddress = user?.addresses[0]; // A corriger
+
 
   const handleValidateCart = async (cart: CartType, token: string | null) => {
     const response = await validateCart(cart, token);
@@ -165,18 +167,18 @@ const CartScreen = () => {
               Adresse de livraison
             </h2>
             <hr className="my-1" />
-            {user?.address && (
+            {selectedAddress&& (
               <div>
                 <p className="pl-1">
-                  {user.address.number} {user.address.street}
+                  {selectedAddress?.number} {selectedAddress?.street}
                   <br />
-                  {user.address.zipCode} {user.address.city},{" "}
-                  {user.address.country}
+                  {selectedAddress?.zipCode} {selectedAddress?.city},{" "}
+                  {selectedAddress?.country}
                 </p>
-                <p className="pl-1">{user.address.complement}</p>
+                <p className="pl-1">{selectedAddress?.complement}</p>
               </div>
             )}
-            {!user?.address && (
+            {!selectedAddress && (
               <div className="flex items-center">
                 <button className="ml-2">
                   <BiMap className="h-6 w-6" />

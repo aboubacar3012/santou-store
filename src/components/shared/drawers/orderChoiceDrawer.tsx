@@ -22,10 +22,28 @@ const OrderChoiceDrawer = () => {
   const orderChoiceDrawer = useSelector(
     (state: RootState) => state.controls.values.orderChoiceDrawer
   );
-  const takingOrder = useSelector((state: RootState) => state.auth.takingOrder);
-  const timeToPickup = useSelector(
-    (state: RootState) => state.auth.timeToPickup
-  );
+  const auth = useSelector((state: RootState) => state.auth);
+  const takingOrder = auth.takingOrder
+  const timeToPickup = auth.timeToPickup
+  const deliveryAddress = auth.deliveryAddress;
+  const isAuth = auth.isAuthenticated;
+  const selectedAddress = auth.user?.addresses[0]; // A corriger
+
+
+  const handleOnClose = () => {
+    if(takingOrder === null) { 
+      alert("Veuillez choisir un mode de récupération")
+      dispatch(updateControl({ takingOrderDrawer: true }));
+    }
+    // else if(deliveryAddress === null){
+    //   alert("Veuillez choisir une adresse de livraison")
+    //   dispatch(updateControl({ selectAddressDrawer: true }));
+    // }
+    else {
+      dispatch(updateControl({ orderChoiceDrawer: false }));
+    }
+
+  }
 
   return (
     <Drawer
@@ -40,7 +58,7 @@ const OrderChoiceDrawer = () => {
         <IconButton
           variant="text"
           color="blue-gray"
-          onClick={() => dispatch(updateControl({ orderChoiceDrawer: false }))}
+          onClick={handleOnClose}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -105,30 +123,36 @@ const OrderChoiceDrawer = () => {
           </p>
         </div>
         <hr />
-        <div className=" flex justify-between w-full px-3 py-2 ">
+        {
+          isAuth && selectedAddress && (
+            <div className=" flex justify-between w-full px-3 py-2 ">
           <div className="flex justify-start gap-3 items-center">
             <p className="text-blue-500 text-xl">
               <FaLocationDot />
             </p>
             <p className="text-sm">
-              8{" "}
-              <span>{truncateText("rue de la republique de Guinee", 22)}</span>,
-              Marseille
+              {selectedAddress.number} {" "}
+              <span>
+                {truncateText(selectedAddress.street,16)}
+              </span>
+              , {selectedAddress.zipCode} {selectedAddress.city}
             </p>
           </div>
           <p
             onClick={() =>
-              dispatch(updateControl({ selectAddressDrawer: true }))
+              dispatch(updateControl({ newAddressWindow: true }))
             }
             className="text-blue-500"
           >
             Modifier
           </p>
         </div>
+          )
+        }
         <hr />
       </div>
       <div
-        onClick={() => dispatch(updateControl({ orderChoiceDrawer: false }))}
+        onClick={handleOnClose}
         className="p-2"
       >
         <Button color="blue" fullWidth>

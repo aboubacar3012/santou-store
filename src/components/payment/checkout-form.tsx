@@ -22,6 +22,8 @@ export default function CheckoutForm() {
   const loading = useSelector((state: RootState) => state.controls.values.spinner);
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch()
+  const selectedAddress = user?.addresses[0]; // A corriger
+
   
 
   useEffect(() => {
@@ -71,11 +73,11 @@ export default function CheckoutForm() {
             phone: user?.phone,
             name: user?.firstName + " " + user?.lastName,
             address: {
-              line1: user?.address.number + " " + user?.address.street,
-              postal_code: user?.address.zipCode,
-              city: user?.address.city,
-              state: user?.address.city,
-              country: user?.address.country,
+              line1: selectedAddress?.number + " " + selectedAddress?.street,
+              postal_code: selectedAddress?.zipCode,
+              city: selectedAddress?.city,
+              state: selectedAddress?.city,
+              country: selectedAddress?.country,
             },
           },
         },

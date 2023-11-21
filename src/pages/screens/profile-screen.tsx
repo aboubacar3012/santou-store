@@ -12,30 +12,7 @@ import { useRouter } from "next/router";
 import NeedToConnectComponent from "@/components/shared/need-to-connect";
 import TabSelector from "@/components/shared/tab-selector";
 
-export const user: UserType = {
-  id: "12345",
-  firstName: "John",
-  lastName: "Doe",
-  email: "john.doe@example.com",
-  dateOfBirth: "1990-01-01",
-  phone: "1234567890",
-  gender: GenderEnum.MALE,
-  avatar: "path/to/avatar.jpg",
-  role: RoleEnum.USER,
-  isActive: true,
-  address: {
-    street: "1234 Main St",
-    city: "City",
-    number: "1234",
-    id: "12345",
-    zipCode: "12345",
-    country: "Country",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-};
+
 
 export enum PageToShow {
   profile = "profile",

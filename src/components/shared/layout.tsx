@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import CartButton from "./cart-button";
 import SpinnerOverlay from "./spinner-overlay";
 import NavbarComponent from "./navbar";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import OrderChoiceDrawer from "./drawers/orderChoiceDrawer";
 import TakingOrderDrawer from "./drawers/takingOrderDrawer";
 import PlanningOrderDrawer from "./drawers/planningOrderDrawer";
@@ -47,6 +47,11 @@ const Layout = ({ children }: any) => {
       // router.pathname !== "/screens/profile-screen"
     );
   };
+
+  useEffect(() => {
+    if(auth.takingOrder === null)
+    dispatch(updateControl({ orderChoiceDrawer: true }));
+  }, []);
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header fixe */}
@@ -143,7 +148,7 @@ const Layout = ({ children }: any) => {
       <OrderChoiceDrawer />
       <TakingOrderDrawer />
       <PlanningOrderDrawer />
-      <SelectAddressDrawer />
+      {/* <SelectAddressDrawer /> */}
       <NewAddressDrawer />
     </div>
   );

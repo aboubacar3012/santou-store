@@ -56,6 +56,10 @@ export const authSlice = createSlice({
     logout: () => {
       return initialState;
     },
+    updateUser: (state, action: PayloadAction<UserType>) => {
+      state.user = action.payload;
+      return state;
+    },
     isAuthenticated: (state, action:PayloadAction<boolean>) => {
       state.isAuthenticated = action.payload;
       return state;
@@ -71,6 +75,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { login, logout, isAuthenticated,updateTakingOrder,updateTimeToPickup } = authSlice.actions;
+export const { login, logout, isAuthenticated,updateTakingOrder,updateTimeToPickup,updateUser } = authSlice.actions;
 
 export default authSlice.reducer;

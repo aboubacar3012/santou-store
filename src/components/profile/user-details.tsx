@@ -5,6 +5,8 @@ type UserDetailsProps = {
   user: UserType | null;
 };
 const UserDetails = ({ user }: UserDetailsProps) => {
+  const selectedAddress = user?.addresses[0];
+
   if (!user) return <div>Loading</div>;
 
   return (
@@ -31,26 +33,30 @@ const UserDetails = ({ user }: UserDetailsProps) => {
         {user.gender}
       </div>
       {/* Address */}
-      <div className="font-light text-gray-600 ">
-        <span className="text-gray-900">Adresse: </span>
-        {user.address.number} {user.address.street}
-      </div>
-      <div className="font-light text-gray-600 ">
-        <span className="text-gray-900">Adresse: </span>
-        {user.address.complement}
-      </div>
-      <div className="font-light text-gray-600 ">
-        <span className="text-gray-900">Ville: </span>
-        {user.address.city}
-      </div>
-      <div className="font-light text-gray-600 ">
-        <span className="text-gray-900">Pays: </span>
-        {user.address.country}
-      </div>
-      <div className="font-light text-gray-600 ">
-        <span className="text-gray-900">Code postal: </span>
-        {user.address.zipCode}
-      </div>
+      {selectedAddress && (
+        <div className="font-light text-gray-600 ">
+          <div className="font-light text-gray-600 ">
+            <span className="text-gray-900">Adresse: </span>
+            {selectedAddress.number} {selectedAddress.street}
+          </div>
+          <div className="font-light text-gray-600 ">
+            <span className="text-gray-900">Complement: </span>
+            {selectedAddress.complement}
+          </div>
+          <div className="font-light text-gray-600 ">
+            <span className="text-gray-900">Ville: </span>
+            {selectedAddress.city}
+          </div>
+          <div className="font-light text-gray-600 ">
+            <span className="text-gray-900">Pays: </span>
+            {selectedAddress.country}
+          </div>
+          <div className="font-light text-gray-600 ">
+            <span className="text-gray-900">Code postal: </span>
+            {selectedAddress.zipCode}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -6,15 +6,13 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/router";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import { truncateText } from "../../utils/truncate-text";
-import {useState} from "react"
+import { useState } from "react";
 import {
   Drawer,
   Button,
   Typography,
-  IconButton
+  IconButton,
 } from "@material-tailwind/react";
-
-
 
 interface Props {
   singleShop?: boolean;
@@ -24,6 +22,13 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
   const router = useRouter();
+  const auth = useSelector((state: RootState) => state.auth);
+  const takingOrder = auth.takingOrder;
+  const deliveryAddress = auth.deliveryAddress;
+  const timeToPickup = auth.timeToPickup;
+  const isAuth = auth.isAuthenticated;
+  const selectedAddress = auth.user?.addresses[0]; // A corriger
+
   useEffect(() => {
     if (router.pathname === "/screens/single-shop-screen") {
       setSingleShop(true);
@@ -40,7 +45,7 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
       style={{
         // backgroundImage:
         //   'url("https://png.pngtree.com/png-clipart/20190927/ourlarge/pngtree-guinea-waving-flag-png-image_1735000.jpg")',
-        backgroundColor: "lightblue"
+        backgroundColor: "lightblue",
       }}
     >
       <nav className="p-2 flex flex-grow relative justify-between z-10 items-center mx-auto h-18">
@@ -117,12 +122,29 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
       {/* Input de recherche a reutiliser plus tard peut etre */}
       <div className="flex items-center justify-between -mb-5 px-3 z-10 ">
         <div className="relative w-full">
-          <div className="flex justify-between items-center  rounded-md p-1 text-sm bg-gray-200">
+          <div className="flex justify-between items-center  rounded-md p-2 text-sm bg-gray-200">
             <div>
-              <p><strong>En Livraison</strong> • <strong>Maintenant</strong> </p>
-              <p>8 <span>{truncateText("rue de la republique de Guinee", 18)}</span>, 13003 Marseille</p>
+              <p>
+                <strong>En Livraison</strong> • <strong>Maintenant</strong>{" "}
+              </p>
+              {isAuth && selectedAddress &&  (
+                <p>
+                  {selectedAddress.number} {" "}
+                  <span>
+                    {truncateText(selectedAddress.street, 23)}
+                  </span>
+                  , {selectedAddress.zipCode} {selectedAddress.city}
+                </p>
+              )}
             </div>
-            <div className="text-blue-700" onClick={() => dispatch(updateControl({orderChoiceDrawer:true}))}>Modifier</div>
+            <div
+              className="text-blue-700"
+              onClick={() =>
+                dispatch(updateControl({ orderChoiceDrawer: true }))
+              }
+            >
+              Modifier
+            </div>
           </div>
         </div>
       </div>

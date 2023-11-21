@@ -18,18 +18,18 @@ import { IoCheckmark } from "react-icons/io5";
 import { MdMyLocation } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 
-
-
-
 const SelectAddressDrawer = () => {
   const dispatch = useDispatch();
   const selectAddressDrawer = useSelector(
     (state: RootState) => state.controls.values.selectAddressDrawer
   );
+  const auth = useSelector((state: RootState) => state.auth);
+  const user = auth.user;
+  const isAuth = auth.isAuthenticated;
 
   return (
     <Drawer
-      size={500}
+      size={400}
       placement="bottom"
       open={selectAddressDrawer}
       onClose={() => dispatch(updateControl({ selectAddressDrawer: false }))}
@@ -42,7 +42,9 @@ const SelectAddressDrawer = () => {
         <IconButton
           variant="text"
           color="blue-gray"
-          onClick={() => dispatch(updateControl({ selectAddressDrawer: false }))}
+          onClick={() =>
+            dispatch(updateControl({ selectAddressDrawer: false }))
+          }
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -60,45 +62,55 @@ const SelectAddressDrawer = () => {
           </svg>
         </IconButton>
       </div>
-      <div className="p-2">
-        <Button color="blue" fullWidth className="bg-gray-500 flex justify-center items-center">
-        <MdMyLocation className="text-blue-500 w-6 h-6 mx-2" />
+      {/* <div className="p-2">
+        <Button
+          color="blue"
+          fullWidth
+          className="bg-gray-500 flex justify-center items-center"
+        >
+          <MdMyLocation className="text-blue-500 w-6 h-6 mx-2" />
           <p>Me géolocaliser</p>
         </Button>
-      </div>
-      <div>
+      </div> */}
+     
+        <div className="h-44 overflow-scroll">
         <hr />
-        <Radio
-          crossOrigin={false}
-          name="type"
-          label={<p>
-            <h4 className="font-bold">Travail</h4>
-            <p>10 Rue de la Paix</p>
-            <p>13001 Marseille</p>
-          </p>}
-          icon={
-            <IoCheckmark className="text-green-500" />
-          }
-        />
+        {user?.addresses.map((address, index) => (
+          <div key={index}>
+            <Radio
+              crossOrigin={false}
+              name="type"
+              label={
+                <p>
+                  {address.addressName && <h4 className="font-bold">{address.addressName}</h4>}
+                  <p>
+                  {address.number} {address.street} 
+                  </p>
+                  <p>
+                  {address.complement} 
+                  </p>
+                  <p>
+                  {address.zipCode} {address.city}
+                  </p>
+                </p>
+              }
+              icon={<IoCheckmark className="text-green-500" />}
+            />
+            <hr />
+          </div>
+        ))}
+
         <hr />
-        <Radio
-          crossOrigin={false}
-          name="type"
-          label={<p>
-            <h4 className="font-bold">Maison</h4>
-            <p>10 Rue de la Paix</p>
-            <p>13001 Marseille</p>
-          </p>}
-          icon={
-            <IoCheckmark className="text-green-500" />
-          }
-          defaultChecked
-        />
-        <hr/>
       </div>
+
       <div className="p-2">
-        <Button onClick={() => dispatch(updateControl({newAddressWindow:true}))} color="blue" fullWidth className="bg-gray-500 flex flex justify-center items-center">
-        <FaPlus className="text-blue-500 w-6 h-6 mx-2" />
+        <Button
+          onClick={() => dispatch(updateControl({ newAddressWindow: true }))}
+          color="blue"
+          fullWidth
+          className="bg-gray-500 flex flex justify-center items-center"
+        >
+          <FaPlus className="text-blue-500 w-6 h-6 mx-2" />
           <p>AJOUTER UNE NOUVELLE ADRESSE</p>
         </Button>
       </div>

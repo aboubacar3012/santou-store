@@ -26,7 +26,7 @@ export type UserType = {
   password?: string;
   role: RoleEnum;
   isActive: boolean;
-  address: AddressType;
+  addresses: AddressType[];
   createdAt: string;
   updatedAt: string;
 };
