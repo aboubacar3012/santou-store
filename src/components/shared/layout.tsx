@@ -3,7 +3,7 @@ import { AiOutlineHistory } from "react-icons/ai";
 import { BsBookmarks } from "react-icons/bs";
 import { GiShoppingCart } from "react-icons/gi";
 import { FaStoreAlt } from "react-icons/fa";
-import {GoRocket} from "react-icons/go"
+import { GoRocket } from "react-icons/go";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { updateControl } from "@/redux/features/controlsSlice";
@@ -18,6 +18,7 @@ import TakingOrderDrawer from "./drawers/takingOrderDrawer";
 import PlanningOrderDrawer from "./drawers/planningOrderDrawer";
 import SelectAddressDrawer from "./drawers/selectAddressDrawer";
 import NewAddressDrawer from "./drawers/newAddressDrawer";
+import useScreenDimension from "@/hooks/useScreenDimension";
 
 const Layout = ({ children }: any) => {
   const dispatch = useDispatch();
@@ -26,9 +27,12 @@ const Layout = ({ children }: any) => {
     (state: RootState) => state.controls.values.showCart
   );
   const auth = useSelector((state: RootState) => state.auth);
-  const loading = useSelector((state: RootState) => state.controls.values.spinner);
+  const loading = useSelector(
+    (state: RootState) => state.controls.values.spinner
+  );
   const router = useRouter();
   const [singleShop, setSingleShop] = useState<boolean>(false);
+  const dimension = useScreenDimension();
 
   // if (
   //   !auth.isAuthenticated &&
@@ -49,10 +53,10 @@ const Layout = ({ children }: any) => {
   };
 
   useEffect(() => {
-    if(auth.takingOrder === null)
-    dispatch(updateControl({ orderChoiceDrawer: true }));
+    if (auth.takingOrder === null)
+      dispatch(updateControl({ orderChoiceDrawer: true }));
   }, []);
-  
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header fixe */}
@@ -66,8 +70,8 @@ const Layout = ({ children }: any) => {
       </main>
       {/* Tab inférieur fixe */}
       {handleShowBottomTab() && (
-          <div className="container fixed bottom-0  p-3   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 cursor-pointer">
-            <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+        <div className="container fixed bottom-0  p-3   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 cursor-pointer">
+          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
             <button
               onClick={() => router.push("/screens/home-screen")}
               type="button"
@@ -78,8 +82,8 @@ const Layout = ({ children }: any) => {
                 Accueil
               </span>
             </button>
-            </div>
-            <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+          </div>
+          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
             <button
               onClick={() => router.push("/screens/orders-screen")}
               type="button"
@@ -90,21 +94,24 @@ const Layout = ({ children }: any) => {
                 Commandes
               </span>
             </button>
-            </div>
-            <div  onClick={() => router.push("/screens/cart-screen")} className="flex flex-col items-center  hover:text-blue-400 ">
-              <div className="absolute bottom-9 shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-16 h-16 p-2 text-white transition ease-in duration-500 ">
+          </div>
+          <div
+            onClick={() => router.push("/screens/cart-screen")}
+            className="flex flex-col items-center  hover:text-blue-400 "
+          >
+            <div className="absolute bottom-9 shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-16 h-16 p-2 text-white transition ease-in duration-500 ">
               <div className="flex flex-col justify-end items-center">
-              {cart.products.length > 0 && (
-                <span className="-mb-3 text-red-500 text-xl">
-                {cart.products.length}
-              </span>
-              )}
-              <GiShoppingCart className="w-8 h-8" />
-            </div>
-                {/* <span className="animate absolute inline-flex h-full w-full rounded-full border-4 opacity-50" /> */}
+                {cart.products.length > 0 && (
+                  <span className="-mb-3 text-red-500 text-xl">
+                    {cart.products.length}
+                  </span>
+                )}
+                <GiShoppingCart className="w-8 h-8" />
               </div>
+              {/* <span className="animate absolute inline-flex h-full w-full rounded-full border-4 opacity-50" /> */}
             </div>
-            <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+          </div>
+          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
             <button
               onClick={() => router.push("/screens/favorites-screen")}
               type="button"
@@ -115,8 +122,8 @@ const Layout = ({ children }: any) => {
                 Favoris
               </span>
             </button>
-            </div>
-            {/* <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+          </div>
+          {/* <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
             <button
               onClick={() => router.push("/screens/favorites-screen")}
               type="button"
@@ -128,7 +135,7 @@ const Layout = ({ children }: any) => {
               </span>
             </button>
             </div> */}
-            <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
             <button
               onClick={() => router.push("/screens/profile-screen")}
               type="button"
@@ -139,17 +146,21 @@ const Layout = ({ children }: any) => {
                 Mon Profil
               </span>
             </button>
-            </div>
           </div>
+        </div>
       )}
 
       {/* <CartButton /> */}
       <SpinnerOverlay show={loading} />
-      <OrderChoiceDrawer />
-      <TakingOrderDrawer />
-      <PlanningOrderDrawer />
-      <SelectAddressDrawer />
-      <NewAddressDrawer />
+      {dimension && dimension > 768 && (
+        <div>
+          <OrderChoiceDrawer />
+          <TakingOrderDrawer />
+          <PlanningOrderDrawer />
+          <SelectAddressDrawer />
+          <NewAddressDrawer />
+        </div>
+      )}
     </div>
   );
 };
