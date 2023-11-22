@@ -152,7 +152,7 @@ const Layout = ({ children }: any) => {
 
       {/* <CartButton /> */}
       <SpinnerOverlay show={loading} />
-      {dimension && dimension > 768 && (
+      {dimension && dimension < 768 && (
         <div>
           <OrderChoiceDrawer />
           <TakingOrderDrawer />

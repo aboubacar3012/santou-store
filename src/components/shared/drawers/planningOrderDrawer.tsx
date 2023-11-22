@@ -52,6 +52,7 @@ const PlanningOrderDrawer = () => {
 
   return (
     <Drawer
+    size={230}
       placement="bottom"
       open={planningOrderDrawer}
       onClose={() => dispatch(updateControl({ planningOrderDrawer: false }))}

@@ -48,6 +48,7 @@ const OrderChoiceDrawer = () => {
 
   return (
     <Drawer
+      size={230}
       placement="bottom"
       open={orderChoiceDrawer}
       className="p-4 rounded-t-2xl rounded-t-3xl"

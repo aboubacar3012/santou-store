@@ -36,6 +36,7 @@ const TakingOrderDrawer = () => {
 
   return (
     <Drawer
+    size={230}
       placement="bottom"
       open={takingOrderDrawer}
       onClose={() => dispatch(updateControl({ takingOrderDrawer: false }))}
