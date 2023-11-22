@@ -20,9 +20,3 @@ const HomeScreenPage = () => {
 };
 
 export default HomeScreenPage;
-
-export const getServerSideProps = async () => {
-  return {
-    props: {},
-  };
-}

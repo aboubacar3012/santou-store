@@ -23,6 +23,7 @@ const OrderChoiceDrawer = () => {
     (state: RootState) => state.controls.values.orderChoiceDrawer
   );
   const auth = useSelector((state: RootState) => state.auth);
+  if(!auth) return;
   const takingOrder = auth.takingOrder
   const timeToPickup = auth.timeToPickup
   const deliveryAddress = auth.deliveryAddress;

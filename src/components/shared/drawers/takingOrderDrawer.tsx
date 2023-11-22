@@ -29,6 +29,11 @@ const TakingOrderDrawer = () => {
     setSelected(takingOrder);
   },[takingOrder])
 
+  
+
+
+ 
+
   return (
     <Drawer
       placement="bottom"
@@ -65,21 +70,23 @@ const TakingOrderDrawer = () => {
       <div>
         <hr />
         <Radio
-          crossOrigin={false}
+          crossOrigin={undefined}
           name="type"
           label="Livraison"
           icon={<IoCheckmark className="text-green-500" />}
           checked={selected === "delivery"}
           onClick={() => dispatch(updateTakingOrder("delivery"))}
+          onChange={(e) => console.log(e)}
         />
         <hr />
         <Radio
-          crossOrigin={false}
+          crossOrigin={undefined}
           name="type"
           label="À emporter"
           icon={<IoCheckmark className="text-green-500" />}
           checked={selected === "pickup"}
           onClick={() => dispatch(updateTakingOrder("pickup"))}
+          onChange={(e) => console.log(e)}
         />
         <hr />
       </div>

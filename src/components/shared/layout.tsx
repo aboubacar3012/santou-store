@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import CartButton from "./cart-button";
 import SpinnerOverlay from "./spinner-overlay";
 import NavbarComponent from "./navbar";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import OrderChoiceDrawer from "./drawers/orderChoiceDrawer";
 import TakingOrderDrawer from "./drawers/takingOrderDrawer";
 import PlanningOrderDrawer from "./drawers/planningOrderDrawer";
@@ -52,6 +52,7 @@ const Layout = ({ children }: any) => {
     if(auth.takingOrder === null)
     dispatch(updateControl({ orderChoiceDrawer: true }));
   }, []);
+  
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header fixe */}
@@ -60,7 +61,6 @@ const Layout = ({ children }: any) => {
       {/* Main content avec défilement */}
       <main className="flex-grow p-4 overflow-y-auto">
         <div className="container mx-auto">
-          {/* Contenu principal */}
           <div className="my-36">{children}</div>
         </div>
       </main>
@@ -148,7 +148,7 @@ const Layout = ({ children }: any) => {
       <OrderChoiceDrawer />
       <TakingOrderDrawer />
       <PlanningOrderDrawer />
-      {/* <SelectAddressDrawer /> */}
+      <SelectAddressDrawer />
       <NewAddressDrawer />
     </div>
   );

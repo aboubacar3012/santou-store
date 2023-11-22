@@ -31,6 +31,7 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
             >
               <ListItemPrefix className="mr-3">
                 <Radio
+                onChange={(e) => console.log(e)}
                   crossOrigin={undefined}
                   name="paiement-method"
                   checked={method === "apple-pay"}
@@ -61,6 +62,7 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
             >
               <ListItemPrefix className="mr-3">
                 <Radio
+                onChange={(e) => console.log(e)}
                   crossOrigin={undefined}
                   name="paiement-method"
                   id="credit-card"

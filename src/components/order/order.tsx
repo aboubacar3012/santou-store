@@ -5,19 +5,12 @@ import { GiSandsOfTime } from "react-icons/gi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdDoneAll } from "react-icons/md";
 import { FcCancel } from "react-icons/fc";
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
-import { Card, Typography } from "@material-tailwind/react";
-import { Select, Option } from "@material-tailwind/react";
 import { OrderType } from "@/types/order.type";
 import { formatDate } from "@/utils/format-date";
 import { updateOrderByIdService } from "@/services/orders";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { formatPrice } from "@/utils/formatPrice";
+import { Select, Accordion, AccordionHeader, AccordionBody, Card, Typography, Option } from "../../materialTailwind";
 
 function Icon({ id, open }: { id: number; open: number }) {
   return (
@@ -168,7 +161,7 @@ const OrderComponent = ({
         <div className="flex flex-col">
           <div className="flex justify-between">
             <div><strong>Vendeur</strong>: AfroGraille</div>
-            <div><strong>Total:</strong> {formatPrice(order.totalAmount)}</div>
+            <div><strong>Prix TTC:</strong> {order.totalAmount/100}€</div>
           </div>
           <div>
             <strong>Client</strong>: {order.user?.firstName} {order.user?.lastName}
@@ -304,7 +297,7 @@ const OrderComponent = ({
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {formatPrice(price)}
+                          {price/100} €
                         </Typography>
                       </td>
                       <td className="p-4">

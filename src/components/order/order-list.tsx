@@ -14,7 +14,9 @@ const OrderListComponent = ({ isAdmin }: OrderListComponentProps) => {
   const [orders, setOrders] = useState([]); // TODO: replace with [OrderType]
   const [showType, setShowType] = useState("current" as "current" | "past");
   const [statusChanged, setStatusChanged] = useState(false);
-  const token = useSelector((state: RootState) => state.auth.token);
+  const auth = useSelector((state: RootState) => state.auth);
+  const token = auth.token;
+  const user = auth.user;
 
   const fetchOrders = async () => {
     try {
@@ -42,6 +44,8 @@ const OrderListComponent = ({ isAdmin }: OrderListComponentProps) => {
         order.orderStatus === "DELIVERED" || order.orderStatus === "CANCELLED"
     );
   }
+  filteredOrders = filteredOrders.filter((order:OrderType) => order.user?.id === user?.id)
+
 
   const handleClickTab1 = () => {
     setShowType("current");
@@ -50,6 +54,8 @@ const OrderListComponent = ({ isAdmin }: OrderListComponentProps) => {
   const handleClickTab2 = () => {
     setShowType("past");
   };
+
+  console.log(filteredOrders)
 
   return (
     <>

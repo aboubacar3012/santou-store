@@ -74,7 +74,7 @@ const SelectAddressDrawer = () => {
     const response = await updateAddress(newAddress, token,selectedAddress?.id);
     if (response.success) {
       dispatch(updateUser(response.user));
-      dispatch(updateControl({ selectAddressDrawer: true }));
+      dispatch(updateControl({ orderChoiceDrawer: true }));
       dispatch(updateControl({ newAddressWindow: false }));
     } else if (response.code === 401) {
       router.push("/login");
@@ -90,6 +90,12 @@ const SelectAddressDrawer = () => {
       setIsDefault(selectedAddress.isDefault)
     }
   },[user])
+
+  if (!user) return;
+  if(!selectedAddress) return;
+  if(!newAddressWindow) return;
+  if(!token) return;
+
 
   return (
     <Drawer
@@ -110,7 +116,7 @@ const SelectAddressDrawer = () => {
             variant="text"
             color="blue-gray"
             onClick={() => {
-              dispatch(updateControl({ selectAddressDrawer: true }));
+              dispatch(updateControl({ orderChoiceDrawer: true }));
               dispatch(updateControl({ newAddressWindow: false }));
             }}
           >
@@ -203,7 +209,8 @@ const SelectAddressDrawer = () => {
           <div className="flex justify-start ">
             {/* Maison */}
             <Radio
-              crossOrigin={false}
+            onChange={(e) => console.log(e)}
+              crossOrigin={undefined}
               name="type"
               label="Maison"
               icon={<IoCheckmark className="text-green-500" />}
@@ -213,7 +220,8 @@ const SelectAddressDrawer = () => {
 
             {/* Travail */}
             <Radio
-              crossOrigin={false}
+            onChange={(e) => console.log(e)}
+              crossOrigin={undefined}
               name="type"
               label="Travail"
               icon={<IoCheckmark className="text-green-500" />}
@@ -223,7 +231,8 @@ const SelectAddressDrawer = () => {
 
             {/* Ami */}
             <Radio
-              crossOrigin={false}
+            onChange={(e) => console.log(e)}
+              crossOrigin={undefined}
               name="type"
               label="Ami"
               icon={<IoCheckmark className="text-green-500" />}
@@ -233,7 +242,8 @@ const SelectAddressDrawer = () => {
 
             {/* Autre */}
             <Radio
-              crossOrigin={false}
+            onChange={(e) => console.log(e)}
+              crossOrigin={undefined}
               name="type"
               label="Autre"
               icon={<IoCheckmark className="text-green-500" />}

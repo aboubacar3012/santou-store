@@ -20,15 +20,17 @@ import { updateTimeToPickup } from "@/redux/features/authSlice";
 
 const PlanningOrderDrawer = () => {
   const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth);
   const planningOrderDrawer = useSelector(
     (state: RootState) => state.controls.values.planningOrderDrawer
   );
-  const timeToPickup = useSelector(
-    (state: RootState) => state.auth.timeToPickup
-  );
+  const timeToPickup = auth.timeToPickup;
   const [selected, setSelected] = useState<"now" | "later" | null>(null);
   const [day, setDay] = useState<string | null>(null);
   const [period, setPeriod] = useState<string | null>(null);
+
+ 
+
 
   useEffect(() => {
     if (timeToPickup?.now) setSelected("now");
@@ -45,6 +47,8 @@ const PlanningOrderDrawer = () => {
     }
   };
 
+
+  
 
   return (
     <Drawer
@@ -86,7 +90,8 @@ const PlanningOrderDrawer = () => {
         <div>
           <hr />
           <Radio
-            crossOrigin={false}
+          onChange={(e) => console.log(e)}
+            crossOrigin={undefined}
             name="type"
             label="Maintenant"
             icon={<IoCheckmark className="text-green-500" />}
@@ -99,7 +104,8 @@ const PlanningOrderDrawer = () => {
           />
           <hr />
           <Radio
-            crossOrigin={false}
+          onChange={(e) => console.log(e)}
+            crossOrigin={undefined}
             name="type"
             label="Plannifier pour plus tard"
             icon={<IoCheckmark className="text-green-500" />}

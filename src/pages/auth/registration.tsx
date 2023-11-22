@@ -15,7 +15,8 @@ import { login } from "@/redux/features/authSlice";
 import { useRouter } from "next/router";
 import NotificationMessage from "@/components/shared/notification-message";
 import { RootState } from "@/redux/store";
-import Select from 'react-select'
+import Select from "react-select";
+import { addUserId } from "@/redux/features/cartSlice";
 
 interface Props {
   setStep: (value: number) => void;
@@ -28,10 +29,10 @@ type _InformationFormComponentProps = Props & {
   setFirstName: (value: string) => void;
   lastName: string;
   setLastName: (value: string) => void;
-  dateOfBirth: string;
-  setDateOfBirth: (value: string) => void;
-  gender: string;
-  setGender: (value: string) => void;
+  // dateOfBirth: string;
+  // setDateOfBirth: (value: string) => void;
+  // gender: string;
+  // setGender: (value: string) => void;
   validateFrenchPhoneNumber: (value: string) => boolean;
   handleValidStepOne: () => void;
 };
@@ -43,10 +44,10 @@ const _InformationFormComponent = ({
   setFirstName,
   lastName,
   setLastName,
-  dateOfBirth,
-  setDateOfBirth,
-  gender,
-  setGender,
+  // dateOfBirth,
+  // setDateOfBirth,
+  // gender,
+  // setGender,
   validateFrenchPhoneNumber,
   handleValidStepOne,
 }: _InformationFormComponentProps) => {
@@ -103,7 +104,7 @@ const _InformationFormComponent = ({
           </label>
         </div>
 
-        <div className="relative h-11 w-full min-w-[200px]">
+        {/* <div className="relative h-11 w-full min-w-[200px]">
           <input
             value={dateOfBirth}
             onChange={(e) => setDateOfBirth(e.target.value)}
@@ -128,7 +129,7 @@ const _InformationFormComponent = ({
           <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
             Genre
           </label>
-        </div>
+        </div> */}
       </div>
       <div className="p-6 pt-0 flex justify-center">
         <button
@@ -171,7 +172,6 @@ const _AdresseFormComponent = ({
   setZipCode,
   handleValidStepTwo,
 }: _AdresseFormComponentProps) => {
-  
   return (
     <div className="relative flex w-full flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div className="flex flex-col gap-4 p-6">
@@ -208,22 +208,22 @@ const _AdresseFormComponent = ({
         </div>
 
         <div className="relative h-10  min-w-[200px]">
-         <div className="relative h-11 w-full min-w-[200px]">
-          <input
-            value={city}
-            type="text"
-            onChange={(e) => setCity(e.target.value)}
-            className="peer h-full w-full rounded-md border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-          />
-          <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-            Ville
-          </label>
-        </div>
+          <div className="relative h-11 w-full min-w-[200px]">
+            <input
+              value={city}
+              type="text"
+              onChange={(e) => setCity(e.target.value)}
+              className="peer h-full w-full rounded-md border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+            />
+            <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+              Ville
+            </label>
+          </div>
         </div>
 
-        <div  className="relative h-10  min-w-[200px]">
+        <div className="relative h-10  min-w-[200px]">
           <select
-          disabled={true}
+            disabled={true}
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
@@ -266,20 +266,27 @@ const _FinalisationComponent = ({
 }: _FinalisationComponentProps) => {
   return (
     <div className="relative flex w-full flex-col mt-2 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-      <Card className="mt-6 w-96 h-screen">
+      <Card className="mt-6 w-full h-full">
         <CardHeader color="blue-gray" className="relative h-72">
-          <img src="/images/13508.jpg" alt="card-image" />
+          <img
+            src="https://kelianfood.com/wp-content/uploads/2022/02/IMG_1261.jpg"
+            alt="card-image"
+          />
         </CardHeader>
         <CardBody>
-          <Typography variant="h5" color="blue-gray" className="mb-2">
+          <Typography
+            variant="h5"
+            color="blue-gray"
+            className="mb-2 text-center"
+          >
             Commandez des aujourd&apos;hui
           </Typography>
           <Typography>
-            Découvrez une vitrine virtuelle de l&apos;Afrique !{" "}
-            <strong>Notre application</strong> vous propose une sélection
-            exceptionnelle d&apos;articles authentiques, allant des vêtements à
-            la nourriture et au mobilier, pour vous plonger dans la richesse
-            culturelle de l&apos;Afrique.
+            Plongez dans une sélection authentique de plats et de boissons
+            africaines, capturant la richesse culinaire du continent. Découvrez
+            une diversité de saveurs, des plats traditionnels épicés aux
+            boissons rafraîchissantes aux couleurs vives, offrant une expérience
+            gustative qui célèbre la diversité et l&apos;essence même de l&apos;Afrique.
           </Typography>
         </CardBody>
         <CardFooter className="pt-0">
@@ -290,7 +297,7 @@ const _FinalisationComponent = ({
               data-ripple-light="true"
               onClick={() => setStep(2)}
             >
-              Precedant
+              Précedant
             </button>
             <button
               className="select-none rounded-lg bg-green-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -331,7 +338,6 @@ const RegistrationComponent = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-
   // Mutations
   const mutation = useMutation(
     (register: RegisterType) => registerService(register),
@@ -341,6 +347,7 @@ const RegistrationComponent = () => {
           dispatch(
             login({ isAuthenticated: true, user: data.user, token: data.token })
           );
+          dispatch(addUserId(data.user.id));
           setMessage(data.message);
           setTimeout(() => {
             router.push("/screens/home-screen");
@@ -361,7 +368,7 @@ const RegistrationComponent = () => {
     if (auth.isAuthenticated) {
       router.push("/screens/home-screen");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.isAuthenticated]);
 
   function validateFrenchPhoneNumber(phoneNumber: string) {
@@ -400,7 +407,8 @@ const RegistrationComponent = () => {
   };
 
   const handleValidStepOne = () => {
-    if (!firstName || !lastName || !dateOfBirth || !phone) {
+    if (!firstName || !lastName || !phone) {
+      // !dateOfBirth ||
       alert("Veuillez remplir tous les champs");
       return false;
     }
@@ -410,14 +418,14 @@ const RegistrationComponent = () => {
       return false;
     }
 
-    const date = new Date();
-    const dateNow = date.getFullYear();
-    const dateOfBirthYear = new Date(dateOfBirth).getFullYear();
-    const age = dateNow - dateOfBirthYear;
-    if (age < 15) {
-      alert("Vous devez avoir au moins 15 ans");
-      return false;
-    }
+    // const date = new Date();
+    // const dateNow = date.getFullYear();
+    // const dateOfBirthYear = new Date(dateOfBirth).getFullYear();
+    // const age = dateNow - dateOfBirthYear;
+    // if (age < 15) {
+    //   alert("Vous devez avoir au moins 15 ans");
+    //   return false;
+    // }
 
     // Si tout est valide, passer à l'étape suivante
     setStep(2);
@@ -623,7 +631,11 @@ const RegistrationComponent = () => {
             Fin
           </li>
         </ol>
-        <NotificationMessage message={message as string} color="blue" setErrorMessage={setMessage}  />
+        <NotificationMessage
+          message={message as string}
+          color="blue"
+          setErrorMessage={setMessage}
+        />
         {step === 1 && (
           <_InformationFormComponent
             phone={phone}
@@ -632,10 +644,10 @@ const RegistrationComponent = () => {
             setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
-            dateOfBirth={dateOfBirth}
-            setDateOfBirth={setDateOfBirth}
-            gender={gender}
-            setGender={setGender}
+            // dateOfBirth={dateOfBirth}
+            // setDateOfBirth={setDateOfBirth}
+            // gender={gender}
+            // setGender={setGender}
             setStep={setStep}
             validateFrenchPhoneNumber={validateFrenchPhoneNumber}
             handleValidStepOne={handleValidStepOne}

@@ -7,6 +7,7 @@ import { setSafeArea } from "@/utils/fixStatusBarHeight";
 import NotificationMessage from "@/components/shared/notification-message";
 import { useRouter } from "next/router";
 import { RootState } from "@/redux/store";
+import { addUserId } from "@/redux/features/cartSlice";
 
 // interface RegistrationProps {
 //   setIsLogin: (value: boolean) => void;
@@ -41,6 +42,7 @@ const LoginComponent = () => {
           dispatch(
             login({ isAuthenticated: true, user: data.user, token: data.token })
           );
+          dispatch(addUserId(data.user.id));
           router.push("/screens/home-screen");
           // setMessage(data.message);
         } else {

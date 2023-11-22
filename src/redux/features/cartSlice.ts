@@ -7,7 +7,7 @@ const initialState: CartType = {
   userId: "",
   products: [],
   amount: 0,
-  deliveryCharge: 190,
+  deliveryCharge: 200,
   totalAmount: 0,
 };
 

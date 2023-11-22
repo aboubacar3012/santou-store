@@ -27,6 +27,10 @@ const SelectAddressDrawer = () => {
   const user = auth.user;
   const isAuth = auth.isAuthenticated;
 
+  if(!isAuth) return;
+  if(!selectAddressDrawer) return;
+  
+
   return (
     <Drawer
       size={400}
@@ -78,7 +82,8 @@ const SelectAddressDrawer = () => {
         {user?.addresses.map((address, index) => (
           <div key={index}>
             <Radio
-              crossOrigin={false}
+            onChange={(e) => console.log(e)}
+              crossOrigin={undefined}
               name="type"
               label={
                 <p>

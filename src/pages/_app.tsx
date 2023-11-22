@@ -17,6 +17,8 @@ import Layout from "../components/shared/layout";
 import { useEffect } from "react";
 import { GlobalDebug } from "@/utils/removeConsoles";
 import OneSignalComponent from "@/components/shared/one-signal-component";
+import { ThemeProvider } from "@material-tailwind/react";
+
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -73,6 +75,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <QueryClientProvider client={queryClient}>
+          <ThemeProvider>
           <Head>
             <meta
               name="viewport"
@@ -111,6 +114,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               {/* <OneSignalComponent /> */}
             </Layout>
           </Elements>
+          </ThemeProvider>
           {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </QueryClientProvider>
       </PersistGate>
