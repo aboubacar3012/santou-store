@@ -1,10 +1,11 @@
+import { TakingOrderEnum } from "@/types/order.type";
 import { GenderEnum, RoleEnum, UserType } from "@/types/user.type";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 type Auth = {
   isAuthenticated: boolean;
-  takingOrder: "delivery" | "pickup" | null;
+  takingOrder: TakingOrderEnum | null;
   deliveryAddress: {
     number: string;
     street: string;
@@ -64,7 +65,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = action.payload;
       return state;
     },
-    updateTakingOrder: (state, action:PayloadAction<"delivery" | "pickup" | null>) => {
+    updateTakingOrder: (state, action:PayloadAction<TakingOrderEnum>) => {
       state.takingOrder = action.payload;
       return state;
     },

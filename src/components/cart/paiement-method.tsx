@@ -12,10 +12,12 @@ import { SiApplepay } from "react-icons/si";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { GrSecure } from "react-icons/gr";
+import { GiCash } from "react-icons/gi";
+
 
 type PaiementMethodProps = {
   method: string;
-  setMethod: React.Dispatch<React.SetStateAction<"apple-pay" | "credit-card">>;
+  setMethod: React.Dispatch<React.SetStateAction<"cash" | "credit-card">>;
 };
 const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
   const [saveCreditCard, setSaveCreditCard] = useState(true);
@@ -24,7 +26,7 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
     <div>
       <Card className="bg-gray-50">
         <List>
-          <ListItem onClick={() => setMethod("apple-pay")} className="p-0">
+          <ListItem onClick={() => setMethod("cash")} className="p-0">
             <label
               htmlFor="vertical-list-react"
               className="flex w-full cursor-pointer items-center px-3 "
@@ -34,8 +36,8 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
                 onChange={(e) => console.log(e)}
                   crossOrigin={undefined}
                   name="paiement-method"
-                  checked={method === "apple-pay"}
-                  id="apple-pay"
+                  checked={method === "cash"}
+                  id="cash"
                   ripple={false}
                   className="hover:before:opacity-0"
                   containerProps={{
@@ -47,8 +49,9 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
                 color="blue-gray"
                 className="font-medium flex justify-between items-center w-full"
               >
-                Apple Pay
-                <SiApplepay className="w-8 h-8" />
+                Espèces
+                <GiCash className="w-8 h-8" />
+                {/* <SiApplepay className="w-8 h-8" /> */}
               </Typography>
             </label>
           </ListItem>
@@ -78,15 +81,14 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
                 color="blue-gray"
                 className="font-medium flex justify-between items-center w-full"
               >
-                Carte de crédit
+                Carte bancaire
                 <div className="flex justify-between items-center">
                   <BsCreditCard2Front className="w-8 h-8" />
                   <RiSecurePaymentLine className="w-8 h-8" />
-                  <GrSecure className="w-8 h-8" />
                 </div>
               </Typography>
             </label>
-            {method === "credit-card" && (
+            {/* {method === "credit-card" && (
               <div className="w-full flex justify-between items-center p-2">
                 <p>Sauvegarder le mode de paiement</p>
                 <Switch
@@ -97,7 +99,7 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
                   defaultChecked
                 />
               </div>
-            )}
+            )} */}
           </ListItem>
         </List>
       </Card>

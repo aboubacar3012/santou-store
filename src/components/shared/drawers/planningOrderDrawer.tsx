@@ -17,12 +17,16 @@ import {
 import { Select, Option } from "@material-tailwind/react";
 import { IoCheckmark } from "react-icons/io5";
 import { updateTimeToPickup } from "@/redux/features/authSlice";
+import Overlay from "../overlay";
 
 const PlanningOrderDrawer = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const planningOrderDrawer = useSelector(
     (state: RootState) => state.controls.values.planningOrderDrawer
+  );
+  const orderChoiceDrawer = useSelector(
+    (state: RootState) => state.controls.values.orderChoiceDrawer
   );
   const timeToPickup = auth.timeToPickup;
   const [selected, setSelected] = useState<"now" | "later" | null>(null);
@@ -51,8 +55,11 @@ const PlanningOrderDrawer = () => {
   
 
   return (
+    <>
+    {!orderChoiceDrawer && <Overlay showOverlay={planningOrderDrawer} onClick={() => dispatch(updateControl({ planningOrderDrawer: false }))} />}
     <Drawer
-    size={230}
+    overlay={false}
+    size={selected === "later" ? 300 : 230}
       placement="bottom"
       open={planningOrderDrawer}
       onClose={() => dispatch(updateControl({ planningOrderDrawer: false }))}
@@ -123,7 +130,7 @@ const PlanningOrderDrawer = () => {
                 <Select
                   onChange={(e: any) => setDay(e)}
                   label="Choisir le jour"
-                  value={day ? day : "samedi"}
+                  // value={day ? day : "samedi"}
                 >
                   <Option disabled={true} value="lundi">Lundi</Option>
                   <Option disabled={true} value="mardi">Mardi</Option>
@@ -138,7 +145,7 @@ const PlanningOrderDrawer = () => {
                 <Select
                   onChange={(e: any) => setPeriod(e)}
                   label="Choisir la période"
-                  value={period ? period : "matin"}
+                  // value={period ? period : "matin"}
                 >
                   <Option value="matin">Matin 9h - 12h</Option>
                   <Option value="midi">Midi 12h - 14h</Option>
@@ -159,6 +166,7 @@ const PlanningOrderDrawer = () => {
         </Button>
       </div>
     </Drawer>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { updateControl } from "@/redux/features/controlsSlice";
 import { RootState } from "@/redux/store";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import { truncateText } from "../../../utils/truncate-text";
@@ -16,6 +16,7 @@ import {
 import { IoIosWalk } from "react-icons/io";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { FaLocationDot } from "react-icons/fa6";
+import Overlay from "../overlay";
 
 const OrderChoiceDrawer = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const OrderChoiceDrawer = () => {
   const deliveryAddress = auth.deliveryAddress;
   const isAuth = auth.isAuthenticated;
   const selectedAddress = auth.user?.addresses[0]; // A corriger
+  
 
 
   const handleOnClose = () => {
@@ -45,13 +47,16 @@ const OrderChoiceDrawer = () => {
     }
 
   }
-
   return (
+    <>
+    <Overlay showOverlay={orderChoiceDrawer} onClick={handleOnClose} />
     <Drawer
-      size={230}
+      size={240}
       placement="bottom"
       open={orderChoiceDrawer}
       className="p-4 rounded-t-2xl rounded-t-3xl"
+     
+      
     >
       <div className="flex items-center justify-between">
         <Typography variant="h5" color="blue-gray">
@@ -89,7 +94,7 @@ const OrderChoiceDrawer = () => {
             <p>
               {takingOrder === null
                 ? "Mode de récupération"
-                : takingOrder === "delivery"
+                : takingOrder === "DELIVERY"
                 ? "Livraison"
                 : "À emporter"}
             </p>
@@ -162,6 +167,8 @@ const OrderChoiceDrawer = () => {
         </Button>
       </div>
     </Drawer>
+    </>
+    
   );
 };
 

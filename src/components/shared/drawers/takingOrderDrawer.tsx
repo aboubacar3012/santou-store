@@ -16,26 +16,28 @@ import {
 } from "@material-tailwind/react";
 import { IoCheckmark } from "react-icons/io5";
 import { updateTakingOrder } from "@/redux/features/authSlice";
+import Overlay from "../overlay";
+import { TakingOrderEnum } from "@/types/order.type";
 
 const TakingOrderDrawer = () => {
-  const [selected, setSelected] = useState<"delivery" | "pickup" | null>(null);
+  const [selected, setSelected] = useState<TakingOrderEnum | null>(null);
   const dispatch = useDispatch();
   const takingOrderDrawer = useSelector(
     (state: RootState) => state.controls.values.takingOrderDrawer
+  );
+  const orderChoiceDrawer = useSelector(
+    (state: RootState) => state.controls.values.orderChoiceDrawer
   );
   const takingOrder = useSelector((state: RootState) => state.auth.takingOrder);
 
   useEffect(() => {
     setSelected(takingOrder);
   },[takingOrder])
-
-  
-
-
- 
-
   return (
+    <>
+    {!orderChoiceDrawer && <Overlay showOverlay={takingOrderDrawer} onClick={() => dispatch(updateControl({ takingOrderDrawer: false }))} />}
     <Drawer
+    overlay={false}
     size={230}
       placement="bottom"
       open={takingOrderDrawer}
@@ -44,7 +46,7 @@ const TakingOrderDrawer = () => {
     >
       <div className="flex items-center justify-between">
         <Typography variant="h5" color="blue-gray">
-          RÉCUPÉRATION
+          MODE RÉCUPÉRATION
         </Typography>
         <IconButton
           variant="text"
@@ -75,18 +77,19 @@ const TakingOrderDrawer = () => {
           name="type"
           label="Livraison"
           icon={<IoCheckmark className="text-green-500" />}
-          checked={selected === "delivery"}
-          onClick={() => dispatch(updateTakingOrder("delivery"))}
+          checked={selected === "DELIVERY"}
+          onClick={() => dispatch(updateTakingOrder(TakingOrderEnum.DELIVERY))}
           onChange={(e) => console.log(e)}
         />
         <hr />
         <Radio
+          disabled={true}
           crossOrigin={undefined}
           name="type"
           label="À emporter"
           icon={<IoCheckmark className="text-green-500" />}
-          checked={selected === "pickup"}
-          onClick={() => dispatch(updateTakingOrder("pickup"))}
+          checked={selected === "PICKUP"}
+          onClick={() => dispatch(updateTakingOrder(TakingOrderEnum.PICKUP))}
           onChange={(e) => console.log(e)}
         />
         <hr />
@@ -101,7 +104,8 @@ const TakingOrderDrawer = () => {
         </Button>
       </div>
     </Drawer>
-  );
+    </>
+  )
 };
 
 export default TakingOrderDrawer;

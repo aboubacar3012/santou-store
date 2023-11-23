@@ -15,9 +15,21 @@ export enum OrderStatusEnum {
   CANCELLED = "CANCELLED",
 }
 
+export enum TakingOrderEnum {
+  DELIVERY = "DELIVERY",
+  PICKUP = "PICKUP",
+}
+
+
 export type OrderType = {
   id: string;
   user: UserType;
+  takingOrder: TakingOrderEnum;
+  timeToPickup: {
+    now: boolean;
+    day: string;
+    period: string;
+  };
   products: ProductType[];
   orderNumber: string;
   orderDate: string;

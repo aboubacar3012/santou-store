@@ -33,12 +33,14 @@ const CartScreen = () => {
   const user = auth.user;
   const isAuth = auth.isAuthenticated;
   const [step, setStep] = useState(1);
-  const [method, setMethod] = useState<"apple-pay" | "credit-card">(
+  const [method, setMethod] = useState<"cash" | "credit-card">(
     "credit-card"
   );
   const token = useSelector((state: RootState) => state.auth?.token);
   const router = useRouter();
   const selectedAddress = user?.addresses[0]; // A corriger
+  const takingOrder = auth.takingOrder;
+  const timeToPickup = auth.timeToPickup;
 
   const handleShowConfirm = () => {
     const confirm = window.confirm("Vous devez vous connecter pour valider votre commande");
@@ -50,11 +52,22 @@ const CartScreen = () => {
 
   const handleValidateCart = async (cart: CartType, token: string | null) => {
     if(!cart.userId || !isAuth) return handleShowConfirm()
-    const response = await validateCart(cart, token);
+    const finalCart = {
+      ...cart,
+     takingOrder,
+      timeToPickup,
+    };
+    const response = await validateCart(finalCart, token);
     if (response.success) {
-      setStep(2);
+      if(method === "cash"){
+        router.push("/screens/paiement-cash-complete-screen");
+        dispatch(clearCart());
+      }
+      else if(method === "credit-card"){
+        setStep(2);
       localStorage.setItem("orderId", response.data.id);
       return;
+      }
     } else if (response.error && response.status === 401){
      return handleShowConfirm();
     }else 
@@ -231,7 +244,7 @@ const CartScreen = () => {
             <p>{formatPrice(cart.amount + cart.deliveryCharge)}</p>
           </div>
 
-          {/* <PaiementMethod method={method} setMethod={setMethod} /> */}
+          <PaiementMethod method={method} setMethod={setMethod} />
           <div
             onClick={() => {
               handleValidateCart(cart, token);
@@ -260,7 +273,7 @@ const CartScreen = () => {
               </a>
             </div>
           )}
-          {method === "apple-pay" && (
+          {method === "cash" && (
             <div
               onClick={() =>
                 alert(
