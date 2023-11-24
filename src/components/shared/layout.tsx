@@ -55,7 +55,7 @@ const Layout = ({ children }: any) => {
   useEffect(() => {
     if (auth.takingOrder === null)
       dispatch(updateControl({ orderChoiceDrawer: true }));
-  }, []);
+  }, [auth]);
 
   return (
     <div className="flex flex-col min-h-screen">

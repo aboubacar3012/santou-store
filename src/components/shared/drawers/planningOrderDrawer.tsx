@@ -33,9 +33,6 @@ const PlanningOrderDrawer = () => {
   const [day, setDay] = useState<string | null>(null);
   const [period, setPeriod] = useState<string | null>(null);
 
- 
-
-
   useEffect(() => {
     if (timeToPickup?.now) setSelected("now");
     else setSelected("later");
@@ -51,121 +48,135 @@ const PlanningOrderDrawer = () => {
     }
   };
 
-
-  
-
   return (
     <>
-    {!orderChoiceDrawer && <Overlay showOverlay={planningOrderDrawer} onClick={() => dispatch(updateControl({ planningOrderDrawer: false }))} />}
-    <Drawer
-    overlay={false}
-    size={selected === "later" ? 300 : 230}
-      placement="bottom"
-      open={planningOrderDrawer}
-      onClose={() => dispatch(updateControl({ planningOrderDrawer: false }))}
-      className="p-4 rounded-t-2xl rounded-t-3xl"
-    >
-      <div className="flex items-center justify-between">
-        <Typography variant="h5" color="blue-gray">
-          CRÉNEAU
-        </Typography>
-        <IconButton
-          variant="text"
-          color="blue-gray"
+      {!orderChoiceDrawer && (
+        <Overlay
+          showOverlay={planningOrderDrawer}
           onClick={() =>
             dispatch(updateControl({ planningOrderDrawer: false }))
           }
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="h-5 w-5"
+        />
+      )}
+      <Drawer
+        overlay={false}
+        size={selected === "later" ? 300 : 230}
+        placement="bottom"
+        open={planningOrderDrawer}
+        onClose={() => dispatch(updateControl({ planningOrderDrawer: false }))}
+        className="p-4 rounded-t-2xl rounded-t-3xl"
+      >
+        <div className="flex items-center justify-between">
+          <Typography variant="h5" color="blue-gray">
+            CRÉNEAU
+          </Typography>
+          <IconButton
+            variant="text"
+            color="blue-gray"
+            onClick={() =>
+              dispatch(updateControl({ planningOrderDrawer: false }))
+            }
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </IconButton>
-      </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </IconButton>
+        </div>
 
-      <div>
-        <hr />
         <div>
           <hr />
-          <Radio
-          onChange={(e) => console.log(e)}
-            crossOrigin={undefined}
-            name="type"
-            label="Maintenant"
-            icon={<IoCheckmark className="text-green-500" />}
-            checked={selected === "now"}
-            onClick={() =>
-              dispatch(
-                updateTimeToPickup({ now: true, day: null, period: null })
-              )
-            }
-          />
-          <hr />
-          <Radio
-          onChange={(e) => console.log(e)}
-            crossOrigin={undefined}
-            name="type"
-            label="Plannifier pour plus tard"
-            icon={<IoCheckmark className="text-green-500" />}
-            checked={selected === "later"}
-            onClick={() =>
-              dispatch(
-                updateTimeToPickup({ now: false, day: null, period: null })
-              )
-            }
-          />
-          {selected === "later" && (
-            <div>
-              <div className="my-2">
-                <Select
-                  onChange={(e: any) => setDay(e)}
-                  label="Choisir le jour"
-                  // value={day ? day : "samedi"}
-                >
-                  <Option disabled={true} value="lundi">Lundi</Option>
-                  <Option disabled={true} value="mardi">Mardi</Option>
-                  <Option disabled={true} value="mercredi">Mercredi</Option>
-                  <Option disabled={true} value="jeudi">Jeudi</Option>
-                  <Option disabled={true} value="vendredi">Vendredi</Option>
-                  <Option value="samedi">Samedi</Option>
-                  <Option value="dimanche">Dimanche</Option>
-                </Select>
+          <div>
+            <hr />
+            <Radio
+              onChange={(e) => console.log(e)}
+              crossOrigin={undefined}
+              name="type"
+              label="Maintenant"
+              icon={<IoCheckmark className="text-green-500" />}
+              checked={selected === "now"}
+              onClick={() =>
+                dispatch(
+                  updateTimeToPickup({ now: true, day: null, period: null })
+                )
+              }
+            />
+            <hr />
+            <Radio
+              onChange={(e) => console.log(e)}
+              crossOrigin={undefined}
+              name="type"
+              label="Plannifier pour plus tard"
+              icon={<IoCheckmark className="text-green-500" />}
+              checked={selected === "later"}
+              onClick={() =>
+                dispatch(
+                  updateTimeToPickup({ now: false, day: null, period: null })
+                )
+              }
+            />
+            {selected === "later" && (
+              <div>
+                <div className="my-2">
+                  <Select
+                    onChange={(e: any) => setDay(e)}
+                    label="Choisir le jour"
+                    // value={day ? day : "samedi"}
+                  >
+                    <Option disabled={true} value="lundi">
+                      Lundi
+                    </Option>
+                    <Option disabled={true} value="mardi">
+                      Mardi
+                    </Option>
+                    <Option disabled={true} value="mercredi">
+                      Mercredi
+                    </Option>
+                    <Option disabled={true} value="jeudi">
+                      Jeudi
+                    </Option>
+                    <Option disabled={true} value="vendredi">
+                      Vendredi
+                    </Option>
+                    <Option value="samedi">Samedi</Option>
+                    <Option value="dimanche">Dimanche</Option>
+                  </Select>
+                </div>
+                <div className="my-2">
+                  <Select
+                    onChange={(e: any) => setPeriod(e)}
+                    label="Choisir la période"
+                    // value={period ? period : "matin"}
+                  >
+                    <Option value="matin">Matin 9h - 12h</Option>
+                    <Option value="midi">Midi 12h - 14h</Option>
+                    <Option value="soir">Soir 14h - 18h</Option>
+                    <Option disabled value="nuit">
+                      Nuit 18h - 23h
+                    </Option>
+                  </Select>
+                </div>
               </div>
-              <div className="my-2">
-                <Select
-                  onChange={(e: any) => setPeriod(e)}
-                  label="Choisir la période"
-                  // value={period ? period : "matin"}
-                >
-                  <Option value="matin">Matin 9h - 12h</Option>
-                  <Option value="midi">Midi 12h - 14h</Option>
-                  <Option value="soir">Soir 14h - 18h</Option>
-                  <Option disabled value="nuit">
-                    Nuit 18h - 23h
-                  </Option>
-                </Select>
-              </div>
-            </div>
-          )}
-          <hr />
+            )}
+            <hr />
+          </div>
         </div>
-      </div>
-      <div className="p-2">
-        <Button onClick={handleSave} color="blue" fullWidth>
-          Enregistrer
-        </Button>
-      </div>
-    </Drawer>
+        <div className="p-2">
+          <Button onClick={handleSave} color="blue" fullWidth>
+            Enregistrer
+          </Button>
+        </div>
+      </Drawer>
     </>
   );
 };
