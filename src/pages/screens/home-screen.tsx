@@ -9,8 +9,6 @@ const HomeScreenPage = () => {
     // <div className="p-3 space-y-4 z-0 h-screen">
     <div>
       <FilterComponent />
-     
-      
       {/* <ProductListComponent /> */}
       <ProductByCategory />
     

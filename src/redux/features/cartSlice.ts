@@ -35,7 +35,11 @@ const checkIfProductAlreadyInCartAndUpdateQuantity = (
       state.products[index] &&
       state.products[index]["quantity"]
     )
-      state.products[index]["quantity"] = product.quantity;
+      {
+        const quantity = state.products[index]["quantity"] ? state.products[index]["quantity"] : 1;
+        const newQuantity = product.quantity ? product.quantity : 1;
+        state.products[index]["quantity"] = quantity && quantity + newQuantity;
+      }
   } else {
     state.products.push(product);
   }

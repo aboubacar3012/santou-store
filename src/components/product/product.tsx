@@ -6,6 +6,7 @@ import { ProductType } from "@/types/product.type";
 import { Button } from "@material-tailwind/react";
 import { truncateText } from "@/utils/truncate-text";
 import { formatPrice } from "@/utils/formatPrice";
+import { ProductDetailsDrawer } from "./product-details-drawer";
 
 interface ProductProps {
   product: ProductType;
@@ -59,14 +60,23 @@ const ProductComponent = ({ product }: ProductProps) => {
           </div>
         </div>
       </div>
-      {product && showProduct && (
+      {/* Ancienne version */}
+      {/* {product && showProduct && (
         <ProductDetails
           handleShow={handleShow}
           showProduct={showProduct}
           product={product}
           isMerchant={isMerchant}
         />
-      )}
+      )} */}
+      {/* Nouvelle version */}
+      <ProductDetailsDrawer
+        handleShow={handleShow}
+        open={showProduct}
+        setOpen={setShowProduct}
+        product={product}
+        isMerchant={isMerchant}
+      />
     </div>
   );
 };

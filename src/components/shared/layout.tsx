@@ -108,7 +108,11 @@ const Layout = ({ children }: any) => {
                 )}
                 <GiShoppingCart className="w-8 h-8" />
               </div>
-              {/* <span className="animate absolute inline-flex h-full w-full rounded-full border-4 opacity-50" /> */}
+              {
+                cart.products.length > 0 && (
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full border-4 opacity-50" />
+                )
+              }
             </div>
           </div>
           <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">

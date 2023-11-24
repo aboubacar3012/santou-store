@@ -9,6 +9,11 @@ import {
   Typography,
   Select,
   Option,
+  Radio,
+  IconButton,
+  Drawer,
+  Button,
+  Carousel
 } from "@material-tailwind/react"
 
 export {
@@ -20,4 +25,9 @@ export {
   Typography,
   Select,
   Option,
+  Radio,
+  IconButton,
+  Drawer,
+  Button,
+  Carousel
 }
