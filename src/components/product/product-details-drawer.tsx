@@ -34,11 +34,9 @@ export function ProductDetailsDrawer({
 
   // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
   useEffect(() => {
-    document.body.classList.add("overflow-hidden");
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  }, []);
+    if (open) document.body.classList.add("overflow-hidden");
+    else document.body.classList.remove("overflow-hidden");
+  }, [open]);
 
   const handleAddProductToCart = (product: ProductType) => () => {
     const productInCart: any = { ...product, quantity };
@@ -105,6 +103,21 @@ export function ProductDetailsDrawer({
       <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 mt-4">
         {product.name}
       </h1>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        lorem ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
+        consectetur adip lorem ipsum dolor sit amet, consectetur adip lorem
+        ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
+      </p>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        lorem ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
+        consectetur adip lorem ipsum dolor sit amet, consectetur adip lorem
+        ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
+      </p>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        lorem ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
+        consectetur adip lorem ipsum dolor sit amet, consectetur adip lorem
+        ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
+      </p>
       <div className="fixed bottom-0 left-0 right-0 flex w-full justify-between p-4 bg-white shadow-lg bg-gradient-to-r from-blue-100 to-blue-200 rounded-t-lg">
         <div className="flex items-center justify-center">
           <button

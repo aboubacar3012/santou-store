@@ -36,6 +36,10 @@ const PlanningOrderDrawer = () => {
   useEffect(() => {
     if (timeToPickup?.now) setSelected("now");
     else setSelected("later");
+
+    return () => {
+      setSelected(null);
+    }
   }, [timeToPickup]);
 
   const handleSave = () => {
@@ -64,7 +68,7 @@ const PlanningOrderDrawer = () => {
         placement="bottom"
         open={planningOrderDrawer}
         onClose={() => dispatch(updateControl({ planningOrderDrawer: false }))}
-        className="p-4 rounded-t-2xl rounded-t-3xl"
+        className="p-4 rounded-t-2xl"
       >
         <div className="flex items-center justify-between">
           <Typography variant="h5" color="blue-gray">
