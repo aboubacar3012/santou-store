@@ -6,9 +6,11 @@ const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
 const calculateCartAmount = (cart: CartType) => {
   let amount = 0;
-  cart.products.map((product) => {
-    product.quantity && (amount += product.price * product.quantity);
-  });
+  if(cart) {
+    cart.products.map((product) => {
+      product.quantity && (amount += product.price * product.quantity);
+    });
+  }
   return amount * 100;
 };
 

@@ -127,7 +127,7 @@ const CartScreen = () => {
           <div className="mt-2 h-44 overflow-scroll">
             <div className="flow-root">
               <ul role="list" className=" divide-y divide-gray-200">
-                {cart &&
+                {cart && cart.products &&
                   cart.products.map((product: ProductType) => (
                     <li className="flex py-1" key={product.name}>
                       <div className="h-14 w-14 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">

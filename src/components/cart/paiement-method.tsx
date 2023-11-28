@@ -63,14 +63,14 @@ const PaiementMethod = ({ method, setMethod, setPaymentStep, setValidateCart}: P
                   }}
                 />
               </ListItemPrefix>
-              <Typography
+              <div
                 color="blue-gray"
                 className="font-medium flex justify-between items-center w-full"
               >
                 Espèces
                 <GiCash className="w-8 h-8" />
                 {/* <SiApplepay className="w-8 h-8" /> */}
-              </Typography>
+              </div>
             </label>
           </ListItem>
           <ListItem
@@ -95,15 +95,15 @@ const PaiementMethod = ({ method, setMethod, setPaymentStep, setValidateCart}: P
                   }}
                 />
               </ListItemPrefix>
-              <Typography
+              <div
                 color="blue-gray"
                 className="font-medium flex justify-between items-center w-full"
               >
                 Carte bancaire
-                <div className="flex justify-between items-center">
+                <p className="flex justify-between items-center">
                   <BsCreditCard2Front className="w-8 h-8" />
-                </div>
-              </Typography>
+                </p>
+              </div>
             </label>
             {/* {method === "credit-card" && (
               <div className="w-full flex justify-between items-center p-2">
@@ -143,16 +143,16 @@ const PaiementMethod = ({ method, setMethod, setPaymentStep, setValidateCart}: P
                   }}
                 />
               </ListItemPrefix>
-              <Typography
+              <div
                 color="blue-gray"
                 className="font-medium flex justify-between items-center w-full"
               >
                 Wallet
-                <div className="flex justify-between items-center">
+                <p className="flex justify-between items-center">
                   <SiApplepay className="w-8 h-8 mx-1" />
                   <FaGooglePay className="w-8 h-8" />
-                </div>
-              </Typography>
+                </p>
+              </div>
             </label>
           </ListItem>
         </List>

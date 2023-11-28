@@ -19,14 +19,20 @@ const updateTotalPrice = (state: CartType) => {
     if (p.quantity && p.quantity > 0) state.amount += p.price * p.quantity;
   });
   let totalOptions = 0;
-  state.products.map(product => {
-    product?.options?.map(option => {
-      option.values.map((value) => {
-        totalOptions += value.price;
-        console.log({totalOptions})
-      })
+  if(state.products){
+    state.products.map(product => {
+      if(product.options){
+        product.options.map(option => {
+          if(option.values){
+            option.values.map((value) => {
+              totalOptions += value.price;
+              console.log({totalOptions})
+            })
+          }
+        })
+      }
     })
-  })
+  }
   state.amount = state.amount + totalOptions;
   state.totalAmount = state.amount + state.deliveryCharge;
 };

@@ -89,7 +89,7 @@ const PaymentDrawer = () => {
   };
 
   useEffect(() => {
-    handleValidateCart(cart, token);
+    if(validateCartMyCart) handleValidateCart(cart, token);
     
   }, [validateCartMyCart])
 

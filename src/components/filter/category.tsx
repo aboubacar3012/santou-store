@@ -51,7 +51,7 @@ const CategoryFilterComponent = () => {
         >
           <p className="text-sm mt-1">Tout afficher</p>
         </div>
-        {data.categories.map((category:CategoryType, index:number) => (
+        {data && data.categories && data.categories.map((category:CategoryType, index:number) => (
           <div
             key={index}
             className={`px-3 py-1 my-1 rounded-lg text-${category.color ?? colors[index]}-600 bg-gray-100 border-gray-100 cursor-pointer ${

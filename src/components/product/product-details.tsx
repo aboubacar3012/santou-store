@@ -182,7 +182,7 @@ const ProductDetails = ({
       </DialogHeader>
       <DialogBody divider>
         <CardHeader shadow={false} floated={false} className="h-56">
-          {product.images.length === 1 && (
+          {product.images && product.images.length === 1 && (
             <img
               src={product.images[0]}
               alt="card-image"
@@ -190,7 +190,7 @@ const ProductDetails = ({
             />
           )}
 
-          {product.images.length > 1 && (
+          {product.images && product.images.length > 1 && (
             <Carousel className="rounded-xl">
               {product.images.map((image, index) => (
                 <img

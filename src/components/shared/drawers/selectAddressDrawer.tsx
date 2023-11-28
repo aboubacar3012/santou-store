@@ -79,7 +79,7 @@ const SelectAddressDrawer = () => {
      
         <div className="h-44 overflow-scroll">
         <hr />
-        {user?.addresses.map((address, index) => (
+        {user && user.addresses && user.addresses.map((address, index) => (
           <div key={index}>
             <Radio
             onChange={(e) => console.log(e)}

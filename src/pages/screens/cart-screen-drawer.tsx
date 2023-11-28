@@ -253,7 +253,7 @@ const  CartScreenDrawer = () => {
               </div>
               <p className="font-semibold">9,90 €</p>
             </div> */}
-              {cart.products.map((product: ProductType) => (
+              {cart && cart.products && cart.products.map((product: ProductType) => (
                 <div key={product.id}>
                   <hr />
                   <div className="flex justify-between items-center p-2">
@@ -285,7 +285,7 @@ const  CartScreenDrawer = () => {
                           )
                         }
                         <p className="text-gray-600 font-semibold">
-                          {formatPrice(product.price + getOptionsPrice(product.options)) }{" "}
+                          {formatPrice(product.price + getOptionsPrice(product?.options)) }{" "}
                         </p>
                       </div>
                     </div>

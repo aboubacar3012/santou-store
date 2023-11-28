@@ -78,7 +78,7 @@ console.log(groupedProducts)
 
   return (
     <div>
-      {groupedProducts.map((group: any) => (
+      {groupedProducts && groupedProducts.map((group: any) => (
         <div key={group.category}>
           <ProductListComponent products={group.products} category={group.category} />
         </div>

@@ -166,7 +166,7 @@ export function ProductDetailsDrawer({
 
       {/* Options */}
       {
-        product?.options?.map((option:OptionType, index:number) => (
+        product.options && product.options.map((option:OptionType, index:number) => (
           <div key={option.name}>
             <h2>{option.name}</h2>
             {
@@ -177,13 +177,13 @@ export function ProductDetailsDrawer({
 
             <div className="flex flex-col">
           {
-            option?.values?.map((value:OptionValueType, index:number) => (
+            option && option.values && option.values.map((value:OptionValueType, index:number) => (
               <div key={value.name}>
               <hr/>
               <div   className="flex justify-between items-center">
                 <Checkbox
                 // containerProps = {{style: {paddingLef:0}}   }
-                crossOrigin={false}
+                crossOrigin={undefined}
                 name="type"
                 label={value.name}
                 icon={<IoCheckmark className="text-green-500 p-0" />}
