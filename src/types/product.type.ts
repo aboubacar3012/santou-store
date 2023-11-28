@@ -1,4 +1,5 @@
 import { CategoryType } from "./category.type";
+import { OptionType } from "./option.type";
 import { UserType } from "./user.type";
 
 export enum ProductStatusEnum {
@@ -34,6 +35,7 @@ export type ProductType = {
   name: string;
   slug?: string,
   category: CategoryType[];
+  options: OptionType[];
   merchant?: UserType;
   description: string;
   price: number;

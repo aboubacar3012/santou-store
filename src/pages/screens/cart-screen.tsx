@@ -60,6 +60,7 @@ const CartScreen = () => {
     const response = await validateCart(finalCart, token);
     if (response.success) {
       if(method === "cash"){
+        dispatch(updateControl({ showPaymentDrawer: false }))
         router.push("/screens/paiement-cash-complete-screen");
         dispatch(clearCart());
       }
@@ -244,7 +245,7 @@ const CartScreen = () => {
             <p>{formatPrice(cart.amount + cart.deliveryCharge)}</p>
           </div>
 
-          <PaiementMethod method={method} setMethod={setMethod} />
+          {/* <PaiementMethod method={p} setMethod={setMethod} /> */}
           <div
             onClick={() => {
               handleValidateCart(cart, token);

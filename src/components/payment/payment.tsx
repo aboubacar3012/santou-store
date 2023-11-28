@@ -60,7 +60,7 @@ const Payement = ({ cart }: PaymentCartProps) => {
           <CheckoutForm />
         </Elements>
       )}
-      <ContinueShoppingBtn />
+      {/* <ContinueShoppingBtn /> */}
     </div>
   );
 };

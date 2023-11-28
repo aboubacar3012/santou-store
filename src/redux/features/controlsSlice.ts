@@ -13,6 +13,7 @@ type Controls = {
     planningOrderDrawer:boolean;
     selectAddressDrawer:boolean;
     newAddressWindow:boolean;
+    showPaymentDrawer:boolean;
 
   };
 };
@@ -27,6 +28,7 @@ const initialState: Controls = {
     planningOrderDrawer:false,
     selectAddressDrawer:false,
     newAddressWindow:false,
+    showPaymentDrawer:false,
   },
 };
 

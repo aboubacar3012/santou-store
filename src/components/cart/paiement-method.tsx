@@ -7,23 +7,41 @@ import {
   ListItemPrefix,
   Typography,
   Switch,
+  Button,
 } from "@material-tailwind/react";
 import { SiApplepay } from "react-icons/si";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { GrSecure } from "react-icons/gr";
 import { GiCash } from "react-icons/gi";
+import { FaGooglePay } from "react-icons/fa6";
+import { CartType } from "@/types/cart.type";
+
 
 
 type PaiementMethodProps = {
+  setPaymentStep: React.Dispatch<React.SetStateAction<number>>;
   method: string;
-  setMethod: React.Dispatch<React.SetStateAction<"cash" | "credit-card">>;
+  setMethod: React.Dispatch<React.SetStateAction<"cash" | "credit-card" | "wallet">>;
+  setValidateCart: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
+const PaiementMethod = ({ method, setMethod, setPaymentStep, setValidateCart}: PaiementMethodProps) => {
   const [saveCreditCard, setSaveCreditCard] = useState(true);
 
   return (
     <div>
+      {/* Choissez votre method de payment */}
+      <div className="flex items-center justify-between flex-col">
+        <Typography variant="h6" color="blue-gray">
+          Choisissez votre méthode de paiement
+        </Typography>
+        <div className="flex items-center">
+          <GrSecure className="w-6 h-6 mr-2" />
+          <Typography color="blue-gray">
+            Paiement sécurisé
+          </Typography>
+        </div>
+      </div>
       <Card className="bg-gray-50">
         <List>
           <ListItem onClick={() => setMethod("cash")} className="p-0">
@@ -84,7 +102,6 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
                 Carte bancaire
                 <div className="flex justify-between items-center">
                   <BsCreditCard2Front className="w-8 h-8" />
-                  <RiSecurePaymentLine className="w-8 h-8" />
                 </div>
               </Typography>
             </label>
@@ -101,8 +118,55 @@ const PaiementMethod = ({ method, setMethod }: PaiementMethodProps) => {
               </div>
             )} */}
           </ListItem>
+          {/* Wallet */}
+          <ListItem
+            disabled={true}
+            onClick={() => setMethod("wallet")}
+            className="p-0 flex flex-col"
+          >
+            <label
+              htmlFor="vertical-list-vue"
+              className="flex w-full cursor-pointer items-center px-3 "
+            >
+              <ListItemPrefix className="mr-3">
+                <Radio
+                
+                onChange={(e) => console.log(e)}
+                  crossOrigin={undefined}
+                  name="paiement-method"
+                  id="wallet"
+                  checked={method === "wallet"}
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography
+                color="blue-gray"
+                className="font-medium flex justify-between items-center w-full"
+              >
+                Wallet
+                <div className="flex justify-between items-center">
+                  <SiApplepay className="w-8 h-8 mx-1" />
+                  <FaGooglePay className="w-8 h-8" />
+                </div>
+              </Typography>
+            </label>
+          </ListItem>
         </List>
       </Card>
+      <div className="p-2">
+        <Button
+          onClick={() => setValidateCart(true)}
+          color="blue"
+          fullWidth
+        >
+          Continuer
+
+        </Button>
+      </div>
     </div>
   );
 };

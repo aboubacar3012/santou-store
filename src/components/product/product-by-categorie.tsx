@@ -4,6 +4,7 @@ import ProductListComponent from './product-list';
 import { getProducts } from '@/services/products';
 import { useQuery } from '@tanstack/react-query';
 import { ProductType } from '@/types/product.type';
+import { OptionType } from '@/types/option.type';
 
 interface ProductByCategory {
   [categoryId: string]: {
@@ -17,6 +18,7 @@ interface ProductByCategory {
       discount: number;
       stock: number;
       status: string;
+      options:OptionType[]
     }[];
   }
 }
@@ -58,7 +60,8 @@ const ProductByCategory = () => {
             images: product.images,
             discount: product.discount,
             stock: product.stock,
-            status: product.status
+            status: product.status,
+            options: product?.options ?? []
           });
         }
       });

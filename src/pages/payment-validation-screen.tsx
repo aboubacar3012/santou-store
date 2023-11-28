@@ -24,6 +24,7 @@ const PaymentValidationScreen = () => {
   const loading = useSelector((state: RootState) => state.controls.values.spinner);
 
   const checkPaymentStatus = async (payementInt: any) => {
+    dispatch(updateControl({ showPaymentDrawer: false }))
     dispatch(updateControl({ spinner: true }))
     try {
       const response = await fetch(

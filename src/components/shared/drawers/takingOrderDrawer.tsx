@@ -33,6 +33,8 @@ const TakingOrderDrawer = () => {
   useEffect(() => {
     setSelected(takingOrder);
   },[takingOrder])
+
+  if(takingOrderDrawer)
   return (
     <>
     {!orderChoiceDrawer && <Overlay showOverlay={takingOrderDrawer} onClick={() => dispatch(updateControl({ takingOrderDrawer: false }))} />}

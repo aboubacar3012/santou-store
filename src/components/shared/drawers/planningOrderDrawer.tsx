@@ -51,7 +51,7 @@ const PlanningOrderDrawer = () => {
       dispatch(updateControl({ planningOrderDrawer: false }));
     }
   };
-
+  if(planningOrderDrawer)
   return (
     <>
       {!orderChoiceDrawer && (

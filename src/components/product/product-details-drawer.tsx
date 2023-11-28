@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Drawer, IconButton, Carousel } from "../../materialTailwind";
+import { Button, Drawer, IconButton, Carousel, Radio } from "../../materialTailwind";
 import { ProductType } from "@/types/product.type";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -11,6 +11,10 @@ import { formatPrice } from "@/utils/formatPrice";
 import { addToCart, addUserId } from "@/redux/features/cartSlice";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
+import { OptionType } from "@/types/option.type";
+import { OptionValueType } from "@/types/optionValue.type";
+import { Checkbox } from "@material-tailwind/react";
+import { getOptionsPrice } from "@/utils/getOptionsPrice";
 
 type ProductDetailsDrawerProps = {
   open: boolean;
@@ -19,6 +23,8 @@ type ProductDetailsDrawerProps = {
   isMerchant: boolean;
   handleShow: () => void;
 };
+
+
 
 export function ProductDetailsDrawer({
   open,
@@ -31,6 +37,21 @@ export function ProductDetailsDrawer({
   const [showEdit, setShowEdit] = useState(true);
   const user = useSelector((state: RootState) => state.auth.user);
   const cart = useSelector((state: RootState) => state.cart);
+  const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
+
+  useEffect(() => {
+    setSelectedOptions([]);
+    // Recuperer toutes options et mettre dans selectedOptions sans rajouter les valeurs des options, qui seront rajoutes plus tard
+    if (product) {
+      const options: OptionType[] = [];
+      product.options.forEach((option: OptionType) => {
+        const optionTemp = { ...option };
+        optionTemp.values = [];
+        options.push(optionTemp);
+      });
+      setSelectedOptions(options);
+    }
+  },[cart])
 
   // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
   useEffect(() => {
@@ -38,8 +59,38 @@ export function ProductDetailsDrawer({
     else document.body.classList.remove("overflow-hidden");
   }, [open]);
 
+  const handleCheckboxChange = (e:any, option:OptionType, value:OptionValueType) => {
+    const isChecked = e.target.checked;
+    setSelectedOptions(prevOptions => {
+      const updatedOptions = [...prevOptions];
+      const currentOptionIndex = updatedOptions.findIndex(o => o.id === option.id);
+  
+      if (isChecked) {
+        if (currentOptionIndex !== -1) {
+          updatedOptions[currentOptionIndex] = {
+            ...updatedOptions[currentOptionIndex],
+            values: [...updatedOptions[currentOptionIndex].values, value]
+          };
+        } else {
+          updatedOptions.push({ ...option, values: [value] });
+        }
+      } else {
+        if (currentOptionIndex !== -1) {
+          updatedOptions[currentOptionIndex] = {
+            ...updatedOptions[currentOptionIndex],
+            values: updatedOptions[currentOptionIndex].values.filter(optionValue => optionValue.id !== value.id)
+          };
+        }
+      }
+      return updatedOptions;
+    });
+  };
+
+
+  
+
   const handleAddProductToCart = (product: ProductType) => () => {
-    const productInCart: any = { ...product, quantity };
+    const productInCart: any = { ...product, quantity, options:selectedOptions };
     dispatch(addToCart(productInCart));
     if (!cart.userId) dispatch(addUserId(user?.id as string));
     handleShow();
@@ -59,7 +110,7 @@ export function ProductDetailsDrawer({
       onClose={handleShow}
       className="py-4 shadow-none fixed overflow-y-auto"
     >
-      <div className="">
+      <div className="mb-20">
         <div className="flex items-center justify-between bg-gray-100 p-2">
           <IconButton
             variant="text"
@@ -99,25 +150,66 @@ export function ProductDetailsDrawer({
             </Carousel>
           )} */}
         </div>
+        <div className="px-2">
+          <div className="flex justify-between items-center mt-4 text-2xl">
+          <h1 className=" font-semibold text-gray-700 dark:text-gray-200 ">
+            {product.name}
+          </h1>
+          <p>{formatPrice(product.price)}</p>
+          </div>
+
+      {/* <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        lorem ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
+        consectetur adip lorem ipsum dolor sit amet, consectetur adip lorem
+        ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
+      </p> */}
+
+      {/* Options */}
+      {
+        product?.options?.map((option:OptionType, index:number) => (
+          <div key={option.name}>
+            <h2>{option.name}</h2>
+            {
+              option.min === 0 && (
+                <p className="font-light">Optionnel, choissez en {option.values.length} maximum</p>
+              )
+            }
+
+            <div className="flex flex-col">
+          {
+            option?.values?.map((value:OptionValueType, index:number) => (
+              <div key={value.name}>
+              <hr/>
+              <div   className="flex justify-between items-center">
+                <Checkbox
+                // containerProps = {{style: {paddingLef:0}}   }
+                crossOrigin={false}
+                name="type"
+                label={value.name}
+                icon={<IoCheckmark className="text-green-500 p-0" />}
+                checked={selectedOptions.find(o => o.id === option.id)?.values.find(v => v.id === value.id) ? true: false}
+                // onClick={() => dispatch(updateTakingOrder(TakingOrderEnum.DELIVERY))}
+                onChange={(e) => handleCheckboxChange(e, option, value)}
+              />
+
+              <p className="pr-8">
+                {formatPrice(value.price)}
+              </p>
+           
+              </div>
+              </div>
+               ))
+          }
+          <hr/>
+        </div>
+          </div>
+        ))
+      }
+        </div>
+
       </div>
-      <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 mt-4">
-        {product.name}
-      </h1>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-        lorem ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
-        consectetur adip lorem ipsum dolor sit amet, consectetur adip lorem
-        ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
-      </p>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-        lorem ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
-        consectetur adip lorem ipsum dolor sit amet, consectetur adip lorem
-        ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
-      </p>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-        lorem ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
-        consectetur adip lorem ipsum dolor sit amet, consectetur adip lorem
-        ipsum dolor sit amet, consectetur adip lorem ipsum dolor sit amet,
-      </p>
+      
+   
       <div className="fixed bottom-0 left-0 right-0 flex w-full justify-between p-4 bg-white shadow-lg bg-gradient-to-r from-blue-100 to-blue-200 rounded-t-lg">
         <div className="flex items-center justify-center">
           <button
@@ -143,11 +235,11 @@ export function ProductDetailsDrawer({
           className="flex gap-x-10"
         >
           <p>Ajouter</p>
-          <p>{formatPrice(product.price)}</p>
+          <p>{formatPrice(product.price + getOptionsPrice(selectedOptions))}</p>
         </Button>
       </div>
 
-      {/* Option Boissons */}
+
       {/* <div>
         <h2>Boissons au choix*</h2>
         <p>

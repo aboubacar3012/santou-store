@@ -9,6 +9,8 @@ const initialState: CartType = {
   amount: 0,
   deliveryCharge: 200,
   totalAmount: 0,
+  indication: "",
+  options:[]
 };
 
 const updateTotalPrice = (state: CartType) => {
@@ -16,6 +18,16 @@ const updateTotalPrice = (state: CartType) => {
   state.products.forEach((p) => {
     if (p.quantity && p.quantity > 0) state.amount += p.price * p.quantity;
   });
+  let totalOptions = 0;
+  state.products.map(product => {
+    product?.options?.map(option => {
+      option.values.map((value) => {
+        totalOptions += value.price;
+        console.log({totalOptions})
+      })
+    })
+  })
+  state.amount = state.amount + totalOptions;
   state.totalAmount = state.amount + state.deliveryCharge;
 };
 
@@ -23,10 +35,13 @@ const checkIfProductAlreadyInCartAndUpdateQuantity = (
   state: CartType,
   product: ProductType
 ) => {
-  // verifier que le produit n'est pas déjà dans le panier, coparer directement le produit 
+  // verifier que le produit n'est pas déjà dans le panier, coparer directement le produit
 
   const index = state.products.findIndex((p) => {
-    if(p.id === product.id && p.color === product.color && p.size === product.size && p.sex === product.sex) return true;
+    if (
+      p.id === product.id
+    )
+      return true;
     else return false;
   });
   if (index !== -1) {
@@ -34,12 +49,13 @@ const checkIfProductAlreadyInCartAndUpdateQuantity = (
       state.products &&
       state.products[index] &&
       state.products[index]["quantity"]
-    )
-      {
-        const quantity = state.products[index]["quantity"] ? state.products[index]["quantity"] : 1;
-        const newQuantity = product.quantity ? product.quantity : 1;
-        state.products[index]["quantity"] = quantity && quantity + newQuantity;
-      }
+    ) {
+      const quantity = state.products[index]["quantity"]
+        ? state.products[index]["quantity"]
+        : 1;
+      const newQuantity = product.quantity ? product.quantity : 1;
+      state.products[index]["quantity"] = quantity && quantity + newQuantity;
+    }
   } else {
     state.products.push(product);
   }
@@ -67,14 +83,40 @@ export const cartSlice = createSlice({
       updateTotalPrice(state);
       return state;
     },
-
-    clearCart: () => {
-      return initialState;
+    updateProductQuantityWithProductId: (
+      state,
+      action: PayloadAction<{ id: string; quantity: number }>
+    ) => {
+      const index = state.products.findIndex((p) => p.id === action.payload.id);
+      if (index !== -1) {
+        if (action.payload.quantity === 0) {
+          if (window.confirm("Voulez-vous supprimer ce produit du panier ?")) {
+            state.products.splice(index, 1);
+          }
+        }
+        if(action.payload.quantity > 0)
+        state.products[index]["quantity"] = action.payload.quantity;
+      }
+      updateTotalPrice(state);
+      return state;
+    },
+    clearCart: (state) => {
+      state.products = [];
+      state.amount = 0;
+      state.deliveryCharge = 200;
+      state.totalAmount = 0;
+      state.indication = "";
+      return state;
     },
   },
 });
 
-export const { addToCart, removeFromCart, addUserId, clearCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  addUserId,
+  updateProductQuantityWithProductId,
+  clearCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

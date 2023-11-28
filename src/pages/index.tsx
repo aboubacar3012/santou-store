@@ -13,7 +13,6 @@ import FavoritesScreenPage from "./screens/favorites-screen";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { updateControl } from "@/redux/features/controlsSlice";
-import CartButton from "../components/shared/cart-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,10 +24,10 @@ export default function Home() {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(updateControl({ showCart: false }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menu]);
+  // useEffect(() => {
+  //   dispatch(updateControl({ showCart: false }));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [menu]);
 
   const containerStyle =
     "fixed w-full  sm:w-6/12  overflow-y-scroll rounded-1xl  z-10";

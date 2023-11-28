@@ -14,65 +14,65 @@ const images = [
   "https://www.banabaana.com/upload/photos/2019/06/11/21/24/2863imd7v4.jpg",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWid7VCl1se9qFxy-_KYM1gbITodc7neVUrTKE4FzkCvs1IlXDWV7ERQDhygLYW8snH1E&usqp=CAU",
 ];
-const generateProduct = (productId: number): ProductType => {
-  const productName = `Product ${productId}`;
-  const productCategories: CategoryType[] = [
-    {
-      id: "cat123",
-      name: "Category 1",
-      // description: "Category 1 description",
-      createdAt: "",
-      updatedAt: "",
-    },
-    {
-      id: "cat456",
-      name: "Category 2",
-      // description: "Category 2 description",
-      createdAt: "",
-      updatedAt: "",
-    },
-    {
-      id: "cat789",
-      name: "Category 3",
-      // description: "Category 3 description",
-      createdAt: "",
-      updatedAt: "",
-    },
-  ];
-  const productDescription = `Description for Product ${productId}`;
-  const productPrice = Math.floor(Math.random() * 1000); // Random price between 0 and 1000
-  const productDiscount = Math.floor(Math.random() * 50); // Random discount between 0 and 50
-  const productStock = Math.floor(Math.random() * 100); // Random stock between 0 and 100
-  const productStatus =
-    Math.random() < 0.5 ? ProductStatusEnum.ACTIVE : ProductStatusEnum.INACTIVE; // Randomly set to active or inactive
-  const productImages = [
-    images[Math.floor(Math.random() * images.length)],
-    images[Math.floor(Math.random() * images.length)],
-    images[Math.floor(Math.random() * images.length)],
-  ];
-  const productCreatedAt = new Date().toISOString();
-  const productUpdatedAt = new Date().toISOString();
+const generateProduct = (productId: number) => {
+  // const productName = `Product ${productId}`;
+  // const productCategories: CategoryType[] = [
+  //   {
+  //     id: "cat123",
+  //     name: "Category 1",
+  //     // description: "Category 1 description",
+  //     createdAt: "",
+  //     updatedAt: "",
+  //   },
+  //   {
+  //     id: "cat456",
+  //     name: "Category 2",
+  //     // description: "Category 2 description",
+  //     createdAt: "",
+  //     updatedAt: "",
+  //   },
+  //   {
+  //     id: "cat789",
+  //     name: "Category 3",
+  //     // description: "Category 3 description",
+  //     createdAt: "",
+  //     updatedAt: "",
+  //   },
+  // ];
+  // const productDescription = `Description for Product ${productId}`;
+  // const productPrice = Math.floor(Math.random() * 1000); // Random price between 0 and 1000
+  // const productDiscount = Math.floor(Math.random() * 50); // Random discount between 0 and 50
+  // const productStock = Math.floor(Math.random() * 100); // Random stock between 0 and 100
+  // const productStatus =
+  //   Math.random() < 0.5 ? ProductStatusEnum.ACTIVE : ProductStatusEnum.INACTIVE; // Randomly set to active or inactive
+  // const productImages = [
+  //   images[Math.floor(Math.random() * images.length)],
+  //   images[Math.floor(Math.random() * images.length)],
+  //   images[Math.floor(Math.random() * images.length)],
+  // ];
+  // const productCreatedAt = new Date().toISOString();
+  // const productUpdatedAt = new Date().toISOString();
 
-  return {
-    id: productId.toString(),
-    name: productName,
-    category: productCategories,
-    description: productDescription,
-    price: productPrice,
-    discount: productDiscount,
-    stock: productStock,
-    status: productStatus,
-    images: productImages,
-    createdAt: productCreatedAt,
-    updatedAt: productUpdatedAt,
-  };
+  // return {
+  //   id: productId.toString(),
+  //   name: productName,
+  //   category: productCategories,
+  //   description: productDescription,
+  //   price: productPrice,
+  //   discount: productDiscount,
+  //   stock: productStock,
+  //   status: productStatus,
+  //   images: productImages,
+  //   createdAt: productCreatedAt,
+  //   updatedAt: productUpdatedAt,
+  // };
 };
 
-export const generate50Products = (): ProductType[] => {
-  const products: ProductType[] = [];
-  for (let i = 1; i <= 50; i++) {
-    const product = generateProduct(i);
-    products.push(product);
-  }
-  return products;
+export const generate50Products = () => {
+  // const products: ProductType[] = [];
+  // for (let i = 1; i <= 50; i++) {
+  //   const product = generateProduct(i);
+  //   products.push(product);
+  // }
+  // return products;
 };

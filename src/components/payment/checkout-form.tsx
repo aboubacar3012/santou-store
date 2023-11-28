@@ -115,21 +115,21 @@ export default function CheckoutForm() {
         disabled={loading || !stripe || !elements}
         id="submit"
       >
-        <a href="#" className="flex items-center justify-center  ">
+        <a href="#" className="flex justify-center  ">
           <span id="button-text">
-            {/* {loading ? (
+            {loading ? (
               <div
-                className="spinner px-2 flex items-center space-x-3"
+                className="spinner px-2 flex space-x-3"
                 id="spinner"
               >
                 <span>Paiement en cours</span> <Spinner className="h-4 w-4" />
               </div>
-            ) : ( */}
+            ) : (
               <div className="flex items-center">
                 Payer ma commande
                 <RiSecurePaymentFill className="w-8 h-8 px-2" />
               </div>
-            {/* )} */}
+            )}
           </span>
         </a>
       </button>

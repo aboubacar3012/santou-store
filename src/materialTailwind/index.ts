@@ -13,7 +13,8 @@ import {
   IconButton,
   Drawer,
   Button,
-  Carousel
+  Carousel,
+  Switch
 } from "@material-tailwind/react"
 
 export {
@@ -29,5 +30,7 @@ export {
   IconButton,
   Drawer,
   Button,
-  Carousel
+  Carousel,
+  Switch,
+  
 }

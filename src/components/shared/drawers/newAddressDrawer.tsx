@@ -23,9 +23,12 @@ import { updateUser } from "@/redux/features/authSlice";
 
 const SelectAddressDrawer = () => {
   const dispatch = useDispatch();
-  const newAddressWindow = useSelector(
-    (state: RootState) => state.controls.values.newAddressWindow
+  const constrols = useSelector(
+    (state: RootState) => state.controls.values
   );
+  const newAddressWindow = constrols.newAddressWindow;
+  
+
   const token = useSelector((state: RootState) => state.auth.token);
   const user = useSelector((state: RootState) => state.auth.user);
   const [address, setAddress] = useState("");
@@ -40,6 +43,7 @@ const SelectAddressDrawer = () => {
   >(null);
   const [isDefault, setIsDefault] = useState(false);
   const [formValid, setFormValid] = useState(false);
+
 
   const selectedAddress = user?.addresses[0];
 
@@ -74,7 +78,7 @@ const SelectAddressDrawer = () => {
     const response = await updateAddress(newAddress, token,selectedAddress?.id);
     if (response.success) {
       dispatch(updateUser(response.user));
-      dispatch(updateControl({ orderChoiceDrawer: true }));
+      // dispatch(updateControl({ orderChoiceDrawer: true }));
       dispatch(updateControl({ newAddressWindow: false }));
     } else if (response.code === 401) {
       router.push("/login");
@@ -99,6 +103,7 @@ const SelectAddressDrawer = () => {
 
   return (
     <Drawer
+      overlay={false}
       size={window.innerHeight}
       placement="bottom"
       open={newAddressWindow}
@@ -116,7 +121,7 @@ const SelectAddressDrawer = () => {
             variant="text"
             color="blue-gray"
             onClick={() => {
-              dispatch(updateControl({ orderChoiceDrawer: true }));
+              // dispatch(updateControl({ orderChoiceDrawer: true }));
               dispatch(updateControl({ newAddressWindow: false }));
             }}
           >

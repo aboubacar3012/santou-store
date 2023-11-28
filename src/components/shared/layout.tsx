@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateControl } from "@/redux/features/controlsSlice";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/router";
-import CartButton from "./cart-button";
 import SpinnerOverlay from "./spinner-overlay";
 import NavbarComponent from "./navbar";
 import { useEffect, useState } from "react";
@@ -19,6 +18,8 @@ import PlanningOrderDrawer from "./drawers/planningOrderDrawer";
 import SelectAddressDrawer from "./drawers/selectAddressDrawer";
 import NewAddressDrawer from "./drawers/newAddressDrawer";
 import useScreenDimension from "@/hooks/useScreenDimension";
+import CartScreenDrawer from "@/pages/screens/cart-screen-drawer";
+import PaymentDrawer from "../payment/payment-drawer";
 
 const Layout = ({ children }: any) => {
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ const Layout = ({ children }: any) => {
       <NavbarComponent singleShop={singleShop} setSingleShop={setSingleShop} />
 
       {/* Main content avec défilement */}
-      <main className="flex-grow p-4 overflow-y-auto">
+      <main className="flex-grow p-4 overflow-y-auto width-s">
         <div className="container mx-auto">
           <div className="my-36">{children}</div>
         </div>
@@ -96,7 +97,8 @@ const Layout = ({ children }: any) => {
             </button>
           </div>
           <div
-            onClick={() => router.push("/screens/cart-screen")}
+            // onClick={() => router.push("/screens/cart-screen")}
+            onClick={() => dispatch(updateControl({ showCart: true }))}
             className="flex flex-col items-center  hover:text-blue-400 "
           >
             <div className="absolute bottom-9 shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-16 h-16 p-2 text-white transition ease-in duration-500 ">
@@ -163,6 +165,8 @@ const Layout = ({ children }: any) => {
           <PlanningOrderDrawer />
           <SelectAddressDrawer />
           <NewAddressDrawer />
+          <CartScreenDrawer />
+          <PaymentDrawer />
         </div>
       )}
     </div>
