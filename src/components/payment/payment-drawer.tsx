@@ -104,7 +104,7 @@ const PaymentDrawer = () => {
 
   return (
     <React.Fragment>
-      <Drawer size={window.innerHeight} open={paymentDrawer} onClose={closeDrawer} className="p-4" placement="bottom">
+      <Drawer overlay={false} size={window.innerHeight / 2} open={paymentDrawer} className="p-4" placement="bottom">
       <div className="flex items-center justify-between">
           <Typography variant="h5" color="blue-gray">
             PAIEMENT 
