@@ -24,9 +24,10 @@ const updateTotalPrice = (state: CartType) => {
       if(product.options){
         product.options.map(option => {
           if(option.values){
+            const productQuantity = product.quantity ? product.quantity : 1;
             option.values.map((value) => {
-              totalOptions += value.price;
-              console.log({totalOptions})
+
+              totalOptions += (value.price * productQuantity);
             })
           }
         })
