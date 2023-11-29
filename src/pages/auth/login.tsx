@@ -113,7 +113,7 @@ const LoginComponent = () => {
     // );
   };
 
-  mutation.isLoading && <div>Loading...</div>;
+  mutation.isLoading && <div>Chargement...</div>;
 
   return (
     <div className="relative flex w-full flex-col mt-44 rounded-xl mb-2 bg-white bg-clip-border text-gray-700 shadow-md">

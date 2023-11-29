@@ -32,7 +32,7 @@ const ProductByCategory = () => {
     staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes
   });
 
-  if (isLoading && isFetching) return <div>Loading...</div>;
+  if (isLoading && isFetching) return <div>Chargement...</div>;
   if (isError) return <div>Erreur lors du chargement des produits</div>;
 
   if (data.products.length === 0) return <div>Aucun produit</div>;
