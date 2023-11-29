@@ -119,7 +119,7 @@ const PaiementMethod = ({ method, setMethod, setPaymentStep, setValidateCart}: P
             )} */}
           </ListItem>
           {/* Wallet */}
-          <ListItem
+          {/* <ListItem
             disabled={true}
             onClick={() => setMethod("wallet")}
             className="p-0 flex flex-col"
@@ -154,7 +154,7 @@ const PaiementMethod = ({ method, setMethod, setPaymentStep, setValidateCart}: P
                 </p>
               </div>
             </label>
-          </ListItem>
+          </ListItem> */}
         </List>
       </Card>
       <div className="p-2">
