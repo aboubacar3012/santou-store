@@ -46,10 +46,9 @@ export function ProductDetailsDrawer({
   const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
 
-
   useEffect(() => {
     setIsExpanded(false);
-    console.log(product, "product details")
+    console.log(product, "product details");
     // Recuperer toutes options et mettre dans selectedOptions sans rajouter les valeurs des options, qui seront rajoutes plus tard
     if (product) {
       const options: OptionType[] = [];
@@ -63,9 +62,8 @@ export function ProductDetailsDrawer({
 
     return () => {
       setSelectedOptions([]);
-    }
-  }, [cart,product]);
-
+    };
+  }, [cart, product]);
 
   // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
   useEffect(() => {
@@ -125,9 +123,7 @@ export function ProductDetailsDrawer({
 
   const handleAddProductToCart = (product: ProductType) => () => {
     // verifier si il ya une option obligatoire qui n'a pas ete selectionnee
-    const requiredOption = selectedOptions.find(
-      (option) => option.min === 1
-    );
+    const requiredOption = selectedOptions.find((option) => option.min === 1);
     if (requiredOption && requiredOption.values.length === 0) {
       return alert("Vous devez choisir une option obligatoire");
     }
@@ -151,7 +147,7 @@ export function ProductDetailsDrawer({
 
   if (!product) return <p>Loading</p>;
 
-  console.log(selectedOptions, "selectedOptions")
+  console.log(selectedOptions, "selectedOptions");
 
   return (
     <Drawer
@@ -212,10 +208,21 @@ export function ProductDetailsDrawer({
           </div>
 
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-            {truncateText(product.description, isExpanded ? product.description.length : 100)}
-            <button className="font-bold text-gray-700" onClick={toggleDescription}>
-          {isExpanded ? 'Voir moins' : 'Voir plus'}
-        </button>
+            {product.description.length > 15 &&
+              truncateText(
+                product.description,
+                isExpanded ? product.description.length : 100
+              )}
+            <button
+              className="font-bold text-gray-700"
+              onClick={toggleDescription}
+            >
+              {product.description.length > 100
+                ? isExpanded
+                  ? "Voir moins"
+                  : "Voir plus"
+                : ""}
+            </button>
           </p>
 
           {/* Options */}
@@ -327,7 +334,11 @@ export function ProductDetailsDrawer({
           className="flex gap-x-10"
         >
           <p>Ajouter</p>
-          <p>{formatPrice((product.price + getOptionsPrice(selectedOptions)) * quantity)}</p>
+          <p>
+            {formatPrice(
+              (product.price + getOptionsPrice(selectedOptions)) * quantity
+            )}
+          </p>
         </Button>
       </div>
 

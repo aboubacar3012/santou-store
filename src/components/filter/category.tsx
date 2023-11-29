@@ -1,3 +1,4 @@
+import { updateControl } from "@/redux/features/controlsSlice";
 import { getCategories } from "@/services/categories";
 import { CategoryType } from "@/types/category.type";
 import { useQuery } from "@tanstack/react-query";
@@ -32,7 +33,7 @@ const CategoryFilterComponent = () => {
     setSelectedCategory(category);
   };
 
-  if (isLoading && isFetching) return <div>Loading...</div>;
+  if (isLoading && isFetching) return <div>Chargement des produits...</div>;
   if (isError) return <div>Erreur lors du chargement des produits</div>;
 
   if (data.categories.length === 0) return <div>Aucun produit</div>;
@@ -69,3 +70,7 @@ const CategoryFilterComponent = () => {
 };
 
 export default CategoryFilterComponent;
+function dispatch(arg0: { payload: object; type: "controlsSlice/updateControl"; }) {
+  throw new Error("Function not implemented.");
+}
+

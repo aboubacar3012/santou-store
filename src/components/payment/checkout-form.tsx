@@ -24,6 +24,7 @@ export default function CheckoutForm() {
   const dispatch = useDispatch()
   const selectedAddress = user?.addresses[0]; // A corriger
 
+
   
 
   useEffect(() => {
