@@ -52,10 +52,11 @@ const OrderChoiceDrawer = () => {
     <>
     <Overlay showOverlay={orderChoiceDrawer} onClick={handleOnClose} />
     <Drawer
+      overlay={false}
       size={240}
       placement="bottom"
       open={orderChoiceDrawer}
-      className="p-4 rounded-t-2xl rounded-t-3xl"
+      className="p-4 rounded-t-2xl"
      
       
     >
@@ -96,7 +97,7 @@ const OrderChoiceDrawer = () => {
               {takingOrder === null
                 ? "Mode de récupération"
                 : takingOrder === "DELIVERY"
-                ? "Livraison"
+                ? "Livraison (2€)"
                 : "À emporter"}
             </p>
           </div>

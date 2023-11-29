@@ -77,7 +77,7 @@ const TakingOrderDrawer = () => {
         <Radio
           crossOrigin={undefined}
           name="type"
-          label="Livraison"
+          label="Livraison (2€)"
           icon={<IoCheckmark className="text-green-500" />}
           checked={selected === "DELIVERY"}
           onClick={() => dispatch(updateTakingOrder(TakingOrderEnum.DELIVERY))}
@@ -85,7 +85,6 @@ const TakingOrderDrawer = () => {
         />
         <hr />
         <Radio
-          disabled={true}
           crossOrigin={undefined}
           name="type"
           label="À emporter"

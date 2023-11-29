@@ -125,10 +125,10 @@ export function ProductDetailsDrawer({
 
   const handleAddProductToCart = (product: ProductType) => () => {
     // verifier si il ya une option obligatoire qui n'a pas ete selectionnee
-    const requiredOptions = selectedOptions.filter(
+    const requiredOption = selectedOptions.find(
       (option) => option.min === 1
     );
-    if (requiredOptions.length > 0) {
+    if (requiredOption && requiredOption.values.length === 0) {
       return alert("Vous devez choisir une option obligatoire");
     }
 
@@ -151,7 +151,7 @@ export function ProductDetailsDrawer({
 
   if (!product) return <p>Loading</p>;
 
-  
+  console.log(selectedOptions, "selectedOptions")
 
   return (
     <Drawer

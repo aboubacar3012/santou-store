@@ -104,9 +104,9 @@ const PaymentDrawer = () => {
 
   return (
     <React.Fragment>
-      <Drawer overlay={false} size={window.innerHeight} open={paymentDrawer} className="p-4 bg-gray-800 shadow-none" placement="bottom">
+      <Drawer overlay={false} size={window.innerHeight} open={paymentDrawer} className="p-4 shadow-none" placement="bottom">
       <div className="flex items-center justify-between">
-          <Typography variant="h5" color="blue-gray">
+          <Typography variant="h4" color="blue-gray">
             PAIEMENT 
           </Typography>
           <IconButton

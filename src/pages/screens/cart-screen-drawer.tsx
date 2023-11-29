@@ -269,6 +269,9 @@ const  CartScreenDrawer = () => {
                             ? truncateText(product.name, 11)
                             : truncateText(product.name, 18)}
                         </p>
+                        <p className="text-gray-600 font-semibold">
+                          {formatPrice(product.price + getOptionsPrice(product?.options)) }{" "}
+                        </p>
                         {/* <p className="text-gray-400">{product.description}</p> */}
                         {
                           product.options && product.options.length > 0 && (
@@ -277,16 +280,21 @@ const  CartScreenDrawer = () => {
                                 product.options.map((option:any) => (
                                   <div key={option.id} className="flex justify-start items-center">
                                     <p className="text-gray-400">{option.name}: </p>
-                                    <p className="text-gray-400 mx-1">{option.values.length}</p>
+                                    {
+                                      option.min === 0 && option.max > 1 && (<p className="text-gray-400 mx-1">{option.values.length}</p>)
+                                    }
+                                    {
+                                      option.min === 1 && option.max === 1 && (<p className="text-gray-400 mx-1">{option.values[0].name}</p>)
+                                    }
+                                    
+                                    
                                   </div>
                                 ))
                               }
                             </div>
                           )
                         }
-                        <p className="text-gray-600 font-semibold">
-                          {formatPrice(product.price + getOptionsPrice(product?.options)) }{" "}
-                        </p>
+                        
                       </div>
                     </div>
                     <div className="flex items-center">

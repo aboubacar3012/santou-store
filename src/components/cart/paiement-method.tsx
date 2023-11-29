@@ -32,19 +32,19 @@ const PaiementMethod = ({ method, setMethod, setPaymentStep, setValidateCart}: P
     <div>
       {/* Choissez votre method de payment */}
       <div className="flex items-center justify-between flex-col">
-        <Typography variant="h6" color="blue-gray">
+        <Typography variant="h4" color="blue-gray" className="text-center">
           Choisissez votre méthode de paiement
         </Typography>
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <GrSecure className="w-6 h-6 mr-2" />
-          <Typography color="blue-gray">
+          <Typography variant="h5" color="blue-gray" className="text-center">
             Paiement sécurisé
           </Typography>
-        </div>
+        </div> */}
       </div>
       <Card className="bg-gray-50">
         <List>
-          <ListItem onClick={() => setMethod("cash")} className="p-0">
+          <ListItem onClick={() => setMethod("cash")} className="p-1">
             <label
               htmlFor="vertical-list-react"
               className="flex w-full cursor-pointer items-center px-3 "
@@ -75,7 +75,7 @@ const PaiementMethod = ({ method, setMethod, setPaymentStep, setValidateCart}: P
           </ListItem>
           <ListItem
             onClick={() => setMethod("credit-card")}
-            className="p-0 flex flex-col"
+            className=" flex flex-col p-1"
           >
             <label
               htmlFor="vertical-list-vue"
