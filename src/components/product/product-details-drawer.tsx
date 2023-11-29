@@ -50,6 +50,7 @@ export function ProductDetailsDrawer({
   useEffect(() => {
     setSelectedOptions([]);
     setIsExpanded(false);
+    console.log(product, "product details")
     // Recuperer toutes options et mettre dans selectedOptions sans rajouter les valeurs des options, qui seront rajoutes plus tard
     if (product) {
       const options: OptionType[] = [];
@@ -62,7 +63,6 @@ export function ProductDetailsDrawer({
     }
   }, [cart,product]);
 
-  console.log("selectedOptions", selectedOptions);
 
   // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
   useEffect(() => {
