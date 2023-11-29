@@ -48,7 +48,6 @@ export function ProductDetailsDrawer({
 
 
   useEffect(() => {
-    setSelectedOptions([]);
     setIsExpanded(false);
     console.log(product, "product details")
     // Recuperer toutes options et mettre dans selectedOptions sans rajouter les valeurs des options, qui seront rajoutes plus tard
@@ -60,6 +59,10 @@ export function ProductDetailsDrawer({
         options.push(optionTemp);
       });
       setSelectedOptions(options);
+    }
+
+    return () => {
+      setSelectedOptions([]);
     }
   }, [cart,product]);
 
