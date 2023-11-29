@@ -364,11 +364,11 @@ const  CartScreenDrawer = () => {
               ))}
 
               {/* Couverts */}
-              <hr />
+              {/* <hr />
               <div className="flex justify-between px-4 py-4">
                 <p>Couverts</p>
                 <Switch crossOrigin={undefined} color="blue" defaultChecked />
-              </div>
+              </div> */}
               <hr />
               <div className="flex flex-col p-4">
                 <div className="flex justify-between items-center ">
@@ -418,7 +418,7 @@ const  CartScreenDrawer = () => {
                 </div>
               )}
 
-              <div className="flex w-full justify-between text-white items-center p-4 bg-blue-400 rounded-b-2xl">
+              {/* <div className="flex w-full justify-between text-white items-center p-4 bg-blue-400 rounded-b-2xl">
                 {!showCommentInput && (
                   <p onClick={() => setShowCommentInput(true)}>
                     Ajouter un commentaire
@@ -435,7 +435,7 @@ const  CartScreenDrawer = () => {
                 {!showPromoCodeInput && (
                   <p onClick={() => setShowPromoCodeInput(true)}>Code promo</p>
                 )}
-              </div>
+              </div> */}
             </div>
           )}
           {/* Panier vide */}
