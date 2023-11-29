@@ -327,7 +327,7 @@ export function ProductDetailsDrawer({
           className="flex gap-x-10"
         >
           <p>Ajouter</p>
-          <p>{formatPrice(product.price + getOptionsPrice(selectedOptions) * quantity)}</p>
+          <p>{formatPrice((product.price + getOptionsPrice(selectedOptions)) * quantity)}</p>
         </Button>
       </div>
 
