@@ -33,7 +33,7 @@ const CategoryFilterComponent = () => {
 
   
   
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const handleCategoryClick = (category:any) => {
     setSelectedCategory(category);
@@ -42,6 +42,7 @@ const CategoryFilterComponent = () => {
 
   useEffect(() => {
     dispatch(updateCategory("all"));
+    setSelectedCategory("all");
   }, []);
 
   useEffect(() => {
@@ -77,10 +78,10 @@ const CategoryFilterComponent = () => {
           <div
             key={index}
             className={`px-3 py-1 my-1 rounded-lg text-${category.color ?? colors[index]}-600 bg-gray-100 border-gray-100 cursor-pointer ${
-              selectedCategory === category.name.toLocaleLowerCase() ? "border border-green-900" : ""
+              selectedCategory === category.name.toLowerCase() ? "border border-green-900" : ""
             }`}
             onClick={() => {
-              handleCategoryClick(category)
+              handleCategoryClick(category.name.toLowerCase());
               dispatch(updateCategory(category.name.toLowerCase()));
             }}
             style={{ whiteSpace: "nowrap" }}

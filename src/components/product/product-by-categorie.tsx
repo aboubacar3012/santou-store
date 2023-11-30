@@ -29,7 +29,9 @@ const ProductByCategory = () => {
   const { data, isLoading, isFetching, error, isError } = useQuery({
     queryKey: ["products"], // une clé simple car on récupère tous les todos
     queryFn: getProducts, // la fonction qui va retourner les données
-    refetchOnWindowFocus: false, // ne pas rafraîchir la requête quand on focus la fenêtre
+    refetchInterval: 1000 * 60 * 1, // rafraîchir les données toutes les minutes
+    refetchOnWindowFocus: true, // rafraîchir la requête quand on focus la fenêtre
+    refetchOnMount: true, // rafraîchir la requête au montage du composant
     retry: false, // ne pas réessayer la requête en cas d'erreur
     staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes
   });

@@ -12,7 +12,7 @@ import { GoPlus } from "react-icons/go";
 import { TbMinus } from "react-icons/tb";
 import { IoTrash } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
-import { FaArrowRight } from "react-icons/fa"
+import { FaAngleRight, FaArrowRight } from "react-icons/fa"
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -470,7 +470,7 @@ const  CartScreenDrawer = () => {
 
           <div onClick={() =>  dispatch(updateControl({ showPaymentDrawer:true }))} className="flex">
             <p>VALIDER</p>
-            <FaArrowRight className="w-6 h-6" />
+            <FaAngleRight className="w-6 h-6" />
           </div>
         </div>
           )
