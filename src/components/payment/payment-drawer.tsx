@@ -93,15 +93,6 @@ const PaymentDrawer = () => {
     
   }, [validateCartMyCart])
 
-  // const getContent = () => {
-  //   if(paymentStep === 1)
-  //     return     <PaiementMethod method={paymentMethod} setMethod={setPaymentMethod}  setPaymentStep={setPaymentStep}/>
-  //   else if(paymentStep ===2) handleValidateCart(cart, token);
-    
-  // }
-
-
-
   return (
     <React.Fragment>
       <Drawer overlay={false} size={window.innerHeight} open={paymentDrawer} className="p-4 shadow-none" placement="bottom">

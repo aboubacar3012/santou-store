@@ -25,6 +25,12 @@ export default function CheckoutForm() {
   const selectedAddress = user?.addresses[0]; // A corriger
 
 
+  useEffect(() => {
+   if(!loading)
+    dispatch(updateControl({ spinner: true }))
+    else dispatch(updateControl({ spinner: false }))
+
+  }, [loading]);
   
 
   useEffect(() => {
@@ -93,7 +99,8 @@ export default function CheckoutForm() {
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message as string);
     } else {
-      setMessage("An unexpected error occurred.");
+      // console.log(error, "error stripe apple pay")
+      setMessage(JSON.stringify(error));
     }
 
     dispatch(updateControl({ spinner: false }))
