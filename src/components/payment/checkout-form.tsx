@@ -25,12 +25,12 @@ export default function CheckoutForm() {
   const selectedAddress = user?.addresses[0]; // A corriger
 
 
-  useEffect(() => {
-   if(!loading)
-    dispatch(updateControl({ spinner: true }))
-    else dispatch(updateControl({ spinner: false }))
+  // useEffect(() => {
+  //  if(!loading)
+  //   dispatch(updateControl({ spinner: true }))
+  //   else dispatch(updateControl({ spinner: false }))
 
-  }, [loading]);
+  // }, [loading]);
   
 
   useEffect(() => {
