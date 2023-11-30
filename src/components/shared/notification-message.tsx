@@ -32,14 +32,13 @@ const NotificationMessage = ({
   setErrorMessage,
   color,
 }: NotificationProps) => {
-  
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setErrorMessage(null);
-  //   }, 3000);
-  //   return () => clearTimeout(timer);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [message]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMessage(null);
+    }, 5000);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [message]);
 
   if (!message) return null;
 
