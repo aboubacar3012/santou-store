@@ -31,6 +31,7 @@ const Layout = ({ children }: any) => {
   const loading = useSelector(
     (state: RootState) => state.controls.values.spinner
   );
+  const controls = useSelector((state: RootState) => state.controls);
   const router = useRouter();
   const [singleShop, setSingleShop] = useState<boolean>(false);
   const dimension = useScreenDimension();
@@ -160,13 +161,19 @@ const Layout = ({ children }: any) => {
       <SpinnerOverlay show={loading} />
       {dimension && dimension < 768 && (
         <div>
-          <OrderChoiceDrawer />
-          <TakingOrderDrawer />
+          {controls.values.orderChoiceDrawer && <OrderChoiceDrawer />}
+          {controls.values.takingOrderDrawer && <TakingOrderDrawer />} 
+          {controls.values.planningOrderDrawer && <PlanningOrderDrawer />}
+          {controls.values.selectAddressDrawer && <SelectAddressDrawer />}
+          {controls.values.newAddressWindow && <NewAddressDrawer />}
+          {controls.values.showCart && <CartScreenDrawer />}
+          {controls.values.showPaymentDrawer && <PaymentDrawer />}
+          {/* <TakingOrderDrawer />
           <PlanningOrderDrawer />
           <SelectAddressDrawer />
           <NewAddressDrawer />
           <CartScreenDrawer />
-          <PaymentDrawer />
+          <PaymentDrawer /> */}
         </div>
       )}
     </div>

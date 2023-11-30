@@ -77,7 +77,7 @@ const CategoryFilterComponent = () => {
           <div
             key={index}
             className={`px-3 py-1 my-1 rounded-lg text-${category.color ?? colors[index]}-600 bg-gray-100 border-gray-100 cursor-pointer ${
-              selectedCategory === category ? "border border-green-900" : ""
+              selectedCategory === category.name ? "border border-green-900" : ""
             }`}
             onClick={() => {
               handleCategoryClick(category)
