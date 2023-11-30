@@ -32,6 +32,7 @@ const NotificationMessage = ({
   setErrorMessage,
   color,
 }: NotificationProps) => {
+  
   // useEffect(() => {
   //   const timer = setTimeout(() => {
   //     setErrorMessage(null);
