@@ -84,7 +84,7 @@ export default function CheckoutForm() {
               postal_code: selectedAddress?.zipCode,
               city: selectedAddress?.city,
               state: selectedAddress?.city,
-              country: selectedAddress?.country,
+              country: "FR",
             },
           },
         },
