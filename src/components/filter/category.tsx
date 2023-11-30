@@ -1,8 +1,12 @@
 import { updateControl } from "@/redux/features/controlsSlice";
+import { updateCategory } from "@/redux/features/filterSlice";
 import { getCategories } from "@/services/categories";
 import { CategoryType } from "@/types/category.type";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-scroll";
+
 
 const categoriesData = [
   { name: "Branding National", color: "orange", bgColor: "green" },
@@ -25,13 +29,26 @@ const CategoryFilterComponent = () => {
     staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes
   });
 
+  const dispatch = useDispatch();
+
   
   
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const handleCategoryClick = (category:any) => {
     setSelectedCategory(category);
+    console.log({category})
   };
+
+  useEffect(() => {
+    dispatch(updateCategory("all"));
+  }, []);
+
+  useEffect(() => {
+    if(isLoading && isFetching) dispatch(updateControl({spinner: true}));
+    else dispatch(updateControl({spinner: false}));
+
+  }, [isLoading, isFetching]);
 
   if (isLoading && isFetching) return <div>Chargement des produits...</div>;
   if (isError) return <div>Erreur lors du chargement des produits</div>;
@@ -44,10 +61,14 @@ const CategoryFilterComponent = () => {
       <div className="flex items-center justify-between overflow-y-scroll">
         {/* Tout afficher */}
         <div
+
           className={`px-3 py-1 my-1 rounded-lg text-gray-600 bg-gray-100 border-gray-100 cursor-pointer ${
-            selectedCategory === null ? "border border-green-900" : ""
+            selectedCategory === "all" ? "border border-green-900" : ""
           }`}
-          onClick={() => handleCategoryClick(null)}
+          onClick={() => {
+            handleCategoryClick("all");
+            dispatch(updateCategory("all"));
+          }}
           style={{ whiteSpace: "nowrap" }}
         >
           <p className="text-sm mt-1">Tout afficher</p>
@@ -58,7 +79,10 @@ const CategoryFilterComponent = () => {
             className={`px-3 py-1 my-1 rounded-lg text-${category.color ?? colors[index]}-600 bg-gray-100 border-gray-100 cursor-pointer ${
               selectedCategory === category ? "border border-green-900" : ""
             }`}
-            onClick={() => handleCategoryClick(category)}
+            onClick={() => {
+              handleCategoryClick(category)
+              dispatch(updateCategory(category.name.toLowerCase()));
+            }}
             style={{ whiteSpace: "nowrap" }}
           >
             <p className="text-sm mt-1">{category.name}</p>
@@ -70,7 +94,4 @@ const CategoryFilterComponent = () => {
 };
 
 export default CategoryFilterComponent;
-function dispatch(arg0: { payload: object; type: "controlsSlice/updateControl"; }) {
-  throw new Error("Function not implemented.");
-}
 

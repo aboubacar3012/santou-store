@@ -113,19 +113,21 @@ export const cartSlice = createSlice({
       updateTotalPrice(state);
       return state;
     },
-    updateProductQuantityWithProductId: (
+    updateProductQuantity: (
       state,
-      action: PayloadAction<{ id: string; quantity: number }>
+      action: PayloadAction<{ product: ProductType; quantity: number }>
     ) => {
-      const index = state.products.findIndex((p) => p.id === action.payload.id);
-      if (index !== -1) {
+      const existingProductIndex = state.products.findIndex(
+        (p) => JSON.stringify(p) === JSON.stringify(action.payload.product)
+      );
+      if (existingProductIndex !== -1) {
         if (action.payload.quantity === 0) {
           if (window.confirm("Voulez-vous supprimer ce produit du panier ?")) {
-            state.products.splice(index, 1);
+            state.products.splice(existingProductIndex, 1);
           }
         }
         if(action.payload.quantity > 0)
-        state.products[index]["quantity"] = action.payload.quantity;
+        state.products[existingProductIndex]["quantity"] = action.payload.quantity;
       }
       updateTotalPrice(state);
       return state;
@@ -145,7 +147,7 @@ export const {
   addToCart,
   removeFromCart,
   addUserId,
-  updateProductQuantityWithProductId,
+  updateProductQuantity,
   clearCart,
 } = cartSlice.actions;
 

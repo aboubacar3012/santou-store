@@ -15,9 +15,9 @@ const UserDetails = ({ user }: UserDetailsProps) => {
         {user.firstName} {user.lastName}
       </h1>
       {/* role */}
-      <div className="text-sm font-light text-gray-600 text-center">
+      {/* <div className="text-sm font-light text-gray-600 text-center">
         <Chip color="cyan" value={`Status: ${user.role}`} />
-      </div>
+      </div> */}
       <div className="font-light text-gray-600 ">
         <span className="text-gray-900">E-mail:</span> {user.email}
       </div>
@@ -25,13 +25,13 @@ const UserDetails = ({ user }: UserDetailsProps) => {
         <span className="text-gray-900">Phone: </span>
         {user.phone}
       </div>
-      <div className="font-light text-gray-600 ">
+      {/* <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Ne(e) le :</span> {user.dateOfBirth}
-      </div>
-      <div className="font-light text-gray-600 ">
+      </div> */}
+      {/* <div className="font-light text-gray-600 ">
         <span className="text-gray-900">Genre: </span>
         {user.gender}
-      </div>
+      </div> */}
       {/* Address */}
       {selectedAddress && (
         <div className="font-light text-gray-600 ">

@@ -26,7 +26,7 @@ import { formatPrice } from "@/utils/formatPrice";
 import { truncateText } from "@/utils/truncate-text";
 import {
   removeFromCart,
-  updateProductQuantityWithProductId,
+  updateProductQuantity,
 } from "@/redux/features/cartSlice";
 import { getOptionsPrice } from "@/utils/getOptionsPrice";
 import ContinueShoppingBtn from "@/components/cart/continue-shopping-btn";
@@ -42,6 +42,7 @@ const  CartScreenDrawer = () => {
   const router = useRouter();
   const user = useSelector((state: RootState) => state.auth.user);
   const cart = useSelector((state: RootState) => state.cart);
+  const auth = useSelector((state: RootState) => state.auth);
   const showCart = useSelector(
     (state: RootState) => state.controls.values.showCart
   );
@@ -117,19 +118,31 @@ const  CartScreenDrawer = () => {
             </div>
             {/* A modifier biensure */}
             {/* <ClientPosition /> */}
-            <div className="flex flex-col p-2">
+            {
+              auth && auth.user && auth.user.addresses && auth.user.addresses.length > 0 && (
+                <div className="flex flex-col p-2">
               <h2 className="font-medium text-gray-400">
                 LIVRAISON À L&apos;ADRESSE
               </h2>
               <p className="font-bold">Maison</p>
-              <p>5, rue des fleurs</p>
-              <p>13003 Marseille</p>
+              <p>{auth.user.addresses[0].number}, {auth.user.addresses[0].street}</p>
+              <p>{auth.user.addresses[0].zipCode} {auth.user.addresses[0].country}</p>
               <br />
               <h2 className="font-medium text-gray-400">
                 INDICATIONS POUR LE LIVREUR
               </h2>
-              <p>Porte de gauche, code 1234 Appeler quand vous arrivez</p>
+              <p>{auth.user.addresses[0].complement}</p>
             </div>
+              )
+            }
+            {
+              !auth || !auth.user || !auth.user.addresses || !auth.user.addresses.length && (
+                <div className="flex flex-col p-2">
+                  <p className="font-semibold">Aucune adresse </p>
+                </div>
+              )
+            }
+            
             <div
               onClick={() =>
                 dispatch(updateTakingOrder(TakingOrderEnum.PICKUP))
@@ -304,8 +317,8 @@ const  CartScreenDrawer = () => {
                           <button
                             onClick={() =>
                               dispatch(
-                                updateProductQuantityWithProductId({
-                                  id: product.id,
+                                updateProductQuantity({
+                                  product,
                                   quantity: product.quantity
                                     ? product.quantity - 1
                                     : 1,
@@ -325,8 +338,8 @@ const  CartScreenDrawer = () => {
                           <button
                             onClick={() =>
                               dispatch(
-                                updateProductQuantityWithProductId({
-                                  id: product.id,
+                                updateProductQuantity({
+                                  product,
                                   quantity: product.quantity
                                     ? product.quantity + 1
                                     : 1,

@@ -5,6 +5,8 @@ import { getProducts } from '@/services/products';
 import { useQuery } from '@tanstack/react-query';
 import { ProductType } from '@/types/product.type';
 import { OptionType } from '@/types/option.type';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateControl } from '@/redux/features/controlsSlice';
 
 interface ProductByCategory {
   [categoryId: string]: {
@@ -31,6 +33,15 @@ const ProductByCategory = () => {
     retry: false, // ne pas réessayer la requête en cas d'erreur
     staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes
   });
+  const categoryToShow = useSelector((state:any) => state.filter.category);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(isLoading && isFetching) dispatch(updateControl({spinner: true}));
+    else dispatch(updateControl({spinner: false}));
+
+  }, [isLoading, isFetching]);
 
   if (isLoading && isFetching) return <div>Chargement...</div>;
   if (isError) return <div>Erreur lors du chargement des produits</div>;
@@ -69,16 +80,15 @@ const ProductByCategory = () => {
     return Object.values(productsByCategory)
   }
 
-  console.log(data.products)
  
-
 const groupedProducts = groupProductsByCategory(data.products);
 
-console.log(groupedProducts)
+const groupedProductsToShowByFilter = groupedProducts.filter((group:any) => group.category.toLowerCase() === categoryToShow || categoryToShow === "all");
+
 
   return (
     <div>
-      {groupedProducts && groupedProducts.map((group: any) => (
+      {groupedProductsToShowByFilter && groupedProductsToShowByFilter.map((group: any) => (
         <div key={group.category}>
           <ProductListComponent products={group.products} category={group.category} />
         </div>

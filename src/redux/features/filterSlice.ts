@@ -6,7 +6,7 @@ type Filter = {
 };
 
 const initialState: Filter = {
-  category: "all", // l'id de la catégorie pour filtrer les produits
+  category: "all", // le nom de la catégorie pour filtrer les produits
 };
 
 export const filterSlice = createSlice({

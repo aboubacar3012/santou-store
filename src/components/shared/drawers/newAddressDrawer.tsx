@@ -208,11 +208,11 @@ const SelectAddressDrawer = () => {
             placeholder="Ex: 12 rue de la paix"
           ></textarea>
         </div>
-        <div>
+        {/* <div>
           <h3>TYPE D&apos;ADRESSE</h3>
 
           <div className="flex justify-start ">
-            {/* Maison */}
+            
             <Radio
             onChange={(e) => console.log(e)}
               crossOrigin={undefined}
@@ -223,7 +223,7 @@ const SelectAddressDrawer = () => {
               onClick={() => setAddressType("maison")}
             />
 
-            {/* Travail */}
+            
             <Radio
             onChange={(e) => console.log(e)}
               crossOrigin={undefined}
@@ -234,7 +234,7 @@ const SelectAddressDrawer = () => {
               onClick={() => setAddressType("travail")}
             />
 
-            {/* Ami */}
+            
             <Radio
             onChange={(e) => console.log(e)}
               crossOrigin={undefined}
@@ -245,7 +245,7 @@ const SelectAddressDrawer = () => {
               onClick={() => setAddressType("ami")}
             />
 
-            {/* Autre */}
+            
             <Radio
             onChange={(e) => console.log(e)}
               crossOrigin={undefined}
@@ -256,7 +256,7 @@ const SelectAddressDrawer = () => {
               onClick={() => setAddressType("autre")}
             />
           </div>
-        </div>
+        </div> */}
         <hr />
         {addressType === "autre" && (
           <div className="my-4">
