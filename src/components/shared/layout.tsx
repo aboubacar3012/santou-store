@@ -10,16 +10,18 @@ import { updateControl } from "@/redux/features/controlsSlice";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/router";
 import SpinnerOverlay from "./spinner-overlay";
-import NavbarComponent from "./navbar";
+import NavbarComponent from "./header";
 import { useEffect, useState } from "react";
 import OrderChoiceDrawer from "./drawers/orderChoiceDrawer";
 import TakingOrderDrawer from "./drawers/takingOrderDrawer";
 import PlanningOrderDrawer from "./drawers/planningOrderDrawer";
 import SelectAddressDrawer from "./drawers/selectAddressDrawer";
 import NewAddressDrawer from "./drawers/newAddressDrawer";
-import useScreenDimension from "@/hooks/useScreenDimension";
+import isMobileDevice from "@/hooks/isMobileDevice";
 import CartScreenDrawer from "@/pages/screens/cart-screen-drawer";
 import PaymentDrawer from "../payment/payment-drawer";
+import HeaderComponent from "./header";
+import BottomTabs from "./bottom-tabs";
 
 const Layout = ({ children }: any) => {
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const Layout = ({ children }: any) => {
   const controls = useSelector((state: RootState) => state.controls);
   const router = useRouter();
   const [singleShop, setSingleShop] = useState<boolean>(false);
-  const dimension = useScreenDimension();
+  const isMobile = isMobileDevice();
 
   // if (
   //   !auth.isAuthenticated &&
@@ -49,9 +51,13 @@ const Layout = ({ children }: any) => {
       // auth.isAuthenticated &&
       // router.pathname !== "/auth/login" &&
       // router.pathname !== "/auth/registration" &&
-      router.pathname !== "/screens/cart-screen"
-      // router.pathname !== "/screens/profile-screen"
+      // router.pathname !== "/screens/cart-screen"
+      !router.pathname.includes("/admin")
     );
+  };
+
+  const handleShowHeader = () => {
+    return !router.pathname.includes("/admin");
   };
 
   useEffect(() => {
@@ -62,118 +68,29 @@ const Layout = ({ children }: any) => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header fixe */}
-      <NavbarComponent singleShop={singleShop} setSingleShop={setSingleShop} />
+      {handleShowHeader() && <HeaderComponent />}
 
       {/* Main content avec défilement */}
       <main className="flex-grow p-4 overflow-y-auto width-s">
-        <div className="container mx-auto">
-          <div className="my-36">{children}</div>
-        </div>
+          {!handleShowHeader() && <div className="my-4">{children}</div>}
+          {handleShowHeader() && <div className="my-36">{children}</div>}
+        {/* <div className="container mx-auto">
+        </div> */}
       </main>
       {/* Tab inférieur fixe */}
-      {handleShowBottomTab() && (
-        <div className="container fixed bottom-0  p-3   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 cursor-pointer">
-          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
-            <button
-              onClick={() => router.push("/screens/home-screen")}
-              type="button"
-              className="inline-flex flex-col items-center justify-center group"
-            >
-              <BiHomeAlt2 className="h-6 w-6" />
-              <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                Accueil
-              </span>
-            </button>
-          </div>
-          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
-            <button
-              onClick={() => router.push("/screens/orders-screen")}
-              type="button"
-              className="inline-flex flex-col items-center justify-center group"
-            >
-              <AiOutlineHistory className="h-6 w-6" />
-              <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                Commandes
-              </span>
-            </button>
-          </div>
-          <div
-            // onClick={() => router.push("/screens/cart-screen")}
-            onClick={() => dispatch(updateControl({ showCart: true }))}
-            className="flex flex-col items-center  hover:text-blue-400 "
-          >
-            <div className="absolute bottom-9 shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-16 h-16 p-2 text-white transition ease-in duration-500 ">
-              <div className="flex flex-col justify-end items-center">
-                {cart.products.length > 0 && (
-                  <span className="-mb-3 text-red-500 text-xl">
-                    {cart.products.length}
-                  </span>
-                )}
-                <GiShoppingCart className="w-8 h-8" />
-              </div>
-              {
-                cart.products.length > 0 && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full border-4 opacity-50" />
-                )
-              }
-            </div>
-          </div>
-          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
-            <button
-              onClick={() => router.push("/screens/favorites-screen")}
-              type="button"
-              className="inline-flex flex-col items-center justify-center group"
-            >
-              <BsBookmarks className="h-6 w-6" />
-              <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                Favoris
-              </span>
-            </button>
-          </div>
-          {/* <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
-            <button
-              onClick={() => router.push("/screens/favorites-screen")}
-              type="button"
-              className="inline-flex flex-col items-center justify-center group"
-            >
-              <GoRocket className="h-6 w-6" />
-              <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                Missions
-              </span>
-            </button>
-            </div> */}
-          <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
-            <button
-              onClick={() => router.push("/screens/profile-screen")}
-              type="button"
-              className="inline-flex flex-col items-center justify-center group"
-            >
-              <BiUserCircle className="h-6 w-6" />
-              <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                Mon Profil
-              </span>
-            </button>
-          </div>
-        </div>
-      )}
+      {handleShowBottomTab() && <BottomTabs />}
 
       {/* <CartButton /> */}
       <SpinnerOverlay show={loading} />
-      {dimension && dimension < 768 && (
+      {isMobile && (
         <div>
           {controls.values.orderChoiceDrawer && <OrderChoiceDrawer />}
-          {controls.values.takingOrderDrawer && <TakingOrderDrawer />} 
+          {controls.values.takingOrderDrawer && <TakingOrderDrawer />}
           {controls.values.planningOrderDrawer && <PlanningOrderDrawer />}
           {controls.values.selectAddressDrawer && <SelectAddressDrawer />}
           {controls.values.newAddressWindow && <NewAddressDrawer />}
           {controls.values.showCart && <CartScreenDrawer />}
           {controls.values.showPaymentDrawer && <PaymentDrawer />}
-          {/* <TakingOrderDrawer />
-          <PlanningOrderDrawer />
-          <SelectAddressDrawer />
-          <NewAddressDrawer />
-          <CartScreenDrawer />
-          <PaymentDrawer /> */}
         </div>
       )}
     </div>

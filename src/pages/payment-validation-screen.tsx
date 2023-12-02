@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import NavbarComponent from "../components/shared/navbar";
+import NavbarComponent from "../components/shared/header";
 import { CartType } from "@/types/cart.type";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";

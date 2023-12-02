@@ -12,13 +12,13 @@ import Head from "next/head";
 import { Capacitor } from "@capacitor/core";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import useScreenDimension from "@/hooks/useScreenDimension";
+import isMobileDevice from "@/hooks/isMobileDevice";
 import Layout from "../components/shared/layout";
 import { useEffect } from "react";
 import { GlobalDebug } from "@/utils/removeConsoles";
 import OneSignalComponent from "@/components/shared/one-signal-component";
 import { ThemeProvider } from "@material-tailwind/react";
-
+import MobileOnlyOverlay from "@/components/shared/mobile-only-overlay";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -31,7 +31,7 @@ const stripePromise = loadStripe(
 const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const dimension = useScreenDimension();
+  const isMobile = isMobileDevice();
 
   // useEffect(() => {
   //   process.env.NODE_ENV === "production" && GlobalDebug(false, false);
@@ -76,44 +76,24 @@ const App = ({ Component, pageProps }: AppProps) => {
       <PersistGate persistor={persistor} loading={null}>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
-          <Head>
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
-            />
-          </Head>
-          <Elements
-            // options={{ ...options, appearance: { theme: "stripe" as const } }}
-            stripe={stripePromise}
-          >
-            {dimension && dimension > 768 && (
-              <div
-                className="mobile-only-overlay h-screen bg-cover bg-center relative"
-                style={{
-                  backgroundImage: "url('/images/overlay-bg.jpg')",
-                }}
-              >
-                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="text-white text-2xl text-center">
-                    <p>
-                      <strong>AfroGraille</strong> est une application mobile, elle n&apos;est pas
-                      disponible sur ordinateur pour le moment.
-                    </p>
-                    <p className="mt-2 text-md">
-                      Vous devez l&apos;ouvrir sur votre téléphone pour pouvoir
-                      l&apos;utiliser.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+            <Head>
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+              />
+            </Head>
+            <Elements
+              // options={{ ...options, appearance: { theme: "stripe" as const } }}
+              stripe={stripePromise}
+            >
+              {!isMobile&& <MobileOnlyOverlay />}
 
-            <Layout>
-              <Component {...pageProps} />
-              <Analytics />
-              {/* <OneSignalComponent /> */}
-            </Layout>
-          </Elements>
+              <Layout>
+                <Component {...pageProps} />
+                <Analytics />
+                {/* <OneSignalComponent /> */}
+              </Layout>
+            </Elements>
           </ThemeProvider>
           {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </QueryClientProvider>

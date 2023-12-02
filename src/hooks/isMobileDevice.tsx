@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const useScreenDimension = () => {
-  const [dimension, setDimension] = useState<number>();
+const IsMobileDevice = () => {
+  const [dimension, setDimension] = useState<number>(0);
 
   const resizeFunction = () => {
     setDimension(window.innerWidth);
@@ -17,7 +17,7 @@ const useScreenDimension = () => {
     };
   }, []);
 
-  return dimension;
+  return dimension < 768 ? true : false;
 };
 
-export default useScreenDimension;
+export default IsMobileDevice;

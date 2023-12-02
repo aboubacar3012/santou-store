@@ -14,11 +14,8 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 
-interface Props {
-  singleShop?: boolean;
-  setSingleShop?: Dispatch<SetStateAction<boolean>> | any;
-}
-const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
+
+const HeaderComponent = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
   const router = useRouter();
@@ -29,13 +26,7 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
   const isAuth = auth.isAuthenticated;
   const selectedAddress = auth.user?.addresses[0]; // A corriger
 
-  useEffect(() => {
-    if (router.pathname === "/screens/single-shop-screen") {
-      setSingleShop(true);
-    } else {
-      setSingleShop(false);
-    }
-  }, [router]);
+
 
   console.log(router.pathname);
 
@@ -49,7 +40,7 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
       }}
     >
       <nav className="p-2 flex flex-grow relative justify-between z-10 items-center mx-auto h-18">
-        {singleShop && (
+        {/* {singleShop && (
           <div className="inline relative">
             <button
               onClick={() => {
@@ -62,7 +53,7 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
               <BsArrowLeftCircle className="w-6 h-6" />
             </button>
           </div>
-        )}
+        )} */}
         <div className="inline-flex">
           <Link href="/">
             {/* <div className="">{singleShop && <h1 className="text-2xl">
@@ -152,4 +143,4 @@ const NavbarComponent = ({ singleShop, setSingleShop }: Props) => {
   );
 };
 
-export default NavbarComponent;
+export default HeaderComponent;
