@@ -1,7 +1,7 @@
 import { RootState } from "@/redux/store";
 import { getOrdersService } from "@/services/orders";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Mode } from "./components/mode";
 import { OrdersAccordion } from "./components/orders-accordion";
 import Statistics from "./components/statistics";
@@ -10,9 +10,11 @@ import { useQuery } from "@tanstack/react-query";
 import { OrderType } from "@/types/order.type";
 import Select from 'react-select';
 import { getOpenValueStatus } from "@/utils/ordersFunc";
+import { logout } from "@/redux/features/authSlice";
 
 type Order = { value: string; label: string };
 export const Orders = () => {
+  const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const token = auth.token;
   const [selectedSearchOrder, setSelectedSearchOrder] = useState<Order | null>(
@@ -21,9 +23,10 @@ export const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState<OrderType | null>(null);
   const [open, setOpen] = useState(0);
   const [showOrderDialog, setShowOrderDialog] = useState(false);
+  const [orderToShow, setOrderToShow] = useState<OrderType | null>(null);
 
 
-  const { data, isLoading, isFetching, error, isError } = useQuery({
+  const { data, isLoading, isFetching, error, isError, fetchStatus } = useQuery({
     queryKey: ["orders"], // une clé simple car on récupère tous les todos
     queryFn: () => getOrdersService(token), // la fonction qui va retourner les données
     refetchInterval: 1000 * 60 * 1, // rafraîchir les données toutes les minutes
@@ -33,6 +36,23 @@ export const Orders = () => {
     staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes
   });
 
+  useEffect(() => {
+    if (data && data.orders.length > 0) {
+      setOrderToShow(data.orders);
+    }
+  }, [data]);
+
+  if (isLoading && isFetching) return <div>Chargement...</div>;
+  if (isError) return <div>Erreur lors du chargement des produits</div>;
+
+  if(data && data.status === 401) {
+    localStorage.removeItem("token");
+    dispatch(logout())
+    window.location.href = "/auth/login";
+  }
+  if (data && data.orders.length === 0) return <div>Aucun produit</div>;
+
+  
   const getOrdersNumber = () => {
     if(data)
     {
@@ -56,10 +76,6 @@ export const Orders = () => {
     }
   };
 
-  if (isLoading && isFetching) return <div>Chargement...</div>;
-  if (isError) return <div>Erreur lors du chargement des produits</div>;
-
-  if (data.orders.length === 0) return <div>Aucun produit</div>;
 
   
   return (
@@ -70,7 +86,7 @@ export const Orders = () => {
       <br/> */}
     <div className="flex flex-col justify-center items-center w-full md:w-[60rem]">
       {/* <Mode /> */}
-      <DateFilterComponent />
+      {/* <DateFilterComponent /> */}
       <Select
         className="basic-single p-3 text-sm w-full"
         classNamePrefix="select"

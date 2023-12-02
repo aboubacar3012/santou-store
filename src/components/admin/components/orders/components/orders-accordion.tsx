@@ -143,7 +143,7 @@ export function OrdersAccordion({orders, selectedSearchOrder, setSelectedSearchO
                   </td>
                   {status === 'planified' && order.createdAt && (
                     <td className="p-4">
-                      <Chip color="teal" value={formatFrenchDate(order.createdAt)} />
+                      <Chip color="teal" value={formatFrenchDate(order.createdAt) ?? ""} />
                     </td>
                   )}
                 </tr>

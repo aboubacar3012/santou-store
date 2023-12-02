@@ -190,33 +190,33 @@ export function ShowOrderDialog({
   const orderBody = () => {
     return (
       <div id="orderBody" className="px-2 space-y-2 ">
-        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400 flex ">
+        <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400 flex ">
           <strong className="font-bold mr-2">Paiement:</strong>
           {order?.paymentStatus === "PAID" ? (
             <Chip size="sm" color="green" value="Déjà payé" />
           ) : (
             <Chip size="sm" color="red" value="Non payé" />
           )}
-        </p>
-        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        </div>
+        <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
           <strong className="font-bold">Commandé le :</strong>{" "}
           {formatFrenchDate(order?.createdAt.toString() ?? "")}
-        </p>
-        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        </div>
+        <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
           <strong className="font-bold">Mode de récupération:</strong>{" "}
           {order?.takingOrder === "DELIVERY" ? "Livraison" : "À emporter"}
-        </p>
-        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        </div>
+        <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
           <p className="font-bold">Commande Numéro: {order?.orderNumber}</p>
-        </p>
+        </div>
         {/* Numero telephone */}
-        <p className="text-base leading-relaxed text-gray-500  flex justify-start items-center">
+        <div className="text-base leading-relaxed text-gray-500  flex justify-start items-center">
           <strong className="font-bold mr-2">Téléphone:</strong>{" "}
           <a href={`tel:${order?.user?.phone}`}>
-            <Chip size="md" color="indigo" value={order?.user?.phone} icon={<FiPhoneCall className="mt-1" />} />
+            <Chip size="md" color="indigo" value={order?.user?.phone ?? "unknown"} icon={<FiPhoneCall className="mt-1" />} />
           </a>
-        </p>
-        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        </div>
+        <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
           <strong className="font-bold">Adresse: </strong> <br />
           {order?.deliveryAddress?.number}, {order?.deliveryAddress?.street}{" "}
           {order?.deliveryAddress?.zipCode} {order?.deliveryAddress?.city}
@@ -256,17 +256,17 @@ export function ShowOrderDialog({
               </span>
             </Button>
           </div>
-        </p>
+        </div>
         
-        {/* <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        {/* <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
           <strong>Commentaire client:</strong> 
-        </p> */}
-        {/* <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        </div> */}
+        {/* <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
           <strong>Code de confirmations :</strong>{' '}
           <span className="bg-blue-100 text-blue-800 text-md font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
             {commandeInfos.codeConfirmation}
           </span>
-        </p> */}
+        </div> */}
         <hr />
         <h1>
           <strong>Detail de la commande</strong>
@@ -275,17 +275,18 @@ export function ShowOrderDialog({
       </div>
     );
   };
-  // if(!order) return <p>Chargement de la commande ...</p>
+  if(!order) return <div>Chargement de la commande ...</div>
 
   return (
     <div className="fixed">
       <Dialog
-        open={open}
+        open={open ?? false}
         handler={handleOpen}
         animate={{
           mount: { scale: 1, y: 0 },
           unmount: { scale: 0.9, y: -100 },
         }}
+        
       >
         <DialogHeader className="justify-between">
           <Typography
@@ -306,12 +307,12 @@ export function ShowOrderDialog({
           </IconButton>
         </DialogHeader>
         <DialogBody divider className="h-96  overflow-y-scroll">
-          {orderBody()}
+          {orderBody()?? "Chargement de la commande ..."}
         </DialogBody>
         <DialogFooter>
-          {order?.orderStatus &&
+          {order?.orderStatus ?
             buttonsByStatus(order?.orderStatus) &&
-            buttonsByStatus(order?.orderStatus)}
+            buttonsByStatus(order?.orderStatus): ""}
         </DialogFooter>
       </Dialog>
     </div>

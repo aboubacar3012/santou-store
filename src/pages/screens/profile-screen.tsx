@@ -95,6 +95,17 @@ const ProfileScreenPage = () => {
             </Button>
           </div>
         )} */}
+        {user && user.role === RoleEnum.USER && (
+          <Button
+          className="mt-5"
+          onClick={() => router.push("/admin/admin-screen")}
+          color="blue"
+          fullWidth
+        >
+          Acceder au dashboard admin
+        </Button>
+        )}
+        
         <Button
           className="mt-5"
           onClick={() => {

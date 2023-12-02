@@ -6,10 +6,16 @@ const DateFilterComponent = () => {
   const [selectedDate, setSelectedDate] = useState('thisWeek'); // Date sélectionnée : thisWeek, lastWeek, specificDate
   const [customDate, setCustomDate] = useState('');
 
+
+
   const filterByDate = (date: string) => {
     const currentDate = new Date();
     const sevenDaysAgo = new Date(currentDate);
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); // Date d'il y a 7 jours
+
+    console.log('sevenDaysAgo', sevenDaysAgo);
+    console.log('currentDate', currentDate);
+    console.log('customDate', customDate);
 
     if (date === 'thisWeek') {
       const thisWeekItems = items.filter((item:any) => new Date(item.createdAt) > sevenDaysAgo);
@@ -51,7 +57,7 @@ const DateFilterComponent = () => {
   return (
     <div className="container mx-auto p-4">
       <p className="mb-4 font-bold text-center">
-        Filtrer les commandes selon vos criteres
+        Filtrer les commandes par date
         </p>
       <div className="flex items-center space-x-4 justify-between">
         <button

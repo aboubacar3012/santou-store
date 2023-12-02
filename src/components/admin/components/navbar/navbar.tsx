@@ -59,11 +59,12 @@ export function HeaderNavbar() {
           <Switch
             label="Disponible"
             // checked={availabity === 'online'}
-            // onChange={() =>
-            //   handleAvailability({
-            //     availability: availabity === 'online' ? 'offline' : 'online',
-            //   })
-            // }
+            onChange={() =>
+              // handleAvailability({
+              //   availability: availabity === 'online' ? 'offline' : 'online',
+              // })
+              {}
+            }
             color="blue"
             checked={true}
             crossOrigin={undefined}
