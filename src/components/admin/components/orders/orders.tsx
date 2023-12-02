@@ -14,7 +14,6 @@ import { logout } from "@/redux/features/authSlice";
 
 type Order = { value: string; label: string };
 export const Orders = () => {
-  const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const token = auth.token;
   const [selectedSearchOrder, setSelectedSearchOrder] = useState<Order | null>(
@@ -23,8 +22,8 @@ export const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState<OrderType | null>(null);
   const [open, setOpen] = useState(0);
   const [showOrderDialog, setShowOrderDialog] = useState(false);
-  const [orderToShow, setOrderToShow] = useState<OrderType | null>(null);
 
+  const dispatch = useDispatch();
 
   const { data, isLoading, isFetching, error, isError, fetchStatus } = useQuery({
     queryKey: ["orders"], // une clé simple car on récupère tous les todos
@@ -34,22 +33,20 @@ export const Orders = () => {
     refetchOnMount: true, // rafraîchir la requête au montage du composant
     retry: false, // ne pas réessayer la requête en cas d'erreur
     staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes
+    
   });
 
   useEffect(() => {
-    if (data && data.orders.length > 0) {
-      setOrderToShow(data.orders);
+    if(data && data.status === 401) {
+      localStorage.removeItem("token");
+      dispatch(logout())
+      window.location.href = "/auth/login";
     }
   }, [data]);
 
   if (isLoading && isFetching) return <div>Chargement...</div>;
   if (isError) return <div>Erreur lors du chargement des produits</div>;
 
-  if(data && data.status === 401) {
-    localStorage.removeItem("token");
-    dispatch(logout())
-    window.location.href = "/auth/login";
-  }
   if (data && data.orders.length === 0) return <div>Aucun produit</div>;
 
   
