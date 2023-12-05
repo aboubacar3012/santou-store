@@ -52,12 +52,12 @@ const Layout = ({ children }: any) => {
       // router.pathname !== "/auth/login" &&
       // router.pathname !== "/auth/registration" &&
       // router.pathname !== "/screens/cart-screen"
-      !router.pathname.includes("/admin")
+      !router.pathname.includes("/admin") && !router.pathname.includes("/[id]")
     );
   };
 
   const handleShowHeader = () => {
-    return !router.pathname.includes("/admin");
+    return !router.pathname.includes("/admin") && !router.pathname.includes("/[id]");
   };
 
   useEffect(() => {
@@ -71,8 +71,8 @@ const Layout = ({ children }: any) => {
       {handleShowHeader() && <HeaderComponent />}
 
       {/* Main content avec défilement */}
-      <main className="flex-grow p-4 overflow-y-auto width-s">
-          {!handleShowHeader() && <div className="my-4">{children}</div>}
+      <main className="flex-grow  overflow-y-auto width-s"> {/* p-4 */ }
+          {!handleShowHeader() && <div className="">{children}</div>} {/* my-4 */ }
           {handleShowHeader() && <div className="my-36">{children}</div>}
         {/* <div className="container mx-auto">
         </div> */}

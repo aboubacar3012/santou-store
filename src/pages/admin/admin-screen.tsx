@@ -1,6 +1,8 @@
 'use client';
+import AddRestaurantForm from '@/components/admin/components/forms/addRestaurantForm';
 import { HeaderNavbar } from '@/components/admin/components/navbar/navbar';
 import Orders from '@/components/admin/components/orders/orders';
+import ProfilePage from '@/components/admin/components/profile/profile.component';
 import { MobileSidebar } from '@/components/admin/components/sidebar/mobile-sidebar';
 import { DesktopSidebar } from '@/components/admin/components/sidebar/sidebar';
 import isMobileDevice from '@/hooks/isMobileDevice';
@@ -33,13 +35,13 @@ const AdminScreenPage = () => {
   };
 
   const pageToShow = () => {
-    // if (controls.dashboardScreen) return <PageIndisponible />;
-    // else if (controls.ordersScreen) return <PageIndisponible />;
-    // else if (controls.summaryScreen) return <PageIndisponible />;
-    // else if (controls.articleScreen) return <PageIndisponible />;
-    // else if (controls.formulaScreen) return <PageIndisponible />;
-    // else if (controls.profileScreen) return <PageIndisponible />;
-    // else if (controls.historyScreen) return <PageIndisponible />;
+    if (controls.showDashBoardScreen) return <PageIndisponible />;
+    else if (controls.showOrdersScreen) return <Orders />;
+    else if (controls.showSummariesScreen) return <PageIndisponible />;
+    else if (controls.showArticleFormScreen) return <PageIndisponible />;
+    else if (controls.showRestaurantFormScreen) return <ProfilePage />;
+    else if (controls.showSettingsScreen) return <PageIndisponible />;
+    else if (controls.showHistoriesScreen) return <PageIndisponible />;
     return <Orders />;
   };
 
@@ -47,7 +49,6 @@ const AdminScreenPage = () => {
     //Main container
     <main className="flex flex-col overflow-y-clip h-full ">
       <HeaderNavbar />
-
       <div className="flex h-full">
         <div className="h-full">
           {!isMobile ? (
@@ -57,7 +58,7 @@ const AdminScreenPage = () => {
           )}
         </div>
 
-        <div className="w-full flex justify-center items-start mt-4">
+        <div className="w-screen">
           {/* Ecran a afficher */}
           {pageToShow()}
         </div>

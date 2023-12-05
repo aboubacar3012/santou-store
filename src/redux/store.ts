@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig = {
-  key: "afristore_v1.1.2",
+  key: "afristore_v1.1.4",
   storage,
 };
 

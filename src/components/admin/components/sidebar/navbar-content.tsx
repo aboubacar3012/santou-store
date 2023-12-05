@@ -35,25 +35,36 @@ export function NavbarContent() {
   };
 
   const handleSelect = (param: any) => {
-    dispatch(updateControl(param));
+    const screens = {
+      showDashBoardScreen: false,
+      showOrdersScreen: false,
+      showSummariesScreen: false,
+      showArticleFormScreen: false,
+      showRestaurantFormScreen: false,
+      showSettingsScreen: false,
+      showHistoriesScreen: false,
+      ...param, // Remplace les valeurs définies dans param
+    };
+  
+    dispatch(updateControl({ ...screens, adminLeftSidebar: false }));
   };
 
   return (
     <div className="flex flex-col">
       <List>
-        <ListItem onClick={() => handleSelect({ dashboardScreen: true })}>
+        <ListItem onClick={() => handleSelect({ showDashBoardScreen: true })}>
           <ListItemPrefix>
             <AiOutlineDashboard className="inline-block w-5 h-5 mr-2" />
           </ListItemPrefix>
           Dashboard
         </ListItem>
-        <ListItem onClick={() => handleSelect({ ordersScreen: true })}>
+        <ListItem onClick={() => handleSelect({ showOrdersScreen: true })}>
           <ListItemPrefix>
             <BsCart4 className="inline-block w-5 h-5 mr-2" />
           </ListItemPrefix>
           Commandes
         </ListItem>
-        <ListItem onClick={() => handleSelect({ summaryScreen: true })}>
+        <ListItem onClick={() => handleSelect({ showSummariesScreen: true })}>
           <ListItemPrefix>
             <LiaFileInvoiceSolid className="inline-block w-5 h-5 mr-2" />
           </ListItemPrefix>
@@ -78,29 +89,29 @@ export function NavbarContent() {
           </ListItem>
           <AccordionBody className="py-1">
             <List className="pl-5">
-              <ListItem onClick={() => handleSelect({ articleScreen: true })}>
+              <ListItem onClick={() => handleSelect({ showRestaurantFormScreen: true })}>
                 <ListItemPrefix>
                   <BsChevronRight className="inline-block w-5 h-5 mr-2" />
                 </ListItemPrefix>
-                Nouvel article
+                Restaurant
               </ListItem>
-              <ListItem onClick={() => handleSelect({ formulaScreen: true })}>
+              <ListItem onClick={() => handleSelect({ showArticleFormScreen: true })}>
                 <ListItemPrefix>
                   <BsChevronRight className="inline-block w-5 h-5 mr-2" />
                 </ListItemPrefix>
-                Nouvelle formule
+                Article
               </ListItem>
             </List>
           </AccordionBody>
         </Accordion>
 
-        <ListItem onClick={() => handleSelect({ profileScreen: true })}>
+        <ListItem onClick={() => handleSelect({ showSettingsScreen: true })}>
           <ListItemPrefix>
             <FaUserCog className="inline-block w-5 h-5 mr-2" />
           </ListItemPrefix>
           Mes Infos
         </ListItem>
-        <ListItem onClick={() => handleSelect({ historyScreen: true })}>
+        <ListItem onClick={() => handleSelect({ showHistoriesScreen: true })}>
           <ListItemPrefix>
             <AiOutlineHistory className="inline-block w-5 h-5 mr-2" />
           </ListItemPrefix>

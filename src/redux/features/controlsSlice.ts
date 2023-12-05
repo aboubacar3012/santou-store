@@ -14,7 +14,14 @@ type Controls = {
     selectAddressDrawer:boolean;
     newAddressWindow:boolean;
     showPaymentDrawer:boolean;
-
+    adminLeftSidebar:boolean;
+    showDashBoardScreen:boolean;
+    showOrdersScreen:boolean;
+    showSummariesScreen:boolean;
+    showArticleFormScreen:boolean;
+    showRestaurantFormScreen:boolean;
+    showSettingsScreen:boolean;
+    showHistoriesScreen:boolean;
   };
 };
 
@@ -29,6 +36,14 @@ const initialState: Controls = {
     selectAddressDrawer:false,
     newAddressWindow:false,
     showPaymentDrawer:false,
+    adminLeftSidebar:false,
+    showDashBoardScreen:false,
+    showOrdersScreen:false,
+    showSummariesScreen:false,
+    showArticleFormScreen:false,
+    showRestaurantFormScreen:false,
+    showSettingsScreen:false,
+    showHistoriesScreen:false,
   },
 };
 
