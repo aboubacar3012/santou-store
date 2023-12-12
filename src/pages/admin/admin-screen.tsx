@@ -1,4 +1,5 @@
 'use client';
+import AddArticleForm from '@/components/admin/components/forms/addArticleForm';
 import AddRestaurantForm from '@/components/admin/components/forms/addRestaurantForm';
 import { HeaderNavbar } from '@/components/admin/components/navbar/navbar';
 import Orders from '@/components/admin/components/orders/orders';
@@ -38,9 +39,9 @@ const AdminScreenPage = () => {
     if (controls.showDashBoardScreen) return <PageIndisponible />;
     else if (controls.showOrdersScreen) return <Orders />;
     else if (controls.showSummariesScreen) return <PageIndisponible />;
-    else if (controls.showArticleFormScreen) return <PageIndisponible />;
+    else if (controls.showArticleFormScreen) return <AddArticleForm />;
     else if (controls.showRestaurantFormScreen) return <ProfilePage />;
-    else if (controls.showSettingsScreen) return <PageIndisponible />;
+    else if (controls.showSettingsScreen) return <ProfilePage />;
     else if (controls.showHistoriesScreen) return <PageIndisponible />;
     return <Orders />;
   };

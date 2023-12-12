@@ -12,29 +12,37 @@ import {
   MdUpload,
   MdAddCircleOutline,
 } from "react-icons/md";
-import { FaTrash } from "react-icons/fa";
+import { RiImageEditFill } from "react-icons/ri";
 import {
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
   Typography,
   Input,
-  Tooltip,
-  Chip,
-  IconButton,
-  Checkbox,
   Textarea,
   Button,
   Select,
   Option,
+  Checkbox,
   Switch,
 } from "@material-tailwind/react";
 import { mockRestaurantInfo } from "@/docs/mockRestaurantInfo";
 import { RootState } from "@/redux/store";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Speciality from "./speciality.component";
+import Category from "./category.component";
+import {
+  addRestaurantService,
+  getRestaurantByIdService,
+  updateRestaurantByIdService,
+} from "@/services/store";
+import { DayEnum, StoreType } from "@/types/store.type";
+import { uploadImageService } from "@/services/uploadImage";
+import { StoreCategoryType } from "@/types/storeCategory.type";
+import { truncateText } from "@/utils/truncate-text";
+import { IoCheckmark } from "react-icons/io5";
+import { StoreSpecialityType } from "@/types/storeSpeciality.type";
 
-const hours = [
+const hoursMock = [
   "00:15",
   "00:30",
   "00:45",
@@ -132,64 +140,404 @@ const hours = [
   "23:45",
   "00:00",
 ];
+
+const daysMock = [
+  "Lundi",
+  "Mardi",
+  "Mercredi",
+  "Jeudi",
+  "Vendredi",
+  "Samedi",
+  "Dimanche",
+];
+
+const restaurantMock: StoreType = {
+  name: "AfroGraille",
+  slug: "afro-graille",
+};
 const ProfilePage = () => {
+  const [bannerUrl, setBannerUrl] = useState<string | ArrayBuffer | null>(null);
+  const [bannerFile, setBannerFile] = useState<File>();
+  const [logoUrl, setLogoUrl] = useState<string | ArrayBuffer | null>(null);
+  const [logoFile, setLogoFile] = useState<File>();
+  const [storeName, setStoreName] = useState<string>("");
+  const [storeSlug, setStoreSlug] = useState<string>("");
+  const [storeDescription, setStoreDescription] = useState<string>("");
+  const [selectedStoreCategories, setSelectedStoreCategories] = useState<
+    StoreCategoryType[]
+  >([]);
+  const [selectedStoreSpecialities, setSelectedStoreSpecialities] = useState<
+    StoreSpecialityType[]
+  >([]);
+  const [phone, setPhone] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [zipCode, setZipCode] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [website, setWebsite] = useState<string>("");
+  const [hours, setHours] = useState<
+    {
+      day: DayEnum;
+      open: string;
+      close: string;
+      isActive?: boolean;
+    }[]
+  >([
+    {
+      day: DayEnum.Lundi,
+      open: "00:00",
+      close: "00:00",
+    },
+    {
+      day: DayEnum.Mardi,
+      open: "00:00",
+      close: "00:00",
+    },
+    {
+      day: DayEnum.Mercredi,
+      open: "00:00",
+      close: "00:00",
+    },
+    {
+      day: DayEnum.Jeudi,
+      open: "00:00",
+      close: "00:00",
+    },
+    {
+      day: DayEnum.Vendredi,
+      open: "00:00",
+      close: "00:00",
+    },
+    {
+      day: DayEnum.Samedi,
+      open: "00:00",
+      close: "00:00",
+    },
+    {
+      day: DayEnum.Dimanche,
+      open: "00:00",
+      close: "00:00",
+    },
+  ]);
+
   // Access the client
   const queryClient = useQueryClient();
-  const restaurantInfo = mockRestaurantInfo;
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const hiddenFileInput = useRef<HTMLInputElement>(null);
-  const isTablet = false;
-  // const userInfos = useSelector((state: RootState) => state.userInfos);
+  const hiddenBannerFileInput = useRef<HTMLInputElement>(null);
+  const hiddenLogoFileInput = useRef<HTMLInputElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files != null && files.length > 0) {
-      const file = files[0];
-      console.log(file);
+  // const userInfos = useSelector((state: RootState) => state.userInfos);
+  const auth = useSelector((state: RootState) => state.auth);
+  const token = auth.token;
+  const user = auth.user;
+  const storeId = "6572109adeea7b164e9f3c81";
+
+  const { data, isLoading, isFetching, error, isError, fetchStatus } = useQuery(
+    {
+      queryKey: ["store", storeId], // une clé simple car on récupère tous les todos
+      queryFn: () => getRestaurantByIdService(storeId), // la fonction qui va retourner les données
+      refetchOnMount: true, // rafraîchir la requête au montage du composant
+      refetchOnWindowFocus: false, // rafraîchir la requête quand la fenêtre est active
+    }
+  );
+
+  const mutation = useMutation(
+    (restaurantInfos: StoreType) =>
+      updateRestaurantByIdService(storeId, restaurantInfos, token),
+    {
+      onSuccess: (data: any) => {
+        if (data.success) {
+          queryClient.invalidateQueries(["store", storeId]);
+          // handleConfirmUpload()
+        } else {
+        }
+      },
+      onError: (error) => {},
+    }
+  );
+
+  useEffect(() => {
+    if (data && data.success) {
+      const restaurantInfo = data.store;
+      if (restaurantInfo.storeHours.length > 0)
+        setHours(restaurantInfo.storeHours);
+      setBannerUrl(restaurantInfo.storeBanner);
+      setLogoUrl(restaurantInfo.storeLogo);
+      setStoreName(restaurantInfo.name);
+      setStoreSlug(restaurantInfo.slug);
+      setStoreDescription(restaurantInfo.storeDescription);
+      setSelectedStoreCategories(
+        restaurantInfo.storeCategories.map((category: StoreCategoryType) => ({
+          value: category.id,
+          label: category.name,
+          id: category.id,
+        }))
+      );
+      setPhone(restaurantInfo.phoneNumbers[0]);
+      // setAddress(restaurantInfo.address);
+      // setZipCode(restaurantInfo.zipCode);
+      // setCity(restaurantInfo.city);
+      setEmail(restaurantInfo.email);
+      setWebsite(restaurantInfo.website);
+    }
+  }, [data]);
+
+  const handleConfirmBannerUpload = async () => {
+    if (bannerFile) {
+      const response = await uploadImageService(
+        bannerFile,
+        token,
+        "afrograille"
+      );
+      const data = await response;
+      return data;
     }
   };
+
+  const handleConfirmLogoUpload = async () => {
+      if (logoFile) {
+        const response = await uploadImageService(
+          logoFile,
+          token,
+          "afrograille"
+        );
+        const data = await response;
+        return data;
+      }
+  };
+
+  const handleBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return alert("No file selected");
+    const file = e.target.files[0];
+    setBannerFile(file);
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setBannerUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (!e.target.files) return alert("No file selected");
+    const file = e.target.files[0];
+    setLogoFile(file);
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setLogoUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+
+  const handleSubmit = async () => {
+    let store:StoreType = {
+      // storeLogo:bannerUrl.imageUrl,
+      // storeBanner: logoUrl.imageUrl,
+      name: storeName,
+      slug: storeSlug,
+      storeDescription: storeDescription,
+      // specialities: storeSpecialities,
+      storeCategories: selectedStoreCategories.map((category:StoreCategoryType) => category.id),
+      storeSpecialities: selectedStoreSpecialities.map((speciality:StoreSpecialityType) => speciality.id),
+      phoneNumbers: [phone],
+      storeHours: hours,
+      // address,
+      // zipCode,
+      // city,
+      email,
+      website,
+    };
+    if (bannerFile){
+      const bannerUrl = await handleConfirmBannerUpload();
+      store = { ...store, storeBanner: bannerUrl.imageUrl };
+    } 
+    if (logoFile) {
+      const logoUrl = await handleConfirmLogoUpload();
+      store = { ...store, storeLogo: logoUrl.imageUrl };
+    }
+    mutation.mutate(store);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
+  if (isFetching) return <div>Fetching...</div>;
+  if (!data || !data.success) return <div>No data...</div>;
+
+  console.log(
+    bannerUrl,
+  );
 
   return (
     <div className="flex flex-col items-center justify-center">
       <Card className="w-full h-full flex-col flex overflow-y-scroll mx-10 ">
         <CardBody className="text-center overflow-x-scroll h-screen">
-          <div className="relative w-full h-96">
-            <input
-              type="file"
-              ref={hiddenFileInput}
-              onChange={handleChange}
-              style={{ display: "none" }}
-            />
-            <button
-              onClick={() => hiddenFileInput?.current?.click()}
-              className="absolute inset-0 bg-black bg-opacity-50 flex flex-col text-white h-full w-full align-middle items-center justify-center cursor-pointer"
-              style={{ zIndex: 10, borderRadius: 10 }}
-            >
-              <MdUpload style={{ width: 50, height: 50 }} />
-              <Typography>Inserer une nouvelle image</Typography>
-            </button>
+          {/* Banner */}
+          {!bannerUrl && (
+            <div className="relative w-full h-80">
+              <input
+                type="file"
+                ref={hiddenBannerFileInput}
+                onChange={handleBannerUpload}
+                style={{ display: "none" }}
+              />
+              <button
+                onClick={() => hiddenBannerFileInput?.current?.click()}
+                className="absolute inset-0 bg-black bg-opacity-50 flex flex-col text-white h-full w-full align-middle items-center justify-center cursor-pointer"
+                style={{ zIndex: 10, borderRadius: 10 }}
+              >
+                <MdUpload style={{ width: 50, height: 50 }} />
+                <Typography>Uploader</Typography>
+              </button>
+            </div>
+          )}
+          {bannerUrl && (
+            <div className="relative w-full h-80">
+              <Image
+                src={bannerUrl as string}
+                alt="Banner image"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-md"
+              />
+              <button
+                onClick={() => setBannerUrl(null)}
+                className="absolute inset-0 flex flex-col text-white  items-end justify-start cursor-pointer p-2"
+                style={{ zIndex: 10, borderRadius: 10 }}
+              >
+                <RiImageEditFill
+                  className="text-blue-500 rounded-2xl"
+                  style={{ width: 50, height: 50 }}
+                />
+              </button>
+            </div>
+          )}
+          <br />
+          <hr />
+          {/* Logo */}
+          <div className="flex flex-col justify-center items-center">
+            {!logoUrl && (
+              <div className="relative w-28 h-28 mt-2">
+                <input
+                  type="file"
+                  ref={hiddenLogoFileInput}
+                  onChange={handleLogoUpload}
+                  style={{ display: "none" }}
+                />
+                <button
+                  onClick={() => hiddenLogoFileInput?.current?.click()}
+                  className="absolute inset-0 bg-black bg-opacity-50 flex flex-col text-white h-full w-full align-middle items-center justify-center cursor-pointer"
+                  style={{ zIndex: 10, borderRadius: 100 }}
+                >
+                  <MdUpload style={{ width: 50, height: 50 }} />
+                  <Typography>Uploader</Typography>
+                </button>
+              </div>
+            )}
+            {logoUrl && (
+              <div className="relative w-28 h-28 mt-2">
+                <Image
+                  src={logoUrl as string}
+                  alt="Banner image"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                />
+                <button
+                  onClick={() => setLogoUrl(null)}
+                  className="absolute inset-0 flex flex-col text-white  items-center justify-center cursor-pointer p-2"
+                  style={{ zIndex: 10, borderRadius: 100 }}
+                >
+                  <RiImageEditFill
+                    className="text-blue-800 rounded-2xl"
+                    style={{ width: 30, height: 30 }}
+                  />
+                </button>
+              </div>
+            )}
           </div>
-
           <div className="flex flex-col my-2">
             <Input
+              // disabled={true}
               label="Nom du restaurant"
-              // value={restaurantInfo.name}
-              // disabled={!isEditMode}
+              value={storeName}
+              onChange={(e) => setStoreName(e.target.value)}
+              crossOrigin={undefined}
+            />
+          </div>
+          <div className="flex flex-col my-2">
+            <Input
+              // disabled={true}
+              label="Slug"
+              value={storeSlug}
+              onChange={(e) => setStoreSlug(e.target.value)}
+              crossOrigin={undefined}
+            />
+          </div>
+          <div className="flex flex-col my-2">
+            <Input
+              // disabled={true}
+              label="E-mail"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              crossOrigin={undefined}
+            />
+          </div>
+          <div className="flex flex-col my-2">
+            <Input
+              type="url"
+              label="Website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
               crossOrigin={undefined}
             />
           </div>
 
           <div className="flex flex-col my-2">
             <Input
-              label="Spécialité"
-              // value={restaurantInfo.speciality}
-              // disabled={!isEditMode}
               crossOrigin={undefined}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              type="text"
+              label="Adresse"
             />
+          </div>
+          <div className="flex flex-col my-2">
+            <Input
+              crossOrigin={undefined}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              type="text"
+              label="City"
+            />
+          </div>
+          <div className="flex flex-col  my-2">
+            <Input
+              crossOrigin={undefined}
+              value={zipCode}
+              onChange={(e) => setZipCode(e.target.value)}
+              type="text"
+              label="Code postal"
+            />
+          </div>
+          <div className="flex flex-col mt-1">
+            <div className="justify-start">
+              <Typography
+                color="blue-gray"
+                className="font-bold mb-1 text-left"
+                textGradient
+              >
+                Specialités
+              </Typography>
+            </div>
+            <Speciality selectedStoreSpecialities={selectedStoreSpecialities} setSelectedStoreSpecialities={setSelectedStoreSpecialities} />
           </div>
 
           <div className="flex flex-col mt-1">
@@ -199,13 +547,13 @@ const ProfilePage = () => {
                 className="font-bold mb-1 text-left"
                 textGradient
               >
-                Pastilles
+                Categories
               </Typography>
             </div>
-            <h2>Utiliser react select pour les pastilles existantes</h2>
-            <h2>
-              Ajouter un button ajouter une pastille, pour les nouveau pastilles
-            </h2>
+            <Category
+              setSelectedStoreCategories={setSelectedStoreCategories}
+              selectedStoreCategories={selectedStoreCategories}
+            />
           </div>
 
           <div className="my-2">
@@ -213,49 +561,19 @@ const ProfilePage = () => {
               className="mb-2"
               size="lg"
               label="Description"
-              // value={restaurantInfo.description}
-              // disabled={!isEditMode}
+              value={storeDescription}
+              onChange={(e) => setStoreDescription(e.target.value)}
             />
           </div>
 
           <div className="flex flex-col">
             <Input
               label="Numéro de téléphone: ex. +224623456782"
-              // value={restaurantInfo.phone_number}
-              // disabled={!isEditMode}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               crossOrigin={undefined}
             />
           </div>
-
-          <hr className="my-3" />
-
-          <div className="flex flex-col">
-            <Typography
-              color="blue-gray"
-              className="font-bold mb-2 text-left"
-              textGradient
-            >
-              Coordonnées GPS
-            </Typography>
-            <div className="mb-5">
-              <Input
-                label="Latitude"
-                // value={restaurantInfo.gps_coordinates.latitude}
-                // disabled={!isEditMode}
-                crossOrigin={undefined}
-              />
-            </div>
-            <div>
-              <Input
-                label="Longitude"
-                // value={restaurantInfo.gps_coordinates.longitude}
-                // disabled={!isEditMode}
-                crossOrigin={undefined}
-                className=""
-              />
-            </div>
-          </div>
-
           <hr className="my-3 mt-5" />
 
           <div className="flex flex-col">
@@ -267,61 +585,98 @@ const ProfilePage = () => {
               Horaires d&apos;ouvertures
             </Typography>
           </div>
-          <div className="flex justify-between gap-2 items-center w-full">
-            <Typography
-              color="blue-gray"
-              className="font-bold mb-1 text-left"
-              textGradient
+          {daysMock.map((day, index) => (
+            <div
+              key={day}
+              className="flex justify-between gap-2 items-center w-full mt-2"
             >
-              Lundi
-            </Typography>
-            <div className="flex flex-col gap-2">
-              <Select label="Heure d'ouverture">
-                {hours.map((hourOption, index) => (
-                  <Option key={index} value={hourOption}>
-                    {hourOption}
-                  </Option>
-                ))}
-              </Select>
-              <Select label="Heure de fermeture">
-                {hours.map((hourOption, index) => (
-                  <Option key={index} value={hourOption}>
-                    {hourOption}
-                  </Option>
-                ))}
-              </Select>
-            </div>
-            <label
-              className="relative flex items-center p-3 rounded-full cursor-pointer"
-              htmlFor="ripple-on"
-              data-ripple-dark="true"
-            >
-              <input
-                id="ripple-on"
-                type="checkbox"
-                className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
-              />
-              <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3.5 w-3.5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  stroke="currentColor"
-                  stroke-width="1"
+              <Typography
+                color="blue-gray"
+                className="font-bold mb-1 text-left"
+                textGradient
+              >
+                {truncateText(day, 3)}
+              </Typography>
+              <div className="flex flex-col gap-2">
+                <Select
+                  disabled={!hours.find((hour) => hour.day === day)?.isActive}
+                  value={hours.find((hour) => hour.day === day)?.open}
+                  onChange={(value) =>
+                    setHours((prev: any) => {
+                      console.log(value);
+                      const newHours = prev.map((hour: any) => {
+                        if (hour.day === day) {
+                          return {
+                            ...hour,
+                            open: value,
+                          };
+                        }
+                        return hour;
+                      });
+                      return newHours;
+                    })
+                  }
+                  label="Heure d'ouverture"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </span>
-            </label>
-          </div>
+                  {hoursMock.map((hourOption, index) => (
+                    <Option key={index} value={hourOption}>
+                      {hourOption}
+                    </Option>
+                  ))}
+                </Select>
+                <Select
+                  disabled={!hours.find((hour) => hour.day === day)?.isActive}
+                  value={hours.find((hour) => hour.day === day)?.close}
+                  onChange={(value) =>
+                    setHours((prev: any) => {
+                      console.log(value);
+                      const newHours = prev.map((hour: any) => {
+                        if (hour.day === day) {
+                          return {
+                            ...hour,
+                            close: value,
+                          };
+                        }
+                        return hour;
+                      });
+                      return newHours;
+                    })
+                  }
+                  label="Heure de fermeture"
+                >
+                  {hoursMock.map((hourOption, index) => (
+                    <Option key={index} value={hourOption}>
+                      {hourOption}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+              <Checkbox
+                onChange={(value) =>
+                  setHours((prev: any) => {
+                    const newHours = prev.map((hour: any) => {
+                      if (hour.day === day) {
+                        return {
+                          ...hour,
+                          isActive: !hour.isActive,
+                        };
+                      }
+                      return hour;
+                    });
+                    return newHours;
+                  })
+                }
+                color="blue"
+                checked={hours.find((hour) => hour.day === day)?.isActive}
+                crossOrigin={undefined}
+              />
+            </div>
+          ))}
 
           <div className="mt-10">
-            <Button fullWidth>Enregistrer</Button>
+            <Button onClick={handleSubmit} fullWidth>
+              Enregistrer
+            </Button>
           </div>
         </CardBody>
       </Card>

@@ -1,6 +1,6 @@
 import product from "@/components/product/product";
 import { CategoryType } from "@/types/category.type";
-import { IconButton } from "@material-tailwind/react";
+import { IconButton, Typography } from "@material-tailwind/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosHeartEmpty } from "react-icons/io";
@@ -8,6 +8,8 @@ import { CiShare2 } from "react-icons/ci";
 import useVerticalScroll from "@/hooks/useVerticalScroll";
 import { FaPhoneAlt } from "react-icons/fa";
 import { sharePage } from "@/utils/sharePage";
+import { MdUpload } from "react-icons/md";
+import Image from "next/image";
 
 const categoriesMocks = [
   {
@@ -77,7 +79,7 @@ const RestaurantPage = () => {
 
   return (
     <div className="relative">
-      <div
+      {/* <div
         className={`flex items-center justify-between bg-gray-100 p-2 ${
           scrollPosition > 0 && "fixed top-0 left-0 right-0"
         }`}
@@ -97,10 +99,10 @@ const RestaurantPage = () => {
           color="blue-gray"
           className="bg-blue-100 rounded-2xl"
           onClick={() => {
-            // handleShow();
+            handleShow();
           }}
         >
-          {/* <IoIosHeartEmpty className="h-5 w-5" /> */}
+          <IoIosHeartEmpty className="h-5 w-5" />
           <CiShare2
             onClick={() =>
               sharePage(
@@ -112,7 +114,7 @@ const RestaurantPage = () => {
             className="h-5 w-5"
           />
         </IconButton>
-      </div>
+      </div> */}
       <div className="flex items-center justify-center">
         {/* {product.images.length === 1 && ( */}
         {/* <Image
@@ -136,18 +138,31 @@ const RestaurantPage = () => {
             </Carousel>
           )} */}
       </div>
+      {/* Restaurant Logo */}
+      <div className="relative">
+        <div className="flex justify-end items-center w-full bg-green-500 py-1 mb-1 px-1">
+          <p className="text-semibold text-white font-sm text-center py-1 pr-3">
+            Ouvert jusqu&apos;à 19h
+          </p>
+        </div>
+        <img
+          src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt=""
+          className="absolute top-2/3 left-5 transform -translate-y-2/3 w-24 h-24 rounded-full border-8 border-white"
+        />
+      </div>
       <div className="p-2">
         {/* Restaurant name */}
-        <div className="flex items-center my-1">
-          <h1 className="text-2xl font-bold">AfroGraille - Conakry</h1>
+        <div className="flex items-center mt-4">
+          <h1 className="text-2xl font-bold">AfroGraille</h1>
         </div>
         {/* Pastille */}
-        <div className="flex items-center justify-between my-2">
-          <p className="text-sm font-light">Fast-food Burger Street Food</p>
-          <p className="bg-blue-300 text-white p-1 rounded-2xl">3.6/5</p>
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-sm">Cuisine Africaine</p>
+          <p className="bg-blue-300 text-white p-1 rounded-2xl">4.9/5</p>
         </div>
         {/* Ouverture et fermeture */}
-        <div className="flex justify-center items-center w-full bg-red-500 py-1 mb-1 px-1 rounded-xl">
+        {/* <div className="flex justify-center items-center w-full bg-red-500 py-1 mb-1 px-1 rounded-xl">
           <p className="text-sm text-white font-sm text-center">
             Ce restaurant est indisponible pour le moment
           </p>
@@ -166,32 +181,33 @@ const RestaurantPage = () => {
           <p className="text-sm text-white font-sm text-center">
             Ouvre demain à 9h
           </p>
-        </div>
+        </div> */}
         <a
           href="tel:+33711223344"
-          className="flex justify-center font-sm items-center m-auto p-2 bg-gray-300 rounded-xl"
+          className="flex justify-center font-sm items-center m-auto p-2 bg-gray-300 rounded-xl my-2"
         >
           <p className="text-sm mr-2">Appeler au</p>
           <FaPhoneAlt className="w-4 h-4 mr-1" />
-          <span>+224 123 45 67 89</span>
+          <span>+33 123 45 67 89</span>
         </a>
-        <div>
-          <p>Adresse: 24 Route du niger, Kaloum, Conakry</p>
-        </div>
-        <div>
+        {/* <div>
+          <p>Adresse: 23 rue mathieu stilatti, 13003 Marseille</p>
+        </div> */}
+        {/* <div>
           <h1>Heure d&apos;ouverture</h1>
           <p>Aujourd&apos;hui : 9h - 12h </p>
           <p>Demain : 9h - 19h </p>
           <p>Voir toutes horaires... </p>
-        </div>
+        </div> */}
         {/* Restaurant description */}
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <p className="text-sm font-light">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
             voluptatum, voluptates, quos, quas quia doloremque officia
             necessitatibus doloribus quibusdam voluptatem quod.
           </p>
-        </div>
+        </div> */}
+
         {/* Commander a nouveau */}
         <div>
           <p className="text-sm font-semibold">Commander à nouveau</p>
@@ -266,7 +282,6 @@ const RestaurantPage = () => {
             </div>
           </div>
           <hr />
-
         </div>
       </div>
     </div>

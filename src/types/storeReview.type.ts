@@ -7,6 +7,6 @@ export type StoreReviewType = {
   user: UserType;
   rating: number;
   review: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

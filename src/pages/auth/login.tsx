@@ -81,36 +81,6 @@ const LoginComponent = () => {
   const handleLogin = () => {
     if (!handleValidInfo()) return;
     mutation.mutate({ email, password });
-    // dispatch(
-    //   login({
-    //     isAuthenticated: true,
-    //     user: {
-    //       firstName: "Aboubacar",
-    //       lastName: "Doe",
-    //       email: "abou.doe@example.com",
-    //       dateOfBirth: "1985-05-20",
-    //       phone: "123-456789",
-    //       gender: GenderEnum.UNKNOWN,
-    //       avatar: "https://example.com/avatar1.jpg",
-    //       role: RoleEnum.USER,
-    //       isActive: true,
-    //       address: {
-    //         street: "Rue de la paix",
-    //         city: "Paris",
-    //         zipCode: "75000",
-    //         country: "France",
-    //         complement: "Complément d'adresse",
-    //         number: "12",
-    //         createdAt: "2023-09-28T23:19:38.790Z",
-    //         updatedAt: "2023-09-28T23:19:38.790Z",
-    //         id: "65160bd16f17038b4e5d65f4",
-    //       },
-    //       createdAt: "2023-09-28T23:19:38.790Z",
-    //       updatedAt: "2023-09-28T23:19:38.790Z",
-    //       id: "651ec04a439249f99f8cc3b3",
-    //     },
-    //   })
-    // );
   };
 
   mutation.isLoading && <div>Chargement...</div>;

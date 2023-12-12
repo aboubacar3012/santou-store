@@ -12,5 +12,7 @@ export type CartType = {
   deliveryCharge: number;
   totalAmount: number;
   indication:string;
-  options: OptionType[]
+  options: OptionType[];
+  createdAt?: string;
+  updatedAt?: string;
 };

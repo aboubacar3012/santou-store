@@ -16,6 +16,6 @@ export type PaymentType = {
   transactionId: string;
   paymentStatus: PaymentStatusEnum;
   paymentDate: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

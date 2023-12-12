@@ -125,6 +125,39 @@
   resolved "https://registry.npmjs.org/@capacitor/keyboard/-/keyboard-5.0.6.tgz"
   integrity sha512-9GewAa/y2Hwkdw/Be8MTdiAjrFZ7TPDKpR44M0Y/0QMnK+mBbgzcoZ/UkuumWv6e2F1IAI+VY5eYVQHDeZcRoA==
 
+"@cloudinary/html@^1.11.2":
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/@cloudinary/html/-/html-1.11.2.tgz#a906234880ffad3b6e0666a650157b885204375e"
+  integrity sha512-IibBZliI7MOK3dxvz0WlsEyTIsqZhY3SiCBQM0CNwCKxn3N1TO8OgetfU26Now1lJbdoF5JQ8S7Cn6ZWNuU1KA==
+  dependencies:
+    "@types/lodash.clonedeep" "^4.5.6"
+    "@types/lodash.debounce" "^4.0.6"
+    "@types/node" "^14.14.10"
+    lodash.clonedeep "^4.5.0"
+    lodash.debounce "^4.0.8"
+    typescript "^4.1.2"
+
+"@cloudinary/react@^1.11.2":
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/@cloudinary/react/-/react-1.11.2.tgz#6eb540533c18d77d134c47b705e76a867c4ee0a7"
+  integrity sha512-ZnVthMW7TExLMPmyven4N7EVr2oX2yZqnHn6EHBlni9iM0AZd6qtR8R5/SscxNLNwgBieWuvmejUlUT4LqPpMg==
+  dependencies:
+    "@cloudinary/html" "^1.11.2"
+
+"@cloudinary/transformation-builder-sdk@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/transformation-builder-sdk/-/transformation-builder-sdk-1.9.0.tgz#0c6d37f3c4fd071d8205ca800d70bd8882a00512"
+  integrity sha512-19ZV3r2dE2mYMZTN/ytP7p7hmqiD7PC6EoWdQwJByabN4JXtNwgotElHYC509/eD7j5xJajghgHiIXTonrgMhQ==
+  dependencies:
+    "@cloudinary/url-gen" "^1.7.0"
+
+"@cloudinary/url-gen@^1.14.0", "@cloudinary/url-gen@^1.7.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/url-gen/-/url-gen-1.14.0.tgz#87a31719858acd98b482ca331a0df2d5a8791f34"
+  integrity sha512-XbG8QgD5fkTUO/YYUWftfz3sUpKzRZJkXhp6xLSxmK/36iyMy2wA4SF5FLCOnv6fLLUneQzXbc4OAwaDM0EWCQ==
+  dependencies:
+    "@cloudinary/transformation-builder-sdk" "^1.9.0"
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz"
@@ -824,6 +857,25 @@
   dependencies:
     "@types/geojson" "*"
 
+"@types/lodash.clonedeep@^4.5.6":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@types/lodash.clonedeep/-/lodash.clonedeep-4.5.9.tgz#ea48276c7cc18d080e00bb56cf965bcceb3f0fc1"
+  integrity sha512-19429mWC+FyaAhOLzsS8kZUsI+/GmBAQ0HFiCPsKGU+7pBXOQWhyrY6xNNDwUSX8SMZMJvuFVMF9O5dQOlQK9Q==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash.debounce@^4.0.6":
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/@types/lodash.debounce/-/lodash.debounce-4.0.9.tgz#0f5f21c507bce7521b5e30e7a24440975ac860a5"
+  integrity sha512-Ma5JcgTREwpLRwMM+XwBR7DaWe96nC38uCBDFKZWbNKD+osjVzdpnUSwBcqCptrp16sSOLBAUb50Car5I0TCsQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.202"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.202.tgz#f09dbd2fb082d507178b2f2a5c7e74bd72ff98f8"
+  integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
+
 "@types/minimist@^1.2.0":
   version "1.2.5"
   resolved "https://registry.npmjs.org/@types/minimist/-/minimist-1.2.5.tgz"
@@ -840,6 +892,11 @@
   integrity sha512-wmyg8HUhcn6ACjsn8oKYjkN/zUzQeNtMy44weTJSM6p4MMzEOuKbA3OjJ267uPCOW7Xex9dyrNTful8XTQYoDA==
   dependencies:
     undici-types "~5.26.4"
+
+"@types/node@^14.14.10":
+  version "14.18.63"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.63.tgz#1788fa8da838dbb5f9ea994b834278205db6ca2b"
+  integrity sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.4"
@@ -1476,6 +1533,19 @@ cliui@^8.0.1:
     string-width "^4.2.0"
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
+
+cloudinary-core@^2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/cloudinary-core/-/cloudinary-core-2.13.0.tgz#b59f90871b6c708c3d0735b9be47ac08181c57fb"
+  integrity sha512-Nt0Q5I2FtenmJghtC4YZ3MZZbGg1wLm84SsxcuVwZ83OyJqG9CNIGp86CiI6iDv3QobaqBUpOT7vg+HqY5HxEA==
+
+cloudinary-react@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/cloudinary-react/-/cloudinary-react-1.8.1.tgz#8d017d959776be5e80717918412504aa6f35214f"
+  integrity sha512-90LHbUPfB8Uj5tKY08+ladN8ONyfak8zjnlAgVc39vlxKCx3b9G0/+I5C1QQGDwBRqHKzxyXterfugbWUrCQhA==
+  dependencies:
+    cloudinary-core "^2.13.0"
+    prop-types "^15.8.1"
 
 color-convert@^1.9.0:
   version "1.9.3"
@@ -3355,6 +3425,16 @@ locate-path@^6.0.0:
   integrity sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   dependencies:
     p-locate "^5.0.0"
+
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==
+
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
 lodash.ismatch@^4.4.0:
   version "4.4.0"
@@ -5244,6 +5324,11 @@ typescript@5.2.2:
   version "5.2.2"
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.2.2.tgz"
   integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
+
+typescript@^4.1.2:
+  version "4.9.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
+  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 uglify-js@^3.1.4:
   version "3.17.4"

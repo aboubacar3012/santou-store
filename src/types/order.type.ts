@@ -37,6 +37,6 @@ export type OrderType = {
   paymentStatus: PaymentStatusEnum;
   orderStatus: OrderStatusEnum;
   deliveryAddress: AddressType;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

@@ -198,10 +198,13 @@ export function ShowOrderDialog({
             <Chip size="sm" color="red" value="Non payé" />
           )}
         </div>
-        <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        {order && order.createdAt && (
+          <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
           <strong className="font-bold">Commandé le :</strong>{" "}
-          {formatFrenchDate(order?.createdAt.toString() ?? "")}
+          {formatFrenchDate(order.createdAt.toString())}
         </div>
+        )}
+        
         <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
           <strong className="font-bold">Mode de récupération:</strong>{" "}
           {order?.takingOrder === "DELIVERY" ? "Livraison" : "À emporter"}

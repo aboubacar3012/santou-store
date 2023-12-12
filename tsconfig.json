@@ -28,7 +28,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/admin/components/profile/uploadImage/imageUpload.tsx"  ],
   "exclude": [
     "node_modules"
   ]

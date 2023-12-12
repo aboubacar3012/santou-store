@@ -1,6 +1,6 @@
 import { updateControl } from "@/redux/features/controlsSlice";
 import { updateCategory } from "@/redux/features/filterSlice";
-import { getCategories } from "@/services/categories";
+import { getProductCategories } from "@/services/productCategories";
 import { CategoryType } from "@/types/category.type";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ const bgColors = ["green", "red", "blue", "yellow", "purple"];
 const CategoryFilterComponent = () => {
   const { data, isLoading, isFetching, error, isError } = useQuery({
     queryKey: ["categories"], // une clé simple car on récupère tous les todos
-    queryFn: getCategories, // la fonction qui va retourner les données
+    queryFn: getProductCategories, // la fonction qui va retourner les données
     refetchOnWindowFocus: false, // ne pas rafraîchir la requête quand on focus la fenêtre
     retry: false, // ne pas réessayer la requête en cas d'erreur
     staleTime: 1000 * 60 * 5, // la requête est considérée comme périmée après 5 minutes

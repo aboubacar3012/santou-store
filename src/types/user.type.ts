@@ -14,7 +14,7 @@ export enum GenderEnum {
 }
 
 export type UserType = {
-  store?: StoreType;
+  stores?: StoreType;
   id: string;
   firstName: string;
   lastName: string;
@@ -27,6 +27,6 @@ export type UserType = {
   role: RoleEnum;
   isActive: boolean;
   addresses: AddressType[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
