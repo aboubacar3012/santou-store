@@ -10,45 +10,46 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { sharePage } from "@/utils/sharePage";
 import { MdUpload } from "react-icons/md";
 import Image from "next/image";
+import ProductByCategory from "@/components/product/product-by-categorie";
 
 const categoriesMocks = [
   {
-    name: "Nos Menus",
+    name: "Menus",
     ordre: 1,
     createdAt: "2023-11-18T19:22:28.366Z",
     updatedAt: "2023-11-18T19:22:28.366Z",
     id: "65590f13180c7228d1f8de14",
   },
   {
-    name: "Nos Burgers",
+    name: "Burgers",
     ordre: 1,
     createdAt: "2023-11-18T19:22:28.366Z",
     updatedAt: "2023-11-18T19:22:28.366Z",
     id: "65590f13180c7228d1f8de14",
   },
   {
-    name: "Nos Sandwichs",
+    name: "Sandwichs",
     ordre: 1,
     createdAt: "2023-11-18T19:22:28.366Z",
     updatedAt: "2023-11-18T19:22:28.366Z",
     id: "65590f13180c7228d1f8de14",
   },
   {
-    name: "Nos Salades",
+    name: "Salades",
     ordre: 1,
     createdAt: "2023-11-18T19:22:28.366Z",
     updatedAt: "2023-11-18T19:22:28.366Z",
     id: "65590f13180c7228d1f8de14",
   },
   {
-    name: "Nos Desserts",
+    name: "Desserts",
     ordre: 1,
     createdAt: "2023-11-18T19:22:28.366Z",
     updatedAt: "2023-11-18T19:22:28.366Z",
     id: "65590f13180c7228d1f8de14",
   },
   {
-    name: "Nos Boissons",
+    name: "Boissons",
     ordre: 1,
     createdAt: "2023-11-18T19:22:28.366Z",
     updatedAt: "2023-11-18T19:22:28.366Z",
@@ -74,9 +75,8 @@ const RestaurantPage = () => {
 
   const handleCategoryClick = (category: any) => {
     setSelectedCategory(category);
-    console.log({ category });
+    // console.log({ category });
   };
-
   return (
     <div className="relative">
       {/* <div
@@ -125,7 +125,7 @@ const RestaurantPage = () => {
             className="w-full h-80"
           /> */}
         <img
-          src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src="https://kelianfood.com/wp-content/uploads/2022/02/IMG_1261.jpg"
           alt=""
           className="w-full h-60"
         />
@@ -146,7 +146,7 @@ const RestaurantPage = () => {
           </p>
         </div>
         <img
-          src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src="https://scontent.fcdg2-1.fna.fbcdn.net/v/t39.30808-6/262316544_4837364566359886_4698046591459546328_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=dd5e9f&_nc_ohc=8BFEsRWm610AX8jGmui&_nc_ht=scontent.fcdg2-1.fna&oh=00_AfAnz1avAjJBhYanXbQzQKw4cVqGedkyV2mgF5k6pn8j4g&oe=657E9B00"
           alt=""
           className="absolute top-2/3 left-5 transform -translate-y-2/3 w-24 h-24 rounded-full border-8 border-white"
         />
@@ -209,7 +209,7 @@ const RestaurantPage = () => {
         </div> */}
 
         {/* Commander a nouveau */}
-        <div>
+        {/* <div>
           <p className="text-sm font-semibold">Commander à nouveau</p>
           <hr />
           <div className="flex gap-2 overflow-x-scroll mt-1">
@@ -220,7 +220,6 @@ const RestaurantPage = () => {
                 className="w-20 h-16 rounded-2xl"
               />
               <hr />
-              {/* <p className="font-bold">{truncateText("NUA KAO", 8)}</p> */}
               <p className="font-bold">NUA KAO</p>
               <p className="font-light text-sm">10 000 GNF</p>
               <p className="border px-2 flex justify-center items-center text-green-500 w-full">
@@ -228,13 +227,13 @@ const RestaurantPage = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Categories */}
-        <div
-          className={`flex items-center justify-between overflow-y-scroll gap-2 ${
-            scrollPosition > 540 &&
-            "fixed top-14 left-0 right-0 bg-white px-1 py-1"
+        <div 
+          className={`flex items-center justify-between overflow-y-scroll gap-2  ${
+            scrollPosition > 422 &&
+            "fixed top-0 left-0 right-0 px-1 py-1 bg-gray-200"
           }`}
         >
           {categoriesMocks &&
@@ -252,37 +251,13 @@ const RestaurantPage = () => {
                 }}
                 style={{ whiteSpace: "nowrap" }}
               >
-                <p className="text-sm mt-1 font-semibold">{category.name}</p>
+                <p className="mt-1 font-semibold text-xl">{category.name}</p>
               </div>
             ))}
         </div>
 
         {/* Products */}
-        <div>
-          <h1 className="font-bold">Nos Menus</h1>
-          <hr />
-
-          <div className="flex w-full justify-between items-center">
-            <div className="flex flex-col w-[16rem]">
-              <p className="font-sm">Menu Burger Cheesy</p>
-              <p className="font-light text-sm">
-                Pain du boulanger, steak haché, cheddar
-              </p>
-              <p className="font-semibold">10 000 GNF</p>
-            </div>
-            <div className="flex gap-1">
-              <img
-                src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-                className="w-20 h-16 rounded-2xl"
-              />
-              <p className="border p-2 flex justify-center items-center text-green-500">
-                +
-              </p>
-            </div>
-          </div>
-          <hr />
-        </div>
+        <ProductByCategory />
       </div>
     </div>
   );

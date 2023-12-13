@@ -1,4 +1,5 @@
 import { AddressType } from "./address.type";
+import { OrderType } from "./order.type";
 import { StoreType } from "./store.type";
 
 export enum RoleEnum {
@@ -26,6 +27,7 @@ export type UserType = {
   password?: string;
   role: RoleEnum;
   isActive: boolean;
+  lastOrders: OrderType[];
   addresses: AddressType[];
   createdAt?: string;
   updatedAt?: string;

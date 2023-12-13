@@ -48,7 +48,7 @@ export function ProductDetailsDrawer({
 
   useEffect(() => {
     setIsExpanded(false);
-    console.log(product, "product details");
+    // console.log(product, "product details");
     // Recuperer toutes options et mettre dans selectedOptions sans rajouter les valeurs des options, qui seront rajoutes plus tard
     if (product) {
       const options: OptionType[] = [];
@@ -147,7 +147,7 @@ export function ProductDetailsDrawer({
 
   if (!product) return <p>Loading</p>;
 
-  console.log(selectedOptions, "selectedOptions");
+  // console.log(selectedOptions, "selectedOptions");
 
   return (
     <Drawer
