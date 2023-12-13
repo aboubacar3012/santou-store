@@ -49,6 +49,16 @@ const SelectAddressDrawer = () => {
 
   const router = useRouter();
 
+  // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
+  useEffect(() => {
+    if (newAddressWindow) document.body.classList.add("overflow-hidden");
+    else document.body.classList.remove("overflow-hidden");
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [newAddressWindow]);
+
   useEffect(() => {
     if (address.length > 0 && zipCode.length > 0) {
       setFormValid(true);

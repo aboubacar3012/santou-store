@@ -27,8 +27,20 @@ const SelectAddressDrawer = () => {
   const user = auth.user;
   const isAuth = auth.isAuthenticated;
 
+    // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
+    useEffect(() => {
+      if (selectAddressDrawer) document.body.classList.add("overflow-hidden");
+      else document.body.classList.remove("overflow-hidden");
+  
+      return () => {
+        document.body.classList.remove("overflow-hidden");
+      }
+    }, [selectAddressDrawer]);
+
   if(!isAuth) return;
   if(!selectAddressDrawer) return;
+
+  
   
 
   return (

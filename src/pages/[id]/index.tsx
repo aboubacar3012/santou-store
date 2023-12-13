@@ -6,11 +6,18 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosHeartEmpty } from "react-icons/io";
 import { CiShare2 } from "react-icons/ci";
 import useVerticalScroll from "@/hooks/useVerticalScroll";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaAngleRight, FaPhoneAlt } from "react-icons/fa";
 import { sharePage } from "@/utils/sharePage";
 import { MdUpload } from "react-icons/md";
 import Image from "next/image";
 import ProductByCategory from "@/components/product/product-by-categorie";
+import { RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { formatPrice } from "@/utils/formatPrice";
+import { updateControl } from "@/redux/features/controlsSlice";
+import { FaCircleArrowRight } from "react-icons/fa6";
+import CategoryFilterComponent from "@/components/filter/category";
+import OrderChoiceComponent from "@/components/shared/drawers/orderChoiceComponent";
 
 const categoriesMocks = [
   {
@@ -60,7 +67,8 @@ const colors = ["green", "red", "blue", "yellow", "purple", "orange"];
 
 const RestaurantPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const cart = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const scrollPosition = useVerticalScroll((isScrollingUp) => {
@@ -78,7 +86,7 @@ const RestaurantPage = () => {
     // console.log({ category });
   };
   return (
-    <div className="relative">
+    <div className="">
       {/* <div
         className={`flex items-center justify-between bg-gray-100 p-2 ${
           scrollPosition > 0 && "fixed top-0 left-0 right-0"
@@ -142,7 +150,7 @@ const RestaurantPage = () => {
       <div className="relative">
         <div className="flex justify-end items-center w-full bg-green-500 py-1 mb-1 px-1">
           <p className="text-semibold text-white font-sm text-center py-1 pr-3">
-            Ouvert jusqu&apos;à 19h
+            Ouvert {/* jusqu&apos;à 19h */}
           </p>
         </div>
         <img
@@ -151,7 +159,7 @@ const RestaurantPage = () => {
           className="absolute top-2/3 left-5 transform -translate-y-2/3 w-24 h-24 rounded-full border-8 border-white"
         />
       </div>
-      <div className="p-2">
+      <div className="p-2 pb-32">
         {/* Restaurant name */}
         <div className="flex items-center mt-4">
           <h1 className="text-2xl font-bold">AfroGraille</h1>
@@ -183,12 +191,12 @@ const RestaurantPage = () => {
           </p>
         </div> */}
         <a
-          href="tel:+33711223344"
+          href="tel:+33623741097"
           className="flex justify-center font-sm items-center m-auto p-2 bg-gray-300 rounded-xl my-2"
         >
           <p className="text-sm mr-2">Appeler au</p>
           <FaPhoneAlt className="w-4 h-4 mr-1" />
-          <span>+33 123 45 67 89</span>
+          <span>06 23 74 10 97</span>
         </a>
         {/* <div>
           <p>Adresse: 23 rue mathieu stilatti, 13003 Marseille</p>
@@ -230,7 +238,7 @@ const RestaurantPage = () => {
         </div> */}
 
         {/* Categories */}
-        <div 
+        {/* <div 
           className={`flex items-center justify-between overflow-y-scroll gap-2  ${
             scrollPosition > 422 &&
             "fixed top-0 left-0 right-0 px-1 py-1 bg-gray-200"
@@ -254,11 +262,29 @@ const RestaurantPage = () => {
                 <p className="mt-1 font-semibold text-xl">{category.name}</p>
               </div>
             ))}
+        </div> */}
+        <div className="bg-gray-200 -mx-2 px-2 py-6">
+        <OrderChoiceComponent />
         </div>
+        <CategoryFilterComponent />
 
         {/* Products */}
         <ProductByCategory />
       </div>
+      {
+          cart && cart.products.length > 0 && (
+            <div className="mt-10 fixed text-white bottom-0 left-0 right-0 flex w-full justify-between items-center p-4 bg-blue-400 shadow-lg">
+          <div>
+            <p className="text-lg">VOIR LE PANIER</p>
+            <p className="text-2xl font-sm">{formatPrice(cart.totalAmount)}</p>
+          </div>
+
+          <div onClick={() =>  dispatch(updateControl({ showCart:true }))} className="flex">
+            <FaCircleArrowRight className="w-12 h-12" />
+          </div>
+        </div>
+          )
+        }
     </div>
   );
 };

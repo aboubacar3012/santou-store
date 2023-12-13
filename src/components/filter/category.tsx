@@ -17,7 +17,7 @@ const categoriesData = [
   // { name: "Autres", color: "purple", bgColor: "purple" },
 ];
 
-const colors = ["green", "red", "blue", "yellow", "purple"];
+const colors = ["green", "red", "blue", "yellow", "purple", "orange"];
 const bgColors = ["green", "red", "blue", "yellow", "purple"];
 
 const CategoryFilterComponent = () => {
@@ -86,7 +86,7 @@ const CategoryFilterComponent = () => {
             }}
             style={{ whiteSpace: "nowrap" }}
           >
-            <p className="text-sm mt-1">{category.name}</p>
+            <p className="text-sm mt-1">Nos {category.name}</p>
           </div>
         ))}
       </div>

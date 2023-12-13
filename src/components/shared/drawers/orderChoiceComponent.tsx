@@ -1,45 +1,29 @@
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { updateControl } from "@/redux/features/controlsSlice";
-import { RootState } from "@/redux/store";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
-import { BsArrowLeftCircle } from "react-icons/bs";
-import { truncateText } from "../../../utils/truncate-text";
-import { useState } from "react";
-import {
-  Drawer,
-  Button,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
-import { IoIosWalk } from "react-icons/io";
-import { AiOutlineFieldTime } from "react-icons/ai";
-import { FaLocationDot } from "react-icons/fa6";
-import Overlay from "../overlay";
+import { updateControl } from '@/redux/features/controlsSlice';
+import { RootState } from '@/redux/store';
+import { truncateText } from '@/utils/truncate-text';
+import { Typography, IconButton, Button } from '@material-tailwind/react';
+import { useRouter } from 'next/router';
+import React from 'react'
+import { AiOutlineFieldTime } from 'react-icons/ai';
+import { FaLocationDot } from 'react-icons/fa6';
+import { IoIosWalk } from 'react-icons/io';
+import { useDispatch, useSelector } from 'react-redux';
 
-const OrderChoiceDrawer = () => {
+const OrderChoiceComponent = () => {
   const dispatch = useDispatch();
   const orderChoiceDrawer = useSelector(
     (state: RootState) => state.controls.values.orderChoiceDrawer
   );
   const auth = useSelector((state: RootState) => state.auth);
+ 
   const takingOrder = auth.takingOrder
   const timeToPickup = auth.timeToPickup
   const deliveryAddress = auth.deliveryAddress;
   const isAuth = auth.isAuthenticated;
   const selectedAddress = auth.user?.addresses[0]; // A corriger
-  
 
-  // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
-  useEffect(() => {
-    if (orderChoiceDrawer) document.body.classList.add("overflow-hidden");
-    else document.body.classList.remove("overflow-hidden");
+  const router = useRouter();
 
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    }
-  }, [orderChoiceDrawer]);
 
   const handleOnClose = () => {
     if(takingOrder === null) { 
@@ -55,47 +39,16 @@ const OrderChoiceDrawer = () => {
     }
 
   }
-  
+  console.log(router)
   return (
-    <>
-    <Overlay showOverlay={orderChoiceDrawer} onClick={handleOnClose} />
-    <Drawer
-      overlay={false}
-      size={240}
-      placement="bottom"
-      open={orderChoiceDrawer}
-      className="p-4 rounded-t-2xl"
-     
-      
-    >
-      <div className="flex items-center justify-between">
+    <div className="bg-white p-2 rounded-2xl">
+            <div className="flex items-center justify-between">
         <Typography variant="h5" color="blue-gray">
           COMMANDER
-        </Typography>
-        <IconButton
-          variant="text"
-          color="blue-gray"
-          onClick={handleOnClose}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="h-5 w-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </IconButton>
+        </Typography>      
       </div>
 
       <div>
-        <hr />
         <div className="flex justify-between w-full px-3 py-2">
           <div className="flex justify-start gap-3 items-center">
             <p className="text-blue-500 text-xl">
@@ -166,20 +119,9 @@ const OrderChoiceDrawer = () => {
         </div>
           )
         }
-        <hr />
       </div>
-      <div
-        onClick={handleOnClose}
-        className="p-2"
-      >
-        <Button color="blue" fullWidth>
-          Enregistrer
-        </Button>
-      </div>
-    </Drawer>
-    </>
-    
-  );
-};
+    </div>
+  )
+}
 
-export default OrderChoiceDrawer;
+export default OrderChoiceComponent

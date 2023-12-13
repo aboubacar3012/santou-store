@@ -33,6 +33,16 @@ const PlanningOrderDrawer = () => {
   const [day, setDay] = useState<string | null>(null);
   const [period, setPeriod] = useState<string | null>(null);
 
+  // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
+  useEffect(() => {
+    if (planningOrderDrawer) document.body.classList.add("overflow-hidden");
+    else document.body.classList.remove("overflow-hidden");
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [planningOrderDrawer]);
+
   useEffect(() => {
     if (timeToPickup?.now) setSelected("now");
     else setSelected("later");

@@ -60,6 +60,10 @@ const  CartScreenDrawer = () => {
   useEffect(() => {
     if (showCart) document.body.classList.add("overflow-hidden");
     else document.body.classList.remove("overflow-hidden");
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    }
   }, [showCart]);
 
   useEffect(() => {
@@ -462,14 +466,14 @@ const  CartScreenDrawer = () => {
         </div>
         {
           cart && cart.products.length > 0 && (
-            <div className="fixed text-white bottom-0 left-0 right-0 flex w-full justify-between items-center p-4 bg-green-400 shadow-lg  rounded-t-2xl">
+            <div className="fixed text-black bottom-0 left-0 right-0 flex w-full justify-between items-center p-4 bg-blue-400 shadow-lg  rounded-t-2xl">
           <div>
-            <p className="text-sm">TOTAL</p>
-            <p>{formatPrice(cart.totalAmount)}</p>
+          <p className="text-lg">TOTAL</p>
+            <p className="text-2xl font-sm">{formatPrice(cart.totalAmount)}</p>
           </div>
 
-          <div onClick={() =>  dispatch(updateControl({ showPaymentDrawer:true }))} className="flex">
-            <p>VALIDER</p>
+          <div onClick={() =>  dispatch(updateControl({ showPaymentDrawer:true }))} className="flex items-center">
+            <p className="text-lg">VALIDER</p>
             <FaAngleRight className="w-6 h-6" />
           </div>
         </div>

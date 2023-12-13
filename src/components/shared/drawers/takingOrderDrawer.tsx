@@ -34,6 +34,16 @@ const TakingOrderDrawer = () => {
     setSelected(takingOrder);
   },[takingOrder])
 
+    // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
+    useEffect(() => {
+      if (takingOrder) document.body.classList.add("overflow-hidden");
+      else document.body.classList.remove("overflow-hidden");
+  
+      return () => {
+        document.body.classList.remove("overflow-hidden");
+      }
+    }, [takingOrder]);
+
   if(takingOrderDrawer)
   return (
     <>
