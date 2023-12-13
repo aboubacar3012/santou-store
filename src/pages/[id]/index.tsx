@@ -87,9 +87,9 @@ const RestaurantPage = () => {
   };
   return (
     <div className="">
-      {/* <div
+      <div
         className={`flex items-center justify-between bg-gray-100 p-2 ${
-          scrollPosition > 0 && "fixed top-0 left-0 right-0"
+          scrollPosition > 0 && "fixed top-0 left-0 right-0 z-50"
         }`}
       >
         <IconButton
@@ -97,12 +97,12 @@ const RestaurantPage = () => {
           color="blue-gray"
           className="bg-blue-100 rounded-2xl"
           onClick={() => {
-            // handleShow();
+            router.push("/screens/home-screen")
           }}
         >
           <IoIosArrowBack className="h-5 w-5" />
         </IconButton>
-        <IconButton
+        {/* <IconButton
           variant="text"
           color="blue-gray"
           className="bg-blue-100 rounded-2xl"
@@ -121,8 +121,8 @@ const RestaurantPage = () => {
             }
             className="h-5 w-5"
           />
-        </IconButton>
-      </div> */}
+        </IconButton> */}
+      </div>
       <div className="flex items-center justify-center">
         {/* {product.images.length === 1 && ( */}
         {/* <Image
