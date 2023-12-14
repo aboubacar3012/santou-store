@@ -8,7 +8,7 @@ const QrCodeReader = (props:any) => {
     <>
       <QrReader
         constraints={
-          { facingMode: 'user' }
+          { facingMode:'environment'}
         }
         onResult={(result:any, error:any) => {
           if (!!result) {
