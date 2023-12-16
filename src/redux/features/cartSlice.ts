@@ -7,7 +7,7 @@ const initialState: CartType = {
   userId: "",
   products: [],
   amount: 0,
-  deliveryCharge: 200,
+  deliveryCharge: 0,
   totalAmount: 0,
   indication: "",
   options:[]
@@ -132,6 +132,10 @@ export const cartSlice = createSlice({
       updateTotalPrice(state);
       return state;
     },
+    updateDeliveryCharge: (state, action:PayloadAction<number>) => {
+      state.deliveryCharge = action.payload;
+      updateTotalPrice(state);
+    },
     clearCart: (state) => {
       state.products = [];
       state.amount = 0;
@@ -148,6 +152,7 @@ export const {
   removeFromCart,
   addUserId,
   updateProductQuantity,
+  updateDeliveryCharge,
   clearCart,
 } = cartSlice.actions;
 

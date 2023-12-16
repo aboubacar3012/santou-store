@@ -89,7 +89,7 @@ const RestaurantPage = () => {
     <div className="">
       <div
         className={`flex items-center justify-between bg-gray-100 p-2 ${
-          scrollPosition > 0 && "fixed top-0 left-0 right-0 z-50"
+          scrollPosition > 0 && "fixed top-0 left-0 right-0 z-30"
         }`}
       >
         <IconButton

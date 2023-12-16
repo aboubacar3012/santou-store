@@ -10,8 +10,9 @@ import { formatDate } from "@/utils/format-date";
 import { updateOrderByIdService } from "@/services/orders";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { Select, Accordion, AccordionHeader, AccordionBody, Card, Typography, Option } from "../../materialTailwind";
-
+import { Select, Accordion, AccordionHeader, AccordionBody, Card, Typography, Option, Button } from "../../materialTailwind";
+import OrderStatusStep from "./orderStatusStep"
+import { useRouter } from "next/router";
 function Icon({ id, open }: { id: number; open: number }) {
   return (
     <svg
@@ -70,6 +71,8 @@ const OrderComponent = ({
       openMerchantDetailsAccordion === value ? 0 : value
     );
 
+  const router = useRouter();
+
   if (!order || (user?.role === "USER" && order.user?.id !== user?.id))
     return null;
 
@@ -94,70 +97,7 @@ const OrderComponent = ({
   return (
     <div>
       <div className=" space-y-2 bg-white shadow-md border border-gray-500 rounded-2xl p-2">
-        <ol className="flex items-center w-full py-1 space-x-2 text-sm font-sm text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400  dark:bg-gray-800 dark:border-gray-700 ">
-          <li
-            className={`flex items-center text-xs ${
-              orderStatus === "PENDING" && "text-blue-600 dark:text-blue-500"
-            }`}
-          >
-            <GiSandsOfTime
-              className={`flex items-center justify-center w-5 h-5 mr-2   ${
-                orderStatus === "PENDING" &&
-                "border-blue-600 dark:border-blue-500"
-              }  shrink-0 `}
-            />
-            EN ATTENTE
-            <FiChevronsRight className="h-4 w-4" />
-          </li>
-          <li
-            className={`flex items-center text-xs ${
-              orderStatus === "SHIPPED" && "text-blue-600 dark:text-blue-500"
-            }`}
-          >
-            <TbTruckDelivery
-              className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
-                orderStatus === "SHIPPED" &&
-                "border-blue-600 dark:border-blue-500"
-              }  shrink-0 `}
-            />
-            EN LIVRAISON
-            <FiChevronsRight className="h-4 w-4" />
-          </li>
-          {orderStatus !== "CANCELLED" && (
-            <li
-              className={`flex items-center text-xs ${
-                orderStatus === "DELIVERED" &&
-                "text-blue-600 dark:text-blue-500"
-              }`}
-            >
-              <MdDoneAll
-                className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
-                  orderStatus === "DELIVERED" &&
-                  "border-blue-600 dark:border-blue-500"
-                }  shrink-0 `}
-              />
-              LIVRÉ
-            </li>
-          )}
-
-          {orderStatus === "CANCELLED" && (
-            <li
-              className={`flex items-center ${
-                orderStatus === "CANCELLED" &&
-                "text-blue-600 dark:text-blue-500"
-              }`}
-            >
-              <FcCancel
-                className={`flex items-center justify-center w-5 h-5 mr-2 text-xs  ${
-                  orderStatus === "CANCELLED" &&
-                  "border-blue-600 dark:border-blue-500"
-                }  shrink-0 `}
-              />
-              ANNULÉ
-            </li>
-          )}
-        </ol>
-        <hr className="border-gray-500" />
+        <OrderStatusStep orderStatus={orderStatus} />
         <div className="flex flex-col">
           <div className="flex justify-between">
             <div><strong>Vendeur</strong>: AfroGraille</div>
@@ -168,6 +108,23 @@ const OrderComponent = ({
           </div>
           <div><strong>Commande n°:</strong> {order.orderNumber.toLowerCase()}</div>
           <div><strong>Commande effectue le:</strong> {formatDate(order.orderDate)}</div>
+          <Button size="sm" onClick={() => router.push(`/orderStatus?orderId=${order.id}`)}  color="blue" className="flex items-center gap-2 justify-center">
+            <span>Suivre ma commande</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+              className="h-4 w-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </Button>
 
           {isAdmin && (
             <div className="mt-3">
@@ -256,7 +213,7 @@ const OrderComponent = ({
             className="py-0"
             onClick={() => handleOpenProductAccordion(1)}
           >
-            Produits
+            Articles ({order.products.length})
           </AccordionHeader>
           <AccordionBody className="py-0">
             <Card className="h-full w-full overflow-scroll mt-2">

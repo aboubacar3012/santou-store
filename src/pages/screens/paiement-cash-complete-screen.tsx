@@ -4,15 +4,16 @@ import React, { useEffect } from 'react'
 
 const PaiementCashCompleteScreen = () => {
   const router = useRouter();
+  const orderId = localStorage.getItem("orderId");
 
   useEffect(() => {
     setTimeout(() => {
-      router.push("/screens/home-screen");
+      return router.push(`/orderStatus?orderId=${orderId}`);
     }, 10000);
-}, []);
+}, [orderId, router]);
 
   return (
-    <div className="bg-white  mt-8 rounded-3xl border">
+    <div className="bg-white  mt-8 rounded-3xl p-2">
           <div className="bg-gray-100 rounded-3xl p-6 ">
             <svg
               viewBox="0 0 24 24"
@@ -33,10 +34,10 @@ const PaiementCashCompleteScreen = () => {
               <p> Nous avons hâte de vous retrouver très bientôt !</p>
               <div className="py-10 text-center">
                 <Link
-                  href="/screens/home-screen"
+                  href={`/orderStatus?orderId=${orderId}`}
                   className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
                 >
-                  Retourné à l&apos;accueil
+                  Suivre ma commande
                 </Link>
               </div>
             </div>

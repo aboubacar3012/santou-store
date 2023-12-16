@@ -19,7 +19,6 @@ const QrCodeReader = (props:any) => {
             console.info(error);
           }
         }}
-        // style={{ width: '100%' }}
       />
       <p>{data}</p>
     </>

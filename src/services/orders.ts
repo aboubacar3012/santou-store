@@ -26,6 +26,19 @@ export const getOrdersService = async (token: string | null) => {
   return res.json();
 };
 
+export const getOrderByIdService = async (token: string | null, orderId:string) => {
+  const res = await fetch(`${API_URL}/orders/${orderId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.json();
+};
+
+
 export const updateOrderByIdService = async (
   id: string,
   order: any,

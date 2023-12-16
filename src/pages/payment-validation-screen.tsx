@@ -22,6 +22,7 @@ const PaymentValidationScreen = () => {
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
   const loading = useSelector((state: RootState) => state.controls.values.spinner);
+  const orderId = localStorage.getItem("orderId");
 
   const checkPaymentStatus = async (payementInt: any) => {
     dispatch(updateControl({ showPaymentDrawer: false }))
@@ -57,7 +58,6 @@ const PaymentValidationScreen = () => {
   };
 
   const handleUpdateOrderStatus = async (token: string | null) => {
-    const orderId = localStorage.getItem("orderId");
     if (orderId) {
       const response = await updateOrderByIdService(
         orderId,
@@ -68,7 +68,6 @@ const PaymentValidationScreen = () => {
       );
       if (response.success) {
         dispatch(clearCart());
-        localStorage.removeItem("orderId");
       }
     }
   };
@@ -85,14 +84,14 @@ const PaymentValidationScreen = () => {
 
   // Automatically redirect to the payment page in 10 seconds
   useEffect(() => {
-      if(!loading)
       setTimeout(() => {
-        router.push("/screens/home-screen");
-      }, 10000);
-  }, []);
+        if(!loading && pageStatus === "paied")
+          return router.push(`/orderStatus?orderId=${orderId}`);
+      }, 10000)
+  }, [loading, pageStatus]);
 
   const containerStyle =
-    "overflow-y-scroll rounded-1xl  z-10";
+    "overflow-y-scroll rounded-1xl  z-10 p-2";
 
   return (
     <div className={`${containerStyle}`}>
@@ -120,10 +119,10 @@ const PaymentValidationScreen = () => {
               <p> Nous avons hâte de vous retrouver très bientôt !</p>
               <div className="py-10 text-center">
                 <Link
-                  href="/screens/home-screen"
+                  href={`/orderStatus?orderId=${orderId}`}
                   className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
                 >
-                  Retourné à l&apos;accueil
+                  Suivre ma commande
                 </Link>
               </div>
             </div>

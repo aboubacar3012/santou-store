@@ -77,7 +77,7 @@ const CategoryFilterComponent = () => {
         {data && data.categories && data.categories.map((category:CategoryType, index:number) => (
           <div
             key={index}
-            className={`px-3 py-1 my-1 rounded-lg text-${category.color ?? colors[index]}-600 bg-gray-100 border-gray-100 cursor-pointer ${
+            className={`px-3 mx-2 py-1 my-1 rounded-lg text-${category.color ?? colors[index]}-600 bg-gray-100 border-gray-100 cursor-pointer ${
               selectedCategory === category.name.toLowerCase() ? "border border-green-900" : ""
             }`}
             onClick={() => {

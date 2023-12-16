@@ -102,4 +102,26 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
+type AppPropsWithLayout = AppProps & {
+  Component: AppProps["Component"] & {
+    Layout: React.ComponentType;
+  }, 
+  ctx: any;
+};
+
+App.getInitialProps = async ({ Component, ctx }:AppPropsWithLayout) => {
+  let pageProps = {};
+
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+
+  // Redirige vers la page 404 si la route n'est pas trouvée
+  if (ctx.res?.statusCode === 404) {
+    return { pageProps, statusCode: 404 };
+  }
+
+  return { pageProps };
+};
+
 export default App;

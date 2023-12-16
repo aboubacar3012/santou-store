@@ -67,16 +67,16 @@ const PaymentDrawer = () => {
     };
     const response = await validateCart(finalCart, token);
     if (response.success) {
+      localStorage.setItem("orderId", response.data.id);
       if(paymentMethod === "cash"){
         dispatch(updateControl({ showPaymentDrawer: false }))
+        dispatch(updateControl({ showCart: false }))
         router.push("/screens/paiement-cash-complete-screen");
         dispatch(clearCart());
       }
       else if(paymentMethod === "credit-card"){
-        setPaymentStep(2);
-      localStorage.setItem("orderId", response.data.id);
-      
-      return;
+        setPaymentStep(2)
+        return;
       }
     } else if (response.error && response.status === 401){
      return handleShowConfirm();

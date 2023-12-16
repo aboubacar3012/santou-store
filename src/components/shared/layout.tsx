@@ -52,12 +52,12 @@ const Layout = ({ children }: any) => {
       // router.pathname !== "/auth/login" &&
       // router.pathname !== "/auth/registration" &&
       // router.pathname !== "/screens/cart-screen"
-      !router.pathname.includes("/admin") && !router.pathname.includes("/[id]")
+      !router.pathname.includes("/admin") && !router.pathname.includes("/[id]") && !router.pathname.includes("/orderStatus") && !router.pathname.includes("/404")
     );
   };
 
   const handleShowHeader = () => {
-    return !router.pathname.includes("/admin") && !router.pathname.includes("/[id]");
+    return !router.pathname.includes("/admin") && !router.pathname.includes("/[id]") && !router.pathname.includes("/orderStatus") && !router.pathname.includes("/404");
   };
 
   useEffect(() => {

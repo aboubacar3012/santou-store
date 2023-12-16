@@ -13,7 +13,7 @@ import { TbMinus } from "react-icons/tb";
 import { IoTrash } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
 import { FaAngleRight, FaArrowRight } from "react-icons/fa"
-import { MdOutlineRemoveShoppingCart } from "react-icons/md";
+import { MdError, MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { updateControl } from "@/redux/features/controlsSlice";
@@ -26,6 +26,7 @@ import { formatPrice } from "@/utils/formatPrice";
 import { truncateText } from "@/utils/truncate-text";
 import {
   removeFromCart,
+  updateDeliveryCharge,
   updateProductQuantity,
 } from "@/redux/features/cartSlice";
 import { getOptionsPrice } from "@/utils/getOptionsPrice";
@@ -33,6 +34,15 @@ import ContinueShoppingBtn from "@/components/cart/continue-shopping-btn";
 import PaiementMethod from "@/components/cart/paiement-method";
 
 type CartScreenDrawerProps = {};
+
+const ErrorMessage = ({message}:{message:string}) => {
+  return (
+    <div className="flex flex-col justify-center items-center p-4">
+      <MdError className="text-3xl text-red-400" bg-red-200 />
+      <p className="text-red-400 text-sm">{message}</p>
+    </div>
+  )
+}
 
 const  CartScreenDrawer = () => {
   const [quantity, setQuantity] = useState(1);
@@ -50,11 +60,21 @@ const  CartScreenDrawer = () => {
   const timeToPickup = useSelector(
     (state: RootState) => state.auth.timeToPickup
   );
+  const deliveryCharge = useSelector((state:RootState) => state.cart.deliveryCharge)
   const [paymentMethod, setPaymentMethod] = useState<"wallet" | "credit-card" | "cash">("cash");
   const [paymentStep, setPaymentStep] = useState(1);
 
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [showPromoCodeInput, setShowPromoCodeInput] = useState(false);
+
+  useEffect(() => {
+    console.log("takingOrder", takingOrder)
+    if(takingOrder === "DELIVERY") {
+      dispatch(updateDeliveryCharge(200));
+    }else if (takingOrder === "PICKUP") {
+      dispatch(updateDeliveryCharge(0));
+    }
+  },[takingOrder])
 
   // ce useEffect permet de bloquer le scroll du body quand le drawer est ouvert
   useEffect(() => {
@@ -80,7 +100,7 @@ const  CartScreenDrawer = () => {
       placement="bottom"
       size={window.innerHeight}
       open={showCart}
-      className="py-4 shadow-none fixed overflow-y-auto bg-gray-800 z-30"
+      className="py-4 shadow-none fixed overflow-y-auto bg-gray-800 z-50"
     >
       <div className="">
         <div className="flex items-center justify-between  p-2">
@@ -122,6 +142,11 @@ const  CartScreenDrawer = () => {
             </div>
             {/* A modifier biensure */}
             {/* <ClientPosition /> */}
+            {
+              auth && !auth.isAuthenticated && (
+                <ErrorMessage message="Connectez vous pour afficher votre adresse" />
+              )
+            }
             {
               auth && auth.user && auth.user.addresses && auth.user.addresses.length > 0 && (
                 <div className="flex flex-col p-2">
@@ -392,10 +417,14 @@ const  CartScreenDrawer = () => {
                   <p>Sous-total</p>
                   <p className="font-semibold">{formatPrice(cart.amount)}</p>
                 </div>
-                <div className="flex justify-between items-center">
-                  <p>Livraison (1.2km)</p>
-                  <p className="font-semibold">2 €</p>
+                {
+                  takingOrder === "DELIVERY" && (
+                    <div className="flex justify-between items-center">
+                  <p>Frais de livraison </p>
+                  <p className="font-semibold">{deliveryCharge} €</p>
                 </div>
+                  )
+                }
                 <div className="flex justify-between items-center ">
                   <p className="font-semibold">Total à payer</p>
                   <p className="font-semibold text-green-500">
